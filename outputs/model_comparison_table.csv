@@ -1,0 +1,7 @@
+Outcome,Model,N,R2,Adj_R2,AIC,BIC
+Stunting (%),Model 1 (Baseline),67,0.319,0.287,498.5,507.4
+Stunting (%),Model 2 (Gender only),67,0.364,0.312,498.0,511.2
+Wasting (%),Model 1 (Baseline),67,0.043,-0.003,348.8,357.7
+Wasting (%),Model 2 (Gender only),67,0.226,0.163,338.6,351.8
+Overweight (%),Model 1 (Baseline),67,0.262,0.227,370.3,379.1
+Overweight (%),Model 2 (Gender only),67,0.286,0.227,372.1,385.3

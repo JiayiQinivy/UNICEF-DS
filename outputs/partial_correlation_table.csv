@@ -1,0 +1,16 @@
+Outcome,Predictor,N,r_unadjusted,p_unadjusted,r_partial,p_partial,Attenuated
+Stunting (%),Female Child Marriage by 18 (%),138,0.572,0.0,0.343,0.0,Yes
+Stunting (%),Female Child Marriage by 15 (%),136,0.609,0.0,0.452,0.0,Yes
+Stunting (%),"Marriage Gender Gap (F - M, pp)",98,0.584,0.0,0.319,0.0014,Yes
+Stunting (%),"Antenatal Care 4+ visits, 15-19 yrs (%)",73,-0.533,0.0,-0.353,0.0022,Yes
+Stunting (%),"Modern Contraceptive Use, 15-19 yrs (%)",73,-0.271,0.0205,-0.011,0.928,Yes
+Wasting (%),Female Child Marriage by 18 (%),138,0.37,0.0,0.196,0.0216,Yes
+Wasting (%),Female Child Marriage by 15 (%),136,0.438,0.0,0.275,0.0012,Yes
+Wasting (%),"Marriage Gender Gap (F - M, pp)",98,0.457,0.0,0.361,0.0003,Yes
+Wasting (%),"Antenatal Care 4+ visits, 15-19 yrs (%)",73,-0.404,0.0004,-0.38,0.0009,Yes
+Wasting (%),"Modern Contraceptive Use, 15-19 yrs (%)",73,-0.405,0.0004,-0.328,0.0046,Yes
+Overweight (%),Female Child Marriage by 18 (%),138,-0.395,0.0,-0.145,0.0902,Yes
+Overweight (%),Female Child Marriage by 15 (%),136,-0.43,0.0,-0.208,0.0152,Yes
+Overweight (%),"Marriage Gender Gap (F - M, pp)",98,-0.543,0.0,-0.294,0.0033,Yes
+Overweight (%),"Antenatal Care 4+ visits, 15-19 yrs (%)",73,0.578,0.0,0.313,0.007,Yes
+Overweight (%),"Modern Contraceptive Use, 15-19 yrs (%)",73,0.403,0.0004,0.153,0.1972,Yes

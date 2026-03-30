@@ -1,0 +1,19 @@
+Outcome,Predictor,N,Spearman_r,p_value,Significant_0.05,Significant_Bonf
+Stunting (%),Female Child Marriage by 18 (%),138,0.572,0.0,Yes,Yes
+Stunting (%),Female Child Marriage by 15 (%),136,0.609,0.0,Yes,Yes
+Stunting (%),"Marriage Gender Gap (F - M, pp)",98,0.584,0.0,Yes,Yes
+Stunting (%),"Antenatal Care 4+ visits, 15-19 yrs (%)",73,-0.533,0.0,Yes,Yes
+Stunting (%),"Modern Contraceptive Use, 15-19 yrs (%)",73,-0.271,0.0205,Yes,No
+Stunting (%),FGM Prevalence (%),30,0.059,0.7551,No,No
+Wasting (%),Female Child Marriage by 18 (%),138,0.37,0.0,Yes,Yes
+Wasting (%),Female Child Marriage by 15 (%),136,0.438,0.0,Yes,Yes
+Wasting (%),"Marriage Gender Gap (F - M, pp)",98,0.457,0.0,Yes,Yes
+Wasting (%),"Antenatal Care 4+ visits, 15-19 yrs (%)",73,-0.404,0.0004,Yes,Yes
+Wasting (%),"Modern Contraceptive Use, 15-19 yrs (%)",73,-0.405,0.0004,Yes,Yes
+Wasting (%),FGM Prevalence (%),30,0.338,0.0679,No,No
+Overweight (%),Female Child Marriage by 18 (%),138,-0.395,0.0,Yes,Yes
+Overweight (%),Female Child Marriage by 15 (%),136,-0.43,0.0,Yes,Yes
+Overweight (%),"Marriage Gender Gap (F - M, pp)",98,-0.543,0.0,Yes,Yes
+Overweight (%),"Antenatal Care 4+ visits, 15-19 yrs (%)",73,0.578,0.0,Yes,Yes
+Overweight (%),"Modern Contraceptive Use, 15-19 yrs (%)",73,0.403,0.0004,Yes,Yes
+Overweight (%),FGM Prevalence (%),30,-0.049,0.7956,No,No
