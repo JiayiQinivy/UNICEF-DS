@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 # ===== USER INPUT =====
 BASE_FOLDER = os.path.dirname(os.path.abspath(__file__))
-TARGET_FOLDERS = ["Diets", "Breastfeeding", "Child Food Enviroments 25", "Infant and Yound Child", "Iodized Salt"]
+TARGET_FOLDERS = ["Diets", "Breastfeeding", "Infant and Yound Child", "Iodized Salt"] #"Child Enviroments 25" Has slightly different formatting
 
 EXCLUDE_SHEETS = ["Cover", "Notes"]
 
