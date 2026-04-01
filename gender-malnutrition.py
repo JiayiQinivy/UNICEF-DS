@@ -51,7 +51,7 @@ import statsmodels.formula.api as smf
 warnings.filterwarnings("ignore")
 
 # ===== USER INPUT =====
-OUTPUT_FOLDER = "/Users/ivy/Desktop/UNICEF-DS/outputs"
+OUTPUT_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "outputs")
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
 GENDER_CSV      = os.path.join(OUTPUT_FOLDER, "gender_inequality_analysis.csv")
@@ -572,6 +572,123 @@ def run_regression_models(df):
     results_df = pd.DataFrame(all_results)
     return results_df, comp_df
 
+def run_model_3(df):
+    """
+    Model 3 — Integrated:
+      outcome ~ gender_predictors + wash_indicators + education_indicators + child_food_poverty
+      Tests the explanatory power of gender inequality along with WASH, education, and child food poverty indicators.
+    """
+    print("\n" + "=" * 60)
+    print("SECTION 6B: OLS REGRESSION MODEL 3 (Integrated)")
+    print("=" * 60)
+
+    all_results = []
+    model_comparison = []
+
+    # Extra predictors for Model 3
+    wash_predictors = ["wat_bas_nat", "san_bas_nat", "hyg_bas_nat"]
+    edu_predictors = ["completion_primary_f", "literacy_f"]
+    food_predictors = ["severe_food_poverty_national", "moderate_food_poverty_national"]
+
+    # We need to load and merge these datasets first
+    WASH_CSV = os.path.join(OUTPUT_FOLDER, "WASH_clean.csv")
+    EDU_CSV = os.path.join(OUTPUT_FOLDER, "education_clean.csv")
+    FOOD_CSV = os.path.join(OUTPUT_FOLDER, "child_food_poverty_clean.csv")
+
+    wash_df = pd.read_csv(WASH_CSV) if os.path.exists(WASH_CSV) else pd.DataFrame(columns=["iso3"] + wash_predictors)
+    edu_df = pd.read_csv(EDU_CSV) if os.path.exists(EDU_CSV) else pd.DataFrame(columns=["ISO"] + edu_predictors)
+    food_df = pd.read_csv(FOOD_CSV) if os.path.exists(FOOD_CSV) else pd.DataFrame(columns=["ISO"] + food_predictors)
+
+    # Make ISO column consistent
+    if not wash_df.empty and "iso3" in wash_df.columns:
+        wash_df = wash_df.rename(columns={"iso3": "ISO"})
+
+    # Filter wash_df for latest year per country
+    if not wash_df.empty and "year" in wash_df.columns:
+        wash_df = wash_df.sort_values("year").groupby("ISO").tail(1)
+
+    df_m3 = df.copy()
+    if not wash_df.empty:
+        df_m3 = df_m3.merge(wash_df[["ISO"] + [p for p in wash_predictors if p in wash_df.columns]], on="ISO", how="left")
+    if not edu_df.empty:
+        df_m3 = df_m3.merge(edu_df[["ISO"] + [p for p in edu_predictors if p in edu_df.columns]], on="ISO", how="left")
+    if not food_df.empty:
+        df_m3 = df_m3.merge(food_df[["ISO"] + [p for p in food_predictors if p in food_df.columns]], on="ISO", how="left")
+
+    for outcome in OUTCOMES:
+        if outcome not in df_m3.columns:
+            continue
+
+        print(f"\n  Outcome: {OUTCOME_LABELS[outcome]}")
+        print(f"  {'─'*50}")
+
+        base_predictors = [p for p in GENDER_PREDICTORS if p in df_m3.columns]
+        extra_predictors = [p for p in wash_predictors + edu_predictors + food_predictors if p in df_m3.columns]
+        all_predictors = base_predictors + extra_predictors
+
+        all_cols   = [outcome, "income_group"] + all_predictors
+        sub        = df_m3[all_cols].dropna()
+        print(f"  Sample size (complete cases): {len(sub)}")
+
+        if len(sub) < 10:
+            print(f"  Sample too small for regression.")
+            continue
+
+        # ── Model 3: Integrated ────────────────────────
+        pred_str  = " + ".join(all_predictors)
+        formula3  = f"{outcome} ~ {pred_str}"
+        m3 = smf.ols(formula3, data=sub).fit()
+        print(f"\n  Model 3 (Integrated):")
+        print(f"    Adj. R²: {m3.rsquared_adj:.3f} | "
+              f"AIC: {m3.aic:.1f} | N: {int(m3.nobs)}")
+        print(f"\n  Coefficients (Model 3):")
+        coef_df = pd.DataFrame({
+            "Coefficient": m3.params.round(3),
+            "Std. Error":  m3.bse.round(3),
+            "t":           m3.tvalues.round(3),
+            "p-value":     m3.pvalues.round(4),
+            "Significant": m3.pvalues.apply(
+                lambda p: "***" if p < 0.001
+                else ("**" if p < 0.01
+                      else ("*" if p < 0.05 else ""))),
+        })
+        print(coef_df.to_string())
+
+        # Store model comparison row
+        model_comparison.append({
+            "Outcome":        OUTCOME_LABELS[outcome],
+            "Model":          "Model 3 (Integrated)",
+            "N":              int(m3.nobs),
+            "R2":             round(m3.rsquared, 3),
+            "Adj_R2":         round(m3.rsquared_adj, 3),
+            "AIC":            round(m3.aic, 1),
+            "BIC":            round(m3.bic, 1),
+        })
+
+        # Store coefficients for visualisation
+        for var, row in coef_df.iterrows():
+            if var == "Intercept":
+                continue
+            all_results.append({
+                "Outcome":     OUTCOME_LABELS[outcome],
+                "Predictor":   PREDICTOR_LABELS.get(
+                    var, var.replace("_", " ")),
+                "Coefficient": row["Coefficient"],
+                "SE":          row["Std. Error"],
+                "p_value":     row["p-value"],
+                "Significant": row["Significant"],
+            })
+
+    # Save model comparison table
+    if model_comparison:
+        comp_df = pd.DataFrame(model_comparison)
+        out = os.path.join(OUTPUT_FOLDER, "model_comparison_table_m3.csv")
+        comp_df.to_csv(out, index=False)
+        print(f"\n  Saved: model_comparison_table_m3.csv")
+        results_df = pd.DataFrame(all_results)
+        return results_df, comp_df
+    return pd.DataFrame(), pd.DataFrame()
+
 
 # ──────────────────────────────────────────────────────────────
 # SECTION 7: REGRESSION COEFFICIENT PLOT (Forest Plot)
@@ -759,15 +876,60 @@ def main():
     # 6. OLS regression models
     results_df, comp_df = run_regression_models(df)
 
+    # 6b. OLS regression model 3 (Integrated)
+    results_df_m3, comp_df_m3 = run_model_3(df)
+
     # 7. Coefficient forest plot
     if not results_df.empty:
         plot_regression_coefficients(results_df)
+
+    # 7b. Coefficient forest plot for Model 3
+    if not results_df_m3.empty:
+        # We can reuse the plot function but pass a different dataframe, we'll need to save to a different file
+        def plot_m3(results_df_m3):
+            outcomes = results_df_m3["Outcome"].unique()
+            n_panels = len(outcomes)
+            fig, axes = plt.subplots(1, n_panels, figsize=(6 * n_panels, 7), sharey=False)
+            if n_panels == 1:
+                axes = [axes]
+            for ax, outcome in zip(axes, outcomes):
+                sub = results_df_m3[results_df_m3["Outcome"] == outcome].copy()
+                sub = sub.sort_values("Coefficient")
+                y_pos  = range(len(sub))
+                colors = ["#d62728" if s else "#aaaaaa" for s in (sub["p_value"] < 0.05)]
+                ax.barh(list(y_pos), sub["Coefficient"], xerr=1.96 * sub["SE"],
+                        color=colors, alpha=0.8, height=0.5,
+                        error_kw=dict(elinewidth=1, capsize=3, ecolor="black"))
+                ax.axvline(0, color="black", lw=0.9, ls="--", alpha=0.5)
+                ax.set_yticks(list(y_pos))
+                ax.set_yticklabels(sub["Predictor"], fontsize=8)
+                ax.set_xlabel("OLS Coefficient", fontsize=9)
+                ax.set_title(outcome, fontsize=11, fontweight="bold")
+                ax.grid(axis="x", alpha=0.3)
+                for y, (_, row) in zip(y_pos, sub.iterrows()):
+                    if row["Significant"]:
+                        ax.text(row["Coefficient"] + 1.96 * row["SE"] + 0.1,
+                                y, row["Significant"],
+                                va="center", fontsize=9, color="#d62728")
+            fig.suptitle(
+                "OLS Regression Coefficients — Model 3 (Integrated)\n"
+                "Bars show 95% CI; red = significant at p < 0.05",
+                fontsize=12, fontweight="bold", y=1.02)
+            plt.tight_layout()
+            out = os.path.join(OUTPUT_FOLDER, "regression_coefficients_m3.png")
+            fig.savefig(out, dpi=300, bbox_inches="tight")
+            plt.close(fig)
+            print(f"  Saved: regression_coefficients_m3.png")
+
+        plot_m3(results_df_m3)
 
     # 8. Lasso variable importance
     plot_variable_importance(df)
 
     # 9. Model comparison summary
     print_model_comparison(comp_df)
+    if not comp_df_m3.empty:
+        print_model_comparison(comp_df_m3)
 
     print("\n" + "=" * 60)
     print("ANALYSIS COMPLETE")
