@@ -129,6 +129,13 @@ def clean_education():
 
     data = data.dropna(subset=['ISO'])
 
+    print(f"Countries with ISO: {data['ISO'].notna().sum()}")
+    print(f"Missing values per column:")
+    print(data.isna().sum())
+    unmatched = data[data['ISO'].isna()]['country'].dropna().unique()
+    if len(unmatched) > 0:
+        print(f"Unmatched countries ({len(unmatched)}): {list(unmatched[:10])}")
+
     out_path = 'outputs/education_clean.csv'
     os.makedirs('outputs', exist_ok=True)
     data.to_csv(out_path, index=False)
