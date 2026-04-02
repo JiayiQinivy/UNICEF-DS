@@ -115,6 +115,14 @@ def clean_wash():
     merged = merged.dropna(subset=service_cols, how="all")
     merged = merged.reset_index(drop=True)
 
+    print(f"\nMissing values per column:")
+    print(merged.isna().sum())
+    print(f"\nKey indicator coverage (latest year per country):")
+    key_cols = ["wat_bas_nat", "san_bas_nat", "hyg_bas_nat"]
+    for col in key_cols:
+        if col in merged.columns:
+            print(f"  {col}: {merged[col].notna().sum()} rows with data")
+
     # ── Save ───────────────────────────────────────────────────────────
     os.makedirs("outputs", exist_ok=True)
     out_path = "outputs/wash_clean.csv"
