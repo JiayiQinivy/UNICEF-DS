@@ -590,7 +590,7 @@ def run_model_3(df):
     edu_predictors = ["completion_primary_f", "literacy_f"]
 
     # We need to load and merge these datasets first
-    WASH_CSV = os.path.join(OUTPUT_FOLDER, "WASH_clean.csv")
+    WASH_CSV = os.path.join("WASH", "outputs", "wash_clean_data.csv")
     EDU_CSV = os.path.join(OUTPUT_FOLDER, "education_clean.csv")
 
     wash_df = pd.read_csv(WASH_CSV) if os.path.exists(WASH_CSV) else pd.DataFrame(columns=["iso3"] + wash_predictors)

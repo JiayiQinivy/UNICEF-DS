@@ -1,4 +1,4 @@
 Outcome,Model,N,R2,Adj_R2,AIC,BIC
 Stunting (%),Model 3 (Integrated),22,0.677,0.383,162.5,174.5
-Wasting (%),Model 3 (Integrated),22,0.439,-0.07,129.4,141.4
-Overweight (%),Model 3 (Integrated),22,0.631,0.295,124.3,136.3
+Wasting (%),Model 3 (Integrated),22,0.44,-0.069,129.4,141.4
+Overweight (%),Model 3 (Integrated),22,0.63,0.294,124.3,136.3
