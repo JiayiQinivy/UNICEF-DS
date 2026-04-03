@@ -575,8 +575,8 @@ def run_regression_models(df):
 def run_model_3(df):
     """
     Model 3 — Integrated:
-      outcome ~ gender_predictors + wash_indicators + education_indicators + child_food_poverty
-      Tests the explanatory power of gender inequality along with WASH, education, and child food poverty indicators.
+      outcome ~ gender_predictors + wash_indicators + education_indicators
+      Tests the explanatory power of gender inequality along with WASH and education indicators.
     """
     print("\n" + "=" * 60)
     print("SECTION 6B: OLS REGRESSION MODEL 3 (Integrated)")
@@ -588,16 +588,13 @@ def run_model_3(df):
     # Extra predictors for Model 3
     wash_predictors = ["wat_bas_nat", "san_bas_nat", "hyg_bas_nat"]
     edu_predictors = ["completion_primary_f", "literacy_f"]
-    food_predictors = ["severe_food_poverty_national", "moderate_food_poverty_national"]
 
     # We need to load and merge these datasets first
     WASH_CSV = os.path.join(OUTPUT_FOLDER, "WASH_clean.csv")
     EDU_CSV = os.path.join(OUTPUT_FOLDER, "education_clean.csv")
-    FOOD_CSV = os.path.join(OUTPUT_FOLDER, "child_food_poverty_clean.csv")
 
     wash_df = pd.read_csv(WASH_CSV) if os.path.exists(WASH_CSV) else pd.DataFrame(columns=["iso3"] + wash_predictors)
     edu_df = pd.read_csv(EDU_CSV) if os.path.exists(EDU_CSV) else pd.DataFrame(columns=["ISO"] + edu_predictors)
-    food_df = pd.read_csv(FOOD_CSV) if os.path.exists(FOOD_CSV) else pd.DataFrame(columns=["ISO"] + food_predictors)
 
     # Make ISO column consistent
     if not wash_df.empty and "iso3" in wash_df.columns:
@@ -612,8 +609,6 @@ def run_model_3(df):
         df_m3 = df_m3.merge(wash_df[["ISO"] + [p for p in wash_predictors if p in wash_df.columns]], on="ISO", how="left")
     if not edu_df.empty:
         df_m3 = df_m3.merge(edu_df[["ISO"] + [p for p in edu_predictors if p in edu_df.columns]], on="ISO", how="left")
-    if not food_df.empty:
-        df_m3 = df_m3.merge(food_df[["ISO"] + [p for p in food_predictors if p in food_df.columns]], on="ISO", how="left")
 
     for outcome in OUTCOMES:
         if outcome not in df_m3.columns:
@@ -623,7 +618,7 @@ def run_model_3(df):
         print(f"  {'─'*50}")
 
         base_predictors = [p for p in GENDER_PREDICTORS if p in df_m3.columns]
-        extra_predictors = [p for p in wash_predictors + edu_predictors + food_predictors if p in df_m3.columns]
+        extra_predictors = [p for p in wash_predictors + edu_predictors if p in df_m3.columns]
         all_predictors = base_predictors + extra_predictors
 
         all_cols   = [outcome, "income_group"] + all_predictors
