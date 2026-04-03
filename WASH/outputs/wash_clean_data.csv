@@ -1,192 +1,192 @@
-ISO,country,year,sdg_region,unicef_reporting_region,wat_bas_nat,wat_lim_nat,wat_none_nat,san_bas_nat,san_lim_nat,san_none_nat,hyg_bas_nat,hyg_lim_nat,hyg_none_nat
-AFG,Afghanistan,2023,Central and Southern Asia,South Asia,65.6577481204611,12.59225187953891,21.75,38.33174472170008,,,7.731675994981403,,
-ALB,Albania,2023,Europe and Northern America,Europe and Central Asia,81.91118057350559,,,87.98301510375904,,,87.29693508563042,,
-DZA,Algeria,2023,Northern Africa and Western Asia,Middle East and North Africa,91.1248573139599,,,99.5,0.5,0.5,95.46696829428481,,
-AND,Andorra,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-AGO,Angola,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,,,,1.165391999999883,,,12.96905
-AIA,Anguilla,2023,Latin America and the Caribbean,Latin America and Caribbean,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-ATG,Antigua and Barbuda,2023,Latin America and the Caribbean,Latin America and Caribbean,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-ARG,Argentina,2023,Latin America and the Caribbean,Latin America and Caribbean,,,9.715479876160998,83.10526315789457,,,77.56606808588722,,
-ARM,Armenia,2023,Northern Africa and Western Asia,Europe and Central Asia,96.58975195606394,0.5,2.861767858308454,88.85208369151303,6.333365666546882,4.814550641940087,97.5225260543441,,
-AUS,Australia,2023,Australia and New Zealand,East Asia and Pacific,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-AUT,Austria,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-AZE,Azerbaijan,2023,Northern Africa and Western Asia,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-BHS,Bahamas,2023,Latin America and the Caribbean,Latin America and Caribbean,,,0.5,,,,,,
-BHR,Bahrain,2023,Northern Africa and Western Asia,Middle East and North Africa,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-BGD,Bangladesh,2023,Central and Southern Asia,South Asia,89.65158951773174,1.647079390314047,8.701331091954216,86.59070887622147,13.40929112377853,0.5,92.1599689960949,2.770031003904933,5.070000000000164
-BRB,Barbados,2023,Latin America and the Caribbean,Latin America and Caribbean,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-BLR,Belarus,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-BEL,Belgium,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-BLZ,Belize,2023,Latin America and the Caribbean,Latin America and Caribbean,,,,,,,,,
-BEN,Benin,2023,Sub-Saharan Africa,Sub-Saharan Africa,65.85881378584418,,,,,,48.69487551184353,,
-BMU,Bermuda,2023,Europe and Northern America,nan,,,,,,,99.5,0.5,0.5
-BTN,Bhutan,2023,Central and Southern Asia,South Asia,65.10576406826704,26.44688190417696,8.447354027556003,88.0859507975033,9.389389249399755,2.524659953096943,,,39.74958227549632
-BOL,Bolivia (Plurinational State of),2023,Latin America and the Caribbean,Latin America and Caribbean,,,,,,,,,
-BIH,Bosnia and Herzegovina,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,78.9,21.09999999999999,0.5,59.9,,
-BWA,Botswana,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,0.5,,,0.5,,,
-BRA,Brazil,2023,Latin America and the Caribbean,Latin America and Caribbean,,,11.16412700919955,86.11647051257319,10.24027880893061,3.643250678496202,,,3.945149412311338
-VGB,British Virgin Islands,2023,Latin America and the Caribbean,Latin America and Caribbean,96.98276500955717,3.01723499044283,0.5,92.0325928161667,7.967407183833302,0.5,96.3900004553874,3.609999544612606,0.5
-BRN,Brunei Darussalam,2023,Eastern and South-Eastern Asia,East Asia and Pacific,,,,99.5,0.5,0.5,99.5,0.5,0.5
-BFA,Burkina Faso,2023,Sub-Saharan Africa,Sub-Saharan Africa,62.81386616727605,9.38480151291651,27.80133231980744,48.36891414074216,,,49.9534324430042,,
-BDI,Burundi,2023,Sub-Saharan Africa,Sub-Saharan Africa,45.82022214930267,15.62881927054904,38.55095858014829,44.75083374067441,,,17.30881214788856,,
-CPV,Cabo Verde,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,0.5,92.8040347179341,6.014810692579644,1.181154589486255,86.19772186969367,,
-KHM,Cambodia,2023,Eastern and South-Eastern Asia,East Asia and Pacific,85.78868240079544,2.767661877681462,11.4436557215231,37.06960433726158,39.83663016154355,23.09376550119487,84.03720367838469,3.35235808174366,12.61043823987166
-CMR,Cameroon,2023,Sub-Saharan Africa,Sub-Saharan Africa,23.71915745762681,32.1543505487025,44.1264919936707,56.14507125959517,18.7667078645236,25.08822087588123,77.85532480295612,,
-CYM,Cayman Islands,2023,Latin America and the Caribbean,nan,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-CAF,Central African Republic,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,76.69079099900148,,,,,,
-TCD,Chad,2023,Sub-Saharan Africa,Sub-Saharan Africa,30.37800693744066,14.56623882822441,55.05575423433493,19.38,,,9.822861113550971,47.43505534854957,42.74208353789946
-CHL,Chile,2023,Latin America and the Caribbean,Latin America and Caribbean,,,,,,,,,
-CHN,China,2023,Eastern and South-Eastern Asia,East Asia and Pacific,,,0.5,,,,,,0.5
-HKG,"China, Hong Kong SAR",2023,Eastern and South-Eastern Asia,nan,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-MAC,"China, Macao SAR",2023,Eastern and South-Eastern Asia,nan,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-COL,Colombia,2023,Latin America and the Caribbean,Latin America and Caribbean,,,22.9051954887218,84.57959183673574,,,16.92693098481777,,
-COM,Comoros,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,,,,,,,
-COG,Congo,2023,Sub-Saharan Africa,Sub-Saharan Africa,54.34988,,,,,,,,
-COK,Cook Islands,2023,Oceania,East Asia and Pacific,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-CRI,Costa Rica,2023,Latin America and the Caribbean,Latin America and Caribbean,84.1712822789212,7.308381687874572,8.52033603320423,85.06810037909372,11.32533848297322,3.606561137933056,82.96700724869697,0.5,17.03299275130303
-HRV,Croatia,2023,Europe and Northern America,Europe and Central Asia,96.36363636363636,0.5,3.63636363636364,99.5,0.5,0.5,98.72727272727273,,
-CUB,Cuba,2023,Latin America and the Caribbean,Latin America and Caribbean,99.5,0.5,0.5,95.36290322580645,4.637096774193552,0.5,99.5,0.5,0.5
-CZE,Czech Republic,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-CIV,Côte d’Ivoire,2023,Sub-Saharan Africa,Sub-Saharan Africa,52.15841046401813,18.61022179760828,29.23136773837359,,,49.49965055545545,,,43.2677399014101
-COD,Democratic Republic of the Congo,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,57.61538451836998,,,12.61509819448793,,,
-DNK,Denmark,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-DJI,Djibouti,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,6.093098922031913,,,7.070809032155353,94.949579138,,
-DMA,Dominica,2023,Latin America and the Caribbean,Latin America and Caribbean,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-DOM,Dominican Republic,2023,Latin America and the Caribbean,Latin America and Caribbean,,,11.25003361346262,76.42128619641608,,,83.0589167725817,,
-ECU,Ecuador,2023,Latin America and the Caribbean,Latin America and Caribbean,77.1497959999997,16.12502470301479,6.725179296985516,73.26817438775511,17.86999511224489,8.861830499999996,50.66998,26.33148600000005,22.99853399999995
-EGY,Egypt,2023,Northern Africa and Western Asia,Middle East and North Africa,,,,99.5,0.5,0.5,99.5,0.5,0.5
-SLV,El Salvador,2023,Latin America and the Caribbean,Latin America and Caribbean,81.71735271750504,9.927305878870811,8.355341403624152,84.46252112455409,9.042017938113418,6.495460937332496,,,
-GNQ,Equatorial Guinea,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,72.01155657096677,,,37.22074908574859,,,
-ERI,Eritrea,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,,33.03103334910679,,,4.838022259942091,,
-EST,Estonia,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-SWZ,Eswatini,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,13.60418034584154,,,0.5,,,
-ETH,Ethiopia,2023,Sub-Saharan Africa,Sub-Saharan Africa,28.5036739418133,0.5,71.4963260581867,,,52.04638467145651,30.96669343758185,0.5,68.33453245062356
-FJI,Fiji,2023,Oceania,East Asia and Pacific,77.61921825552054,0.5,22.38078174447946,90.54163014809455,9.458369851905445,0.5,43.10826285742228,0.5,56.89173714257772
-FIN,Finland,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-FRA,France,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-GAB,Gabon,2023,Sub-Saharan Africa,Sub-Saharan Africa,65.78165,11.21711999999999,23.00123000000001,,,36.75214,66.119775,21.94606499999999,11.93416000000001
-GMB,Gambia,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,22.1675186214768,64.9759200083322,35.0240799916678,0.5,,,62.46217446009379
-GEO,Georgia,2023,Northern Africa and Western Asia,Europe and Central Asia,,,,,,,,,
-DEU,Germany,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-GHA,Ghana,2023,Sub-Saharan Africa,Sub-Saharan Africa,78.47856233373459,3.711374033033465,17.81006363323195,58.73274718716522,23.93775992247843,17.32949289035635,53.55722143347601,8.146839365927988,38.295939200596
-GIB,Gibraltar,2023,Europe and Northern America,nan,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-GRD,Grenada,2023,Latin America and the Caribbean,Latin America and Caribbean,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-GTM,Guatemala,2023,Latin America and the Caribbean,Latin America and Caribbean,,,30.02711340454334,72.14782517898561,,,,,
-GIN,Guinea,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,41.88792769170595,52.12563814968688,34.20373272444114,13.67062912587198,,,62.40156384947159
-GNB,Guinea-Bissau,2023,Sub-Saharan Africa,Sub-Saharan Africa,63.16560820713239,2.271617000488526,34.56277479237909,36.88324377137274,22.96042989741084,40.15632633121642,74.69467513434293,7.083536883243781,18.22178798241329
-GUY,Guyana,2023,Latin America and the Caribbean,Latin America and Caribbean,,,,,,,,,
-HTI,Haiti,2023,Latin America and the Caribbean,Latin America and Caribbean,,,,,,,,,
-HND,Honduras,2023,Latin America and the Caribbean,Latin America and Caribbean,78.06818021588333,0.5,21.93181978411667,89.48810656250498,,,,,
-HUN,Hungary,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-IND,India,2023,Central and Southern Asia,South Asia,94.90666384299038,0.5,5.093336157009617,84.34394505766977,2.682239286940785,12.97381565538944,52.891226,22.552532,24.556242
-IDN,Indonesia,2023,Eastern and South-Eastern Asia,East Asia and Pacific,75.5155541786446,11.07215989891267,13.41228592244272,70.61859970972182,15.74375963388479,13.63764065639339,68.73670147130963,0.5,31.26329852869037
-IRN,Iran (Islamic Republic of),2023,Central and Southern Asia,Middle East and North Africa,,,,,,,,,
-IRQ,Iraq,2023,Northern Africa and Western Asia,Middle East and North Africa,60.25305850724508,24.31729774436338,15.42964374839154,56.63306910004039,34.13139405042386,9.235536849535748,66.4320550639135,21.83631442523981,11.7316305108467
-ISR,Israel,2023,Northern Africa and Western Asia,Middle East and North Africa,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-ITA,Italy,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-JAM,Jamaica,2023,Latin America and the Caribbean,Latin America and Caribbean,94.88616764350097,,,95.71732079960252,,,99.5,0.5,0.5
-JOR,Jordan,2023,Northern Africa and Western Asia,Middle East and North Africa,99.5,0.5,0.5,,,0.5,,,
-KEN,Kenya,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,,,,,,,
-KIR,Kiribati,2023,Oceania,East Asia and Pacific,,,24.19893314506908,66.16343086436211,,,86.78666666666668,6.989999999999981,6.223333333333343
-KWT,Kuwait,2023,Northern Africa and Western Asia,Middle East and North Africa,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-KGZ,Kyrgyzstan,2023,Central and Southern Asia,Europe and Central Asia,,,,,,,,,
-LAO,Lao People's Democratic Republic,2023,Eastern and South-Eastern Asia,East Asia and Pacific,49.14277621785655,27.77553927152152,23.08168451062193,31.55259,,,,,39.62664928108261
-LVA,Latvia,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-LBN,Lebanon,2023,Northern Africa and Western Asia,Middle East and North Africa,,,,,,,,,
-LSO,Lesotho,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,,,,,,,
-LBR,Liberia,2023,Sub-Saharan Africa,Sub-Saharan Africa,55.04277966100069,,,,,,67.62323429457818,,
-LBY,Libya,2023,Northern Africa and Western Asia,Middle East and North Africa,,,,,,0.5,,,
-LTU,Lithuania,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-LUX,Luxembourg,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-MDG,Madagascar,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,44.21716578250471,39.17178630389026,31.2414285134891,29.58678518262064,,,50.2320240177968
-MWI,Malawi,2023,Sub-Saharan Africa,Sub-Saharan Africa,92.46903647786712,1.110402517720559,6.42056100441232,74.33352319552023,,,44.20790421453557,,
-MYS,Malaysia,2023,Eastern and South-Eastern Asia,East Asia and Pacific,95.35303292731442,4.646967072685584,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-MDV,Maldives,2023,Central and Southern Asia,South Asia,99.5,0.5,0.5,,,,,,
-MLI,Mali,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,6.315000000000509,29.77569430745916,,,,,
-MLT,Malta,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-MHL,Marshall Islands,2023,Oceania,East Asia and Pacific,66.82506678386122,,,78.35544824193204,,,70.15192264706168,,
-MRT,Mauritania,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,,30.68916532950484,,,,,
-MUS,Mauritius,2023,Sub-Saharan Africa,Sub-Saharan Africa,99.5,0.5,0.5,99.5,0.5,0.5,99.5,,
-MEX,Mexico,2023,Latin America and the Caribbean,Latin America and Caribbean,71.09034099622431,17.42670678012622,11.48295222364946,69.57761630792493,,,79.16091723351246,,
-FSM,Micronesia (Federated States of),2023,Oceania,East Asia and Pacific,85.55436384993283,0.5,14.28570999999999,79.4409268301887,14.43662316981128,6.122450000000015,81.63265,0.5,18.36735
-MCO,Monaco,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-MNG,Mongolia,2023,Eastern and South-Eastern Asia,East Asia and Pacific,,,,,,,,,
-MNE,Montenegro,2023,Europe and Northern America,Europe and Central Asia,81.95,9.349999999999994,8.700000000000003,11.3939,87.85609999999998,0.5,,,
-MSR,Montserrat,2023,Latin America and the Caribbean,Latin America and Caribbean,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-MAR,Morocco,2023,Northern Africa and Western Asia,Middle East and North Africa,89.50500858280975,,,96.08199075390053,0.5,3.918009246099473,87.07182137617997,,
-MOZ,Mozambique,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,60.03298499999983,,,46.81270642857089,,,
-MMR,Myanmar,2023,Eastern and South-Eastern Asia,East Asia and Pacific,77.04897207839753,,,73.5171904543418,,,58.6625057145354,,
-NAM,Namibia,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,,,,35.06161034806337,,,
-NRU,Nauru,2023,Oceania,East Asia and Pacific,99.5,0.5,0.5,99.5,0.5,0.5,90.01715420729505,9.98284579270495,0.5
-NPL,Nepal,2023,Central and Southern Asia,South Asia,55.43821841531189,23.58674159977528,20.97503998491283,38.97259071487824,40.1194771058474,20.90793217927435,41.61082750824517,,
-NLD,Netherlands (Kingdom of the),2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-NIC,Nicaragua,2023,Latin America and the Caribbean,Latin America and Caribbean,53.26918871637875,7.933963320700713,38.79684796292054,28.53851292189094,,,,,
-NER,Niger,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,74.54700705476012,25.39052333333333,17.33741042015541,57.27206624651126,41.76970499657957,0.5,58.23029500342043
-NGA,Nigeria,2023,Sub-Saharan Africa,Sub-Saharan Africa,35.61903666666667,24.71512232843161,39.66584100490172,42.92257244604298,13.88478152454536,43.19264602941166,23.60196666666667,11.68446333333334,64.71357
-NIU,Niue,2023,Oceania,East Asia and Pacific,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-NOR,Norway,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-OMN,Oman,2023,Northern Africa and Western Asia,Middle East and North Africa,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-PAK,Pakistan,2023,Central and Southern Asia,South Asia,35.4877103429626,38.3989093371174,26.11338031992,41.5894093733298,39.24224786260058,19.16834276406962,,,
-PLW,Palau,2023,Oceania,East Asia and Pacific,89.26250500864754,10.73749499135246,0.5,89.26250500864754,10.73749499135246,0.5,83.33333333333334,0.5,16.66666666666666
-PAN,Panama,2023,Latin America and the Caribbean,Latin America and Caribbean,59.68880592347341,23.899083962247,16.41211011427959,23.91082814341284,56.21635910055337,19.8728127560338,23.81188330587204,33.67430921941818,42.51380747470978
-PNG,Papua New Guinea,2023,Oceania,East Asia and Pacific,46.83280137490793,6.434352989343125,46.73284563574894,46.38179,12.00309,41.61512,11.66784666666667,42.75544333333333,45.57671
-PRY,Paraguay,2023,Latin America and the Caribbean,Latin America and Caribbean,,,0.5,94.1009832812033,,,,,
-PER,Peru,2023,Latin America and the Caribbean,Latin America and Caribbean,73.6652025826204,14.28342542397968,12.05137199339993,92.88564401864642,3.332978413171759,3.781377568181824,,,23.05259777272749
-PHL,Philippines,2023,Eastern and South-Eastern Asia,East Asia and Pacific,46.26523707653769,34.28897396620823,19.44578895725408,84.79074118774588,,,73.03860629036853,12.2908420053368,14.67055170429467
-POL,Poland,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-PRT,Portugal,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-QAT,Qatar,2023,Northern Africa and Western Asia,Middle East and North Africa,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-KOR,Republic of Korea,2023,Eastern and South-Eastern Asia,East Asia and Pacific,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-MDA,Republic of Moldova,2023,Europe and Northern America,Europe and Central Asia,93.8043301613734,5.952132302085829,0.5,90.22000000000025,4.566324786324543,5.213675213675202,99.5,0.5,0.5
-ROU,Romania,2023,Europe and Northern America,Europe and Central Asia,93.876666666667,,,90.82333333333372,,,90.82333333333372,,
-RUS,Russian Federation,2023,Europe and Northern America,Europe and Central Asia,,,2.839900662251665,,,0.5,,,
-RWA,Rwanda,2023,Sub-Saharan Africa,Sub-Saharan Africa,54.05117776352745,,,69.60460669864894,19.537529932222,10.85786336912906,,,0.5
-KNA,Saint Kitts and Nevis,2023,Latin America and the Caribbean,Latin America and Caribbean,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-LCA,Saint Lucia,2023,Latin America and the Caribbean,Latin America and Caribbean,99.5,0.5,0.5,99.5,0.5,0.5,98.91785857801426,1.082141421985739,0.5
-VCT,Saint Vincent and the Grenadines,2023,Latin America and the Caribbean,Latin America and Caribbean,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-WSM,Samoa,2023,Oceania,East Asia and Pacific,99.5,0.5,0.5,99.5,0.5,0.5,78.00125863703943,21.99874136296057,0.5
-SMR,San Marino,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-STP,Sao Tome and Principe,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,14.71976895101511,75.81628425770307,7.994498205061944,16.18921753723498,,,
-SAU,Saudi Arabia,2023,Northern Africa and Western Asia,Middle East and North Africa,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-SEN,Senegal,2023,Sub-Saharan Africa,Sub-Saharan Africa,72.78622816032889,20.3453944677271,6.868377371944007,77.97340631735642,7.135697030303618,14.89089665233996,21.91299305665932,29.58700694334068,48.5
-SRB,Serbia,2023,Europe and Northern America,Europe and Central Asia,98.45,0.5,1.549999999999997,98.82828282828284,0.5,1.171717171717162,84.73909888902381,14.2109011109762,1.049999999999997
-SYC,Seychelles,2023,Sub-Saharan Africa,Sub-Saharan Africa,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-SLE,Sierra Leone,2023,Sub-Saharan Africa,Sub-Saharan Africa,39.3851,10.44786968239574,50.16703031760426,48.65245283018885,39.63830618641441,11.70924098339674,22.0822299651568,30.48988656994196,47.42788346490124
-SGP,Singapore,2023,Eastern and South-Eastern Asia,East Asia and Pacific,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-SVK,Slovakia,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-SVN,Slovenia,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-SLB,Solomon Islands,2023,Oceania,East Asia and Pacific,30.97272222537216,,,18.78039800237046,,,,,
-SOM,Somalia,2023,Sub-Saharan Africa,Sub-Saharan Africa,52.84593890737873,41.672921502467,5.481139590154271,,,,,,
-ZAF,South Africa,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,,,,0.5,,,
-SSD,South Sudan,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,32.949495,36.65325,38.29976219819703,25.04698780180297,18.108585,,
-ESP,Spain,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-LKA,Sri Lanka,2023,Central and Southern Asia,South Asia,87.03839812721549,6.183844888477097,6.777756984307416,89.91134783456118,9.962340467032277,0.5,87.10250839423267,12.156824017381,0.5
-PSE,State of Palestine,2023,Northern Africa and Western Asia,Middle East and North Africa,99.5,0.5,0.5,97.15391317252556,2.332734867837416,0.5,,,1.089931292095514
-SDN,Sudan,2023,Northern Africa and Western Asia,Sub-Saharan Africa,43.47345132743363,16.8032881131919,39.72326055937447,,,,7.563025210084033,17.57202881152462,74.86494597839135
-SWE,Sweden,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,,,,99.5,0.5,0.5
-CHE,Switzerland,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-SYR,Syrian Arab Republic,2023,Northern Africa and Western Asia,Middle East and North Africa,84.6615654705056,,,86.84240559343198,,,,,
-TJK,Tajikistan,2023,Central and Southern Asia,Europe and Central Asia,,,,,,,,,
-THA,Thailand,2023,Eastern and South-Eastern Asia,East Asia and Pacific,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-TLS,Timor-Leste,2023,Eastern and South-Eastern Asia,East Asia and Pacific,70.27869517551926,,,,,,65.72242278881667,,
-TGO,Togo,2023,Sub-Saharan Africa,Sub-Saharan Africa,65.38025049080534,,,16.81923784993091,31.93849419612707,51.24226795394202,17.0,0.5,83.0
-TKL,Tokelau,2023,Oceania,East Asia and Pacific,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-TON,Tonga,2023,Oceania,East Asia and Pacific,95.03470466087516,,,95.5204266127106,,,83.58632476761755,,
-TUN,Tunisia,2023,Northern Africa and Western Asia,Middle East and North Africa,,,6.28393423135276,,,0.5,,,0.5
-TKM,Turkmenistan,2023,Central and Southern Asia,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-TCA,Turks and Caicos Islands,2023,Latin America and the Caribbean,Latin America and Caribbean,98.70573055028467,1.29426944971533,0.5,98.70573055028467,1.29426944971533,0.5,98.70573055028467,1.29426944971533,0.5
-TUV,Tuvalu,2023,Oceania,East Asia and Pacific,76.55032226349176,23.44967773650824,0.5,85.7609590368111,,,96.04749295443374,3.952507045566264,0.5
-TUR,Türkiye,2023,Northern Africa and Western Asia,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-UGA,Uganda,2023,Sub-Saharan Africa,Sub-Saharan Africa,54.77461142263337,33.43667401477035,11.78871456259628,74.74562207340011,23.05173475479373,2.202643171806159,38.54997984983174,16.31801191873524,45.13200823143302
-UKR,Ukraine,2023,Europe and Northern America,Europe and Central Asia,91.17868843933643,3.941118113939169,4.880193446724405,,,2.722041900265566,81.7198400114964,,
-ARE,United Arab Emirates,2023,Northern Africa and Western Asia,Middle East and North Africa,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-TZA,United Republic of Tanzania,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,23.24495735086202,44.39621582395091,52.64044417604975,2.963339999999334,15.0296266666669,,
-USA,United States of America,2023,Europe and Northern America,North America,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5
-URY,Uruguay,2023,Latin America and the Caribbean,Latin America and Caribbean,67.49470335804472,0.5,32.50529664195528,96.99820720460639,3.001792795393612,0.5,99.5,0.5,0.5
-UZB,Uzbekistan,2023,Central and Southern Asia,Europe and Central Asia,70.01271109087278,15.27985747943504,14.70743142969218,79.74471238251385,6.395827617486148,13.85946,91.60327306981276,4.795636930187243,3.601089999999999
-VUT,Vanuatu,2023,Oceania,East Asia and Pacific,,,,,,,,,
-VEN,Venezuela (Bolivarian Republic of),2023,Latin America and the Caribbean,Latin America and Caribbean,,,,,,,,,
-VNM,Viet Nam,2023,Eastern and South-Eastern Asia,East Asia and Pacific,67.78846826731687,,,93.35351619170139,,,71.92803601663338,,
-YEM,Yemen,2023,Northern Africa and Western Asia,Middle East and North Africa,,,,,,,,,
-ZMB,Zambia,2023,Sub-Saharan Africa,Sub-Saharan Africa,79.06882666666667,5.039471026320811,15.89170230701252,,,17.11770157553291,96.85222796367026,0.5,3.147772036329741
-ZWE,Zimbabwe,2023,Sub-Saharan Africa,Sub-Saharan Africa,69.86351275890911,19.70656885094689,10.429918390144,93.91632653835823,6.083673461641766,0.5,76.6449208309225,16.20198564389764,7.153093525179855
+ISO,country,year,sdg_region,unicef_reporting_region,wat_bas_nat,wat_lim_nat,wat_none_nat,san_bas_nat,san_lim_nat,san_none_nat,hyg_bas_nat,hyg_lim_nat,hyg_none_nat,all_basic_missing
+AFG,Afghanistan,2023,Central and Southern Asia,South Asia,65.66,12.59,21.75,38.33,,,7.73,,,False
+ALB,Albania,2023,Europe and Northern America,Europe and Central Asia,81.91,,,87.98,,,87.3,,,False
+DZA,Algeria,2023,Northern Africa and Western Asia,Middle East and North Africa,91.12,,,99.5,0.5,0.5,95.47,,,False
+AND,Andorra,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+AGO,Angola,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,,,,1.17,,,12.97,True
+AIA,Anguilla,2023,Latin America and the Caribbean,Latin America and Caribbean,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+ATG,Antigua and Barbuda,2023,Latin America and the Caribbean,Latin America and Caribbean,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+ARG,Argentina,2023,Latin America and the Caribbean,Latin America and Caribbean,,,9.72,83.11,,,77.57,,,False
+ARM,Armenia,2023,Northern Africa and Western Asia,Europe and Central Asia,96.59,0.5,2.86,88.85,6.33,4.81,97.52,,,False
+AUS,Australia,2023,Australia and New Zealand,East Asia and Pacific,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+AUT,Austria,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+AZE,Azerbaijan,2023,Northern Africa and Western Asia,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+BHS,Bahamas,2023,Latin America and the Caribbean,Latin America and Caribbean,,,0.5,,,,,,,True
+BHR,Bahrain,2023,Northern Africa and Western Asia,Middle East and North Africa,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+BGD,Bangladesh,2023,Central and Southern Asia,South Asia,89.65,1.65,8.7,86.59,13.41,0.5,92.16,2.77,5.07,False
+BRB,Barbados,2023,Latin America and the Caribbean,Latin America and Caribbean,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+BLR,Belarus,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+BEL,Belgium,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+BLZ,Belize,2023,Latin America and the Caribbean,Latin America and Caribbean,,,,,,,,,,True
+BEN,Benin,2023,Sub-Saharan Africa,Sub-Saharan Africa,65.86,,,,,,48.69,,,False
+BMU,Bermuda,2023,Europe and Northern America,North America,,,,,,,99.5,0.5,0.5,False
+BTN,Bhutan,2023,Central and Southern Asia,South Asia,65.11,26.45,8.45,88.09,9.39,2.52,,,39.75,False
+BOL,Bolivia (Plurinational State of),2023,Latin America and the Caribbean,Latin America and Caribbean,,,,,,,,,,True
+BIH,Bosnia and Herzegovina,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,78.9,21.1,0.5,59.9,,,False
+BWA,Botswana,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,0.5,,,0.5,,,,True
+BRA,Brazil,2023,Latin America and the Caribbean,Latin America and Caribbean,,,11.16,86.12,10.24,3.64,,,3.95,False
+VGB,British Virgin Islands,2023,Latin America and the Caribbean,Latin America and Caribbean,96.98,3.02,0.5,92.03,7.97,0.5,96.39,3.61,0.5,False
+BRN,Brunei Darussalam,2023,Eastern and South-Eastern Asia,East Asia and Pacific,,,,99.5,0.5,0.5,99.5,0.5,0.5,False
+BFA,Burkina Faso,2023,Sub-Saharan Africa,Sub-Saharan Africa,62.81,9.38,27.8,48.37,,,49.95,,,False
+BDI,Burundi,2023,Sub-Saharan Africa,Sub-Saharan Africa,45.82,15.63,38.55,44.75,,,17.31,,,False
+CPV,Cabo Verde,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,0.5,92.8,6.01,1.18,86.2,,,False
+KHM,Cambodia,2023,Eastern and South-Eastern Asia,East Asia and Pacific,85.79,2.77,11.44,37.07,39.84,23.09,84.04,3.35,12.61,False
+CMR,Cameroon,2023,Sub-Saharan Africa,Sub-Saharan Africa,23.72,32.15,44.13,56.15,18.77,25.09,77.86,,,False
+CYM,Cayman Islands,2023,Latin America and the Caribbean,Latin America and Caribbean,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+CAF,Central African Republic,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,76.69,,,,,,,True
+TCD,Chad,2023,Sub-Saharan Africa,Sub-Saharan Africa,30.38,14.57,55.06,19.38,,,9.82,47.44,42.74,False
+CHL,Chile,2023,Latin America and the Caribbean,Latin America and Caribbean,,,,,,,,,,True
+CHN,China,2023,Eastern and South-Eastern Asia,East Asia and Pacific,,,0.5,,,,,,0.5,True
+HKG,"China, Hong Kong SAR",2023,Eastern and South-Eastern Asia,East Asia and Pacific,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+MAC,"China, Macao SAR",2023,Eastern and South-Eastern Asia,East Asia and Pacific,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+COL,Colombia,2023,Latin America and the Caribbean,Latin America and Caribbean,,,22.91,84.58,,,16.93,,,False
+COM,Comoros,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,,,,,,,,True
+COG,Congo,2023,Sub-Saharan Africa,Sub-Saharan Africa,54.35,,,,,,,,,False
+COK,Cook Islands,2023,Oceania,East Asia and Pacific,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+CRI,Costa Rica,2023,Latin America and the Caribbean,Latin America and Caribbean,84.17,7.31,8.52,85.07,11.33,3.61,82.97,0.5,17.03,False
+HRV,Croatia,2023,Europe and Northern America,Europe and Central Asia,96.36,0.5,3.64,99.5,0.5,0.5,98.73,,,False
+CUB,Cuba,2023,Latin America and the Caribbean,Latin America and Caribbean,99.5,0.5,0.5,95.36,4.64,0.5,99.5,0.5,0.5,False
+CZE,Czech Republic,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+CIV,Côte d’Ivoire,2023,Sub-Saharan Africa,Sub-Saharan Africa,52.16,18.61,29.23,,,49.5,,,43.27,False
+COD,Democratic Republic of the Congo,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,57.62,,,12.62,,,,True
+DNK,Denmark,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+DJI,Djibouti,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,6.09,,,7.07,94.95,,,False
+DMA,Dominica,2023,Latin America and the Caribbean,Latin America and Caribbean,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+DOM,Dominican Republic,2023,Latin America and the Caribbean,Latin America and Caribbean,,,11.25,76.42,,,83.06,,,False
+ECU,Ecuador,2023,Latin America and the Caribbean,Latin America and Caribbean,77.15,16.13,6.73,73.27,17.87,8.86,50.67,26.33,23.0,False
+EGY,Egypt,2023,Northern Africa and Western Asia,Middle East and North Africa,,,,99.5,0.5,0.5,99.5,0.5,0.5,False
+SLV,El Salvador,2023,Latin America and the Caribbean,Latin America and Caribbean,81.72,9.93,8.36,84.46,9.04,6.5,,,,False
+GNQ,Equatorial Guinea,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,72.01,,,37.22,,,,True
+ERI,Eritrea,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,,33.03,,,4.84,,,False
+EST,Estonia,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+SWZ,Eswatini,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,13.6,,,0.5,,,,True
+ETH,Ethiopia,2023,Sub-Saharan Africa,Sub-Saharan Africa,28.5,0.5,71.5,,,52.05,30.97,0.5,68.33,False
+FJI,Fiji,2023,Oceania,East Asia and Pacific,77.62,0.5,22.38,90.54,9.46,0.5,43.11,0.5,56.89,False
+FIN,Finland,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+FRA,France,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+GAB,Gabon,2023,Sub-Saharan Africa,Sub-Saharan Africa,65.78,11.22,23.0,,,36.75,66.12,21.95,11.93,False
+GMB,Gambia,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,22.17,64.98,35.02,0.5,,,62.46,False
+GEO,Georgia,2023,Northern Africa and Western Asia,Europe and Central Asia,,,,,,,,,,True
+DEU,Germany,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+GHA,Ghana,2023,Sub-Saharan Africa,Sub-Saharan Africa,78.48,3.71,17.81,58.73,23.94,17.33,53.56,8.15,38.3,False
+GIB,Gibraltar,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+GRD,Grenada,2023,Latin America and the Caribbean,Latin America and Caribbean,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+GTM,Guatemala,2023,Latin America and the Caribbean,Latin America and Caribbean,,,30.03,72.15,,,,,,False
+GIN,Guinea,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,41.89,52.13,34.2,13.67,,,62.4,False
+GNB,Guinea-Bissau,2023,Sub-Saharan Africa,Sub-Saharan Africa,63.17,2.27,34.56,36.88,22.96,40.16,74.69,7.08,18.22,False
+GUY,Guyana,2023,Latin America and the Caribbean,Latin America and Caribbean,,,,,,,,,,True
+HTI,Haiti,2023,Latin America and the Caribbean,Latin America and Caribbean,,,,,,,,,,True
+HND,Honduras,2023,Latin America and the Caribbean,Latin America and Caribbean,78.07,0.5,21.93,89.49,,,,,,False
+HUN,Hungary,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+IND,India,2023,Central and Southern Asia,South Asia,94.91,0.5,5.09,84.34,2.68,12.97,52.89,22.55,24.56,False
+IDN,Indonesia,2023,Eastern and South-Eastern Asia,East Asia and Pacific,75.52,11.07,13.41,70.62,15.74,13.64,68.74,0.5,31.26,False
+IRN,Iran (Islamic Republic of),2023,Central and Southern Asia,Middle East and North Africa,,,,,,,,,,True
+IRQ,Iraq,2023,Northern Africa and Western Asia,Middle East and North Africa,60.25,24.32,15.43,56.63,34.13,9.24,66.43,21.84,11.73,False
+ISR,Israel,2023,Northern Africa and Western Asia,Middle East and North Africa,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+ITA,Italy,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+JAM,Jamaica,2023,Latin America and the Caribbean,Latin America and Caribbean,94.89,,,95.72,,,99.5,0.5,0.5,False
+JOR,Jordan,2023,Northern Africa and Western Asia,Middle East and North Africa,99.5,0.5,0.5,,,0.5,,,,False
+KEN,Kenya,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,,,,,,,,True
+KIR,Kiribati,2023,Oceania,East Asia and Pacific,,,24.2,66.16,,,86.79,6.99,6.22,False
+KWT,Kuwait,2023,Northern Africa and Western Asia,Middle East and North Africa,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+KGZ,Kyrgyzstan,2023,Central and Southern Asia,Europe and Central Asia,,,,,,,,,,True
+LAO,Lao People's Democratic Republic,2023,Eastern and South-Eastern Asia,East Asia and Pacific,49.14,27.78,23.08,31.55,,,,,39.63,False
+LVA,Latvia,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+LBN,Lebanon,2023,Northern Africa and Western Asia,Middle East and North Africa,,,,,,,,,,True
+LSO,Lesotho,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,,,,,,,,True
+LBR,Liberia,2023,Sub-Saharan Africa,Sub-Saharan Africa,55.04,,,,,,67.62,,,False
+LBY,Libya,2023,Northern Africa and Western Asia,Middle East and North Africa,,,,,,0.5,,,,True
+LTU,Lithuania,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+LUX,Luxembourg,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+MDG,Madagascar,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,44.22,39.17,31.24,29.59,,,50.23,False
+MWI,Malawi,2023,Sub-Saharan Africa,Sub-Saharan Africa,92.47,1.11,6.42,74.33,,,44.21,,,False
+MYS,Malaysia,2023,Eastern and South-Eastern Asia,East Asia and Pacific,95.35,4.65,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+MDV,Maldives,2023,Central and Southern Asia,South Asia,99.5,0.5,0.5,,,,,,,False
+MLI,Mali,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,6.32,29.78,,,,,,False
+MLT,Malta,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+MHL,Marshall Islands,2023,Oceania,East Asia and Pacific,66.83,,,78.36,,,70.15,,,False
+MRT,Mauritania,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,,30.69,,,,,,False
+MUS,Mauritius,2023,Sub-Saharan Africa,Sub-Saharan Africa,99.5,0.5,0.5,99.5,0.5,0.5,99.5,,,False
+MEX,Mexico,2023,Latin America and the Caribbean,Latin America and Caribbean,71.09,17.43,11.48,69.58,,,79.16,,,False
+FSM,Micronesia (Federated States of),2023,Oceania,East Asia and Pacific,85.55,0.5,14.29,79.44,14.44,6.12,81.63,0.5,18.37,False
+MCO,Monaco,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+MNG,Mongolia,2023,Eastern and South-Eastern Asia,East Asia and Pacific,,,,,,,,,,True
+MNE,Montenegro,2023,Europe and Northern America,Europe and Central Asia,81.95,9.35,8.7,11.39,87.86,0.5,,,,False
+MSR,Montserrat,2023,Latin America and the Caribbean,Latin America and Caribbean,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+MAR,Morocco,2023,Northern Africa and Western Asia,Middle East and North Africa,89.51,,,96.08,0.5,3.92,87.07,,,False
+MOZ,Mozambique,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,60.03,,,46.81,,,,True
+MMR,Myanmar,2023,Eastern and South-Eastern Asia,East Asia and Pacific,77.05,,,73.52,,,58.66,,,False
+NAM,Namibia,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,,,,35.06,,,,True
+NRU,Nauru,2023,Oceania,East Asia and Pacific,99.5,0.5,0.5,99.5,0.5,0.5,90.02,9.98,0.5,False
+NPL,Nepal,2023,Central and Southern Asia,South Asia,55.44,23.59,20.98,38.97,40.12,20.91,41.61,,,False
+NLD,Netherlands (Kingdom of the),2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+NIC,Nicaragua,2023,Latin America and the Caribbean,Latin America and Caribbean,53.27,7.93,38.8,28.54,,,,,,False
+NER,Niger,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,74.55,25.39,17.34,57.27,41.77,0.5,58.23,False
+NGA,Nigeria,2023,Sub-Saharan Africa,Sub-Saharan Africa,35.62,24.72,39.67,42.92,13.88,43.19,23.6,11.68,64.71,False
+NIU,Niue,2023,Oceania,East Asia and Pacific,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+NOR,Norway,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+OMN,Oman,2023,Northern Africa and Western Asia,Middle East and North Africa,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+PAK,Pakistan,2023,Central and Southern Asia,South Asia,35.49,38.4,26.11,41.59,39.24,19.17,,,,False
+PLW,Palau,2023,Oceania,East Asia and Pacific,89.26,10.74,0.5,89.26,10.74,0.5,83.33,0.5,16.67,False
+PAN,Panama,2023,Latin America and the Caribbean,Latin America and Caribbean,59.69,23.9,16.41,23.91,56.22,19.87,23.81,33.67,42.51,False
+PNG,Papua New Guinea,2023,Oceania,East Asia and Pacific,46.83,6.43,46.73,46.38,12.0,41.62,11.67,42.76,45.58,False
+PRY,Paraguay,2023,Latin America and the Caribbean,Latin America and Caribbean,,,0.5,94.1,,,,,,False
+PER,Peru,2023,Latin America and the Caribbean,Latin America and Caribbean,73.67,14.28,12.05,92.89,3.33,3.78,,,23.05,False
+PHL,Philippines,2023,Eastern and South-Eastern Asia,East Asia and Pacific,46.27,34.29,19.45,84.79,,,73.04,12.29,14.67,False
+POL,Poland,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+PRT,Portugal,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+QAT,Qatar,2023,Northern Africa and Western Asia,Middle East and North Africa,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+KOR,Republic of Korea,2023,Eastern and South-Eastern Asia,East Asia and Pacific,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+MDA,Republic of Moldova,2023,Europe and Northern America,Europe and Central Asia,93.8,5.95,0.5,90.22,4.57,5.21,99.5,0.5,0.5,False
+ROU,Romania,2023,Europe and Northern America,Europe and Central Asia,93.88,,,90.82,,,90.82,,,False
+RUS,Russian Federation,2023,Europe and Northern America,Europe and Central Asia,,,2.84,,,0.5,,,,True
+RWA,Rwanda,2023,Sub-Saharan Africa,Sub-Saharan Africa,54.05,,,69.6,19.54,10.86,,,0.5,False
+KNA,Saint Kitts and Nevis,2023,Latin America and the Caribbean,Latin America and Caribbean,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+LCA,Saint Lucia,2023,Latin America and the Caribbean,Latin America and Caribbean,99.5,0.5,0.5,99.5,0.5,0.5,98.92,1.08,0.5,False
+VCT,Saint Vincent and the Grenadines,2023,Latin America and the Caribbean,Latin America and Caribbean,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+WSM,Samoa,2023,Oceania,East Asia and Pacific,99.5,0.5,0.5,99.5,0.5,0.5,78.0,22.0,0.5,False
+SMR,San Marino,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+STP,Sao Tome and Principe,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,14.72,75.82,7.99,16.19,,,,False
+SAU,Saudi Arabia,2023,Northern Africa and Western Asia,Middle East and North Africa,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+SEN,Senegal,2023,Sub-Saharan Africa,Sub-Saharan Africa,72.79,20.35,6.87,77.97,7.14,14.89,21.91,29.59,48.5,False
+SRB,Serbia,2023,Europe and Northern America,Europe and Central Asia,98.45,0.5,1.55,98.83,0.5,1.17,84.74,14.21,1.05,False
+SYC,Seychelles,2023,Sub-Saharan Africa,Sub-Saharan Africa,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+SLE,Sierra Leone,2023,Sub-Saharan Africa,Sub-Saharan Africa,39.39,10.45,50.17,48.65,39.64,11.71,22.08,30.49,47.43,False
+SGP,Singapore,2023,Eastern and South-Eastern Asia,East Asia and Pacific,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+SVK,Slovakia,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+SVN,Slovenia,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+SLB,Solomon Islands,2023,Oceania,East Asia and Pacific,30.97,,,18.78,,,,,,False
+SOM,Somalia,2023,Sub-Saharan Africa,Sub-Saharan Africa,52.85,41.67,5.48,,,,,,,False
+ZAF,South Africa,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,,,,0.5,,,,True
+SSD,South Sudan,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,32.95,36.65,38.3,25.05,18.11,,,False
+ESP,Spain,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+LKA,Sri Lanka,2023,Central and Southern Asia,South Asia,87.04,6.18,6.78,89.91,9.96,0.5,87.1,12.16,0.5,False
+PSE,State of Palestine,2023,Northern Africa and Western Asia,Middle East and North Africa,99.5,0.5,0.5,97.15,2.33,0.5,,,1.09,False
+SDN,Sudan,2023,Northern Africa and Western Asia,Sub-Saharan Africa,43.47,16.8,39.72,,,,7.56,17.57,74.86,False
+SWE,Sweden,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,,,,99.5,0.5,0.5,False
+CHE,Switzerland,2023,Europe and Northern America,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+SYR,Syrian Arab Republic,2023,Northern Africa and Western Asia,Middle East and North Africa,84.66,,,86.84,,,,,,False
+TJK,Tajikistan,2023,Central and Southern Asia,Europe and Central Asia,,,,,,,,,,True
+THA,Thailand,2023,Eastern and South-Eastern Asia,East Asia and Pacific,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+TLS,Timor-Leste,2023,Eastern and South-Eastern Asia,East Asia and Pacific,70.28,,,,,,65.72,,,False
+TGO,Togo,2023,Sub-Saharan Africa,Sub-Saharan Africa,65.38,,,16.82,31.94,51.24,17.0,0.5,83.0,False
+TKL,Tokelau,2023,Oceania,East Asia and Pacific,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+TON,Tonga,2023,Oceania,East Asia and Pacific,95.03,,,95.52,,,83.59,,,False
+TUN,Tunisia,2023,Northern Africa and Western Asia,Middle East and North Africa,,,6.28,,,0.5,,,0.5,True
+TKM,Turkmenistan,2023,Central and Southern Asia,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+TCA,Turks and Caicos Islands,2023,Latin America and the Caribbean,Latin America and Caribbean,98.71,1.29,0.5,98.71,1.29,0.5,98.71,1.29,0.5,False
+TUV,Tuvalu,2023,Oceania,East Asia and Pacific,76.55,23.45,0.5,85.76,,,96.05,3.95,0.5,False
+TUR,Türkiye,2023,Northern Africa and Western Asia,Europe and Central Asia,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+UGA,Uganda,2023,Sub-Saharan Africa,Sub-Saharan Africa,54.77,33.44,11.79,74.75,23.05,2.2,38.55,16.32,45.13,False
+UKR,Ukraine,2023,Europe and Northern America,Europe and Central Asia,91.18,3.94,4.88,,,2.72,81.72,,,False
+ARE,United Arab Emirates,2023,Northern Africa and Western Asia,Middle East and North Africa,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+TZA,United Republic of Tanzania,2023,Sub-Saharan Africa,Sub-Saharan Africa,,,23.24,44.4,52.64,2.96,15.03,,,False
+USA,United States of America,2023,Europe and Northern America,North America,99.5,0.5,0.5,99.5,0.5,0.5,99.5,0.5,0.5,False
+URY,Uruguay,2023,Latin America and the Caribbean,Latin America and Caribbean,67.49,0.5,32.51,97.0,3.0,0.5,99.5,0.5,0.5,False
+UZB,Uzbekistan,2023,Central and Southern Asia,Europe and Central Asia,70.01,15.28,14.71,79.74,6.4,13.86,91.6,4.8,3.6,False
+VUT,Vanuatu,2023,Oceania,East Asia and Pacific,,,,,,,,,,True
+VEN,Venezuela (Bolivarian Republic of),2023,Latin America and the Caribbean,Latin America and Caribbean,,,,,,,,,,True
+VNM,Viet Nam,2023,Eastern and South-Eastern Asia,East Asia and Pacific,67.79,,,93.35,,,71.93,,,False
+YEM,Yemen,2023,Northern Africa and Western Asia,Middle East and North Africa,,,,,,,,,,True
+ZMB,Zambia,2023,Sub-Saharan Africa,Sub-Saharan Africa,79.07,5.04,15.89,,,17.12,96.85,0.5,3.15,False
+ZWE,Zimbabwe,2023,Sub-Saharan Africa,Sub-Saharan Africa,69.86,19.71,10.43,93.92,6.08,0.5,76.64,16.2,7.15,False

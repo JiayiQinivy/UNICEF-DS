@@ -39,7 +39,7 @@ Strategy:
   - Rename iso3 -> ISO to match the project merge key
   - Output: one row per country, wide format, ready for Model 3
 
-Output file: outputs/wash_clean.csv
+Output file: outputs/wash_clean_data.csv
 =============================================================
 """
 
@@ -49,11 +49,12 @@ import numpy as np
 import pandas as pd
 warnings.filterwarnings("ignore")
 
-# ===== USER INPUT =====
-FILE          = "/Users/ivy/Desktop/UNICEF-DS/WASH/JMP-WASH-in-schools-2024-data-by-country.xlsx"
-OUTPUT_FOLDER = "/Users/ivy/Desktop/UNICEF-DS/WASH/outputs"
+# ===== PATHS (relative to this script's directory) =====
+SCRIPT_DIR    = os.path.dirname(os.path.abspath(__file__))
+FILE          = os.path.join(SCRIPT_DIR, "JMP-WASH-in-schools-2024-data-by-country.xlsx")
+OUTPUT_FOLDER = os.path.join(SCRIPT_DIR, "outputs")
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
-# ======================
+# ========================================================
 
 # Column indices in the WASH main sheet (0-indexed, confirmed from header)
 COL_MAP = {
@@ -131,7 +132,8 @@ def clean_wash():
     df["country"] = df["country"].astype(str).str.strip()
     df["sdg_region"] = df["sdg_region"].astype(str).str.strip()
     df["unicef_reporting_region"] = (
-        df["unicef_reporting_region"].astype(str).str.strip())
+        df["unicef_reporting_region"].astype(str).str.strip()
+        .replace("nan", np.nan))
     df["year"] = 2023
 
     # Drop rows with missing ISO
@@ -141,12 +143,30 @@ def clean_wash():
     for col in INDICATOR_COLS:
         df[col] = df[col].apply(convert_value)
 
+    # Fill missing unicef_reporting_region for known territories
+    REGION_FILL = {
+        "BMU": "North America",
+        "CYM": "Latin America and Caribbean",
+        "HKG": "East Asia and Pacific",
+        "MAC": "East Asia and Pacific",
+        "GIB": "Europe and Central Asia",
+    }
+    for iso, region in REGION_FILL.items():
+        mask = (df["ISO"] == iso) & (df["unicef_reporting_region"].isna())
+        df.loc[mask, "unicef_reporting_region"] = region
+
+    # Flag countries where all 3 core basic indicators are missing
+    core = ["wat_bas_nat", "san_bas_nat", "hyg_bas_nat"]
+    df["all_basic_missing"] = df[core].isna().all(axis=1)
+    n_flagged = df["all_basic_missing"].sum()
+    print(f"  Flagged {n_flagged} countries with all 3 basic indicators missing")
+
     df = df.reset_index(drop=True)
 
-    # ── Coverage report ────────────────────────────────────────
-    print(f"\n  {'─'*50}")
+    # - Coverage report ---------------------------------------------------
+    print(f"\n  {'-'*50}")
     print(f"  COVERAGE SUMMARY (year = 2023)")
-    print(f"  {'─'*50}")
+    print(f"  {'-'*50}")
     print(f"  Total countries : {len(df)}")
     for col in INDICATOR_COLS:
         print(f"  {col:20s}: {df[col].notna().sum():3d} countries")
@@ -178,6 +198,9 @@ def clean_wash():
     # ── Descriptive statistics ─────────────────────────────────
     print(f"\n  Descriptive statistics (core indicators):")
     print(df[core].describe().round(2).to_string())
+
+    # ── Round indicator columns to 2 decimal places ─────────────
+    df[INDICATOR_COLS] = df[INDICATOR_COLS].round(2)
 
     # ── Save ───────────────────────────────────────────────────
     out_path = os.path.join(OUTPUT_FOLDER, "wash_clean_data.csv")
