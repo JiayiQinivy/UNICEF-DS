@@ -77,8 +77,8 @@ python scripts/xgboost_analysis.py
 ```
 
 ## Team
-Omar Elekiaby
-Saud Binlebdah
-David Reeder
-Sulaiman Alsalami
-Jiayi Qin
+- Omar Elekiaby
+- Saud Binlebdah
+- David Reeder
+- Sulaiman Alsalami
+- Jiayi Qin
