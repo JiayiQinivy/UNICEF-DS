@@ -33,8 +33,9 @@ import matplotlib.patches as mpatches
 warnings.filterwarnings("ignore")
 
 # ===== USER INPUT =====
-BASE_FOLDER   = "/Users/ivy/Desktop/UNICEF-DS/Malnutrition Datasets/Malnutrition"
-OUTPUT_FOLDER = "/Users/ivy/Desktop/UNICEF-DS/Malnutrition Datasets/outputs"
+_SCRIPT_DIR   = os.path.dirname(os.path.abspath(__file__))
+BASE_FOLDER   = os.path.join(_SCRIPT_DIR, "Malnutrition Datasets", "Malnutrition")
+OUTPUT_FOLDER = os.path.join(_SCRIPT_DIR, "Malnutrition Datasets", "outputs")
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
 FILES = {

@@ -28,8 +28,8 @@ from scipy import stats
 warnings.filterwarnings("ignore")
 
 # ===== USER INPUT =====
-BASE_FOLDER   = "/Users/ivy/Desktop/UNICEF-DS"
-OUTPUT_FOLDER = "/Users/ivy/Desktop/UNICEF-DS/outputs"
+BASE_FOLDER   = os.path.dirname(os.path.abspath(__file__))
+OUTPUT_FOLDER = os.path.join(BASE_FOLDER, "outputs")
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
 ADOLESCENT_FILE     = os.path.join(BASE_FOLDER, "Adolescent_Long_clean.csv")
