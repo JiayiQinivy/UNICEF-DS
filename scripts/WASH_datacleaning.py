@@ -49,12 +49,13 @@ import numpy as np
 import pandas as pd
 warnings.filterwarnings("ignore")
 
-# ===== PATHS (relative to this script's directory) =====
+# ===== PATHS (relative to repo root) =====
 SCRIPT_DIR    = os.path.dirname(os.path.abspath(__file__))
-FILE          = os.path.join(SCRIPT_DIR, "JMP-WASH-in-schools-2024-data-by-country.xlsx")
-OUTPUT_FOLDER = os.path.join(SCRIPT_DIR, "outputs")
+ROOT_DIR      = os.path.dirname(SCRIPT_DIR)
+FILE          = os.path.join(ROOT_DIR, "data", "JMP-WASH-in-schools-2024-data-by-country.xlsx")
+OUTPUT_FOLDER = os.path.join(ROOT_DIR, "outputs")
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
-# ========================================================
+# ==========================================
 
 # Column indices in the WASH main sheet (0-indexed, confirmed from header)
 COL_MAP = {

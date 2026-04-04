@@ -42,12 +42,15 @@ plt.rcParams.update({
 })
 # ──────────────────────────────────────────────────────────
 
-OUTPUT_FOLDER = "outputs/xgboost"
+_SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+_ROOT_DIR   = os.path.dirname(_SCRIPT_DIR)
+
+OUTPUT_FOLDER = os.path.join(_ROOT_DIR, "outputs", "xgboost")
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
-MALNUTRITION_CSV = os.path.join("outputs", "xgboost_final_dataset.csv")
-WASH_CSV = os.path.join("WASH", "outputs", "wash_clean_data.csv")
-EDU_CSV = os.path.join(OUTPUT_FOLDER, "education_clean.csv")
+MALNUTRITION_CSV = os.path.join(_ROOT_DIR, "outputs", "xgboost_final_dataset.csv")
+WASH_CSV = os.path.join(_ROOT_DIR, "outputs", "wash_clean_data.csv")
+EDU_CSV = os.path.join(_ROOT_DIR, "outputs", "education_clean.csv")
 
 OUTCOMES = [
     "stunting_national",

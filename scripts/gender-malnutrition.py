@@ -51,7 +51,9 @@ import statsmodels.formula.api as smf
 warnings.filterwarnings("ignore")
 
 # ===== USER INPUT =====
-OUTPUT_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "outputs")
+_SCRIPT_DIR   = os.path.dirname(os.path.abspath(__file__))
+_ROOT_DIR     = os.path.dirname(_SCRIPT_DIR)
+OUTPUT_FOLDER = os.path.join(_ROOT_DIR, "outputs")
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
 GENDER_CSV      = os.path.join(OUTPUT_FOLDER, "gender_inequality_analysis.csv")

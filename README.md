@@ -22,26 +22,36 @@ All data sourced from [UNICEF Data](https://data.unicef.org/):
 
 ```
 UNICEF-DS/
-├── Malnutrition Datasets/          # Raw malnutrition data (JME 2025)
-├── WASH/                           # WASH data cleaning pipeline
-│   ├── WASH_datacleaning.py        # Cleans JMP WASH data (year=2023)
-│   └── outputs/                    # wash_clean_data.csv
-├── outputs/                        # All cleaned CSVs and analysis outputs
-│   └── xgboost/                    # XGBoost model plots and metrics
+├── data/                               # All raw source data
+│   ├── Child_marriage.csv
+│   ├── education-dataset.xlsx
+│   ├── Child-Health-Coverage-Database-November-2025.xlsx
+│   ├── JMP-WASH-in-schools-2024-data-by-country.xlsx
+│   └── Malnutrition Datasets/          # JME 2025 (stunting, wasting, etc.)
 │
-├── malnutrition_analysis.py        # Malnutrition data extraction pipeline
-├── gender_inequality_analysis.py   # Gender data cleaning & ISO mapping
-├── gender-malnutrition.py          # OLS regression (Models 1-3), SHAP, Lasso
-├── education_cleaning.py           # Education data cleaning
-├── xgboost_cleaning.py             # Merges all datasets for XGBoost
-├── xgboost_analysis.py             # XGBoost predictive model + SHAP
+├── scripts/                            # All Python cleaning & analysis scripts
+│   ├── WASH_datacleaning.py            # Cleans JMP WASH data (year=2023)
+│   ├── education_cleaning.py           # Education data cleaning
+│   ├── gender_inequality_analysis.py   # Gender data cleaning & ISO mapping
+│   ├── gender-malnutrition.py          # OLS regression (Models 1-3), SHAP
+│   ├── malnutrition_analysis.py        # Malnutrition data extraction pipeline
+│   ├── xgboost_cleaning.py             # Merges all datasets for XGBoost
+│   └── xgboost_analysis.py             # XGBoost predictive model + SHAP
 │
-├── WASH_visualisation.ipynb                    # WASH data visualisations
-├── education_visualisation.ipynb               # Education visualisations
-├── xgboost_datasets_visualisation.ipynb        # Merged dataset EDA + model results
-├── Adolescent_cleaning_and_visulisation.ipynb  # Adolescent health cleaning
-├── Child marriage cleaning and visulisation.ipynb  # Child marriage cleaning
-└── FGM_cleaning_and_visulisation.ipynb         # FGM cleaning & choropleth
+├── notebooks/                          # Jupyter notebooks (cleaning & viz)
+│   ├── WASH_visualisation.ipynb
+│   ├── education_visualisation.ipynb
+│   ├── xgboost_datasets_visualisation.ipynb
+│   ├── Adolescent_cleaning_and_visulisation.ipynb
+│   ├── Child marriage cleaning and visulisation.ipynb
+│   └── FGM_cleaning_and_visulisation.ipynb
+│
+├── outputs/                            # All generated outputs (CSVs, PNGs)
+│   └── xgboost/                        # XGBoost model plots and metrics
+│
+├── README.md
+├── requirements.txt
+└── .gitignore
 ```
 
 ## Analytical Framework
@@ -68,14 +78,14 @@ The project follows a **four-model incremental approach**:
 pip install -r requirements.txt
 
 # Run data cleaning pipelines
-python malnutrition_analysis.py
-python gender_inequality_analysis.py
-python education_cleaning.py
-python WASH/WASH_datacleaning.py
+python scripts/malnutrition_analysis.py
+python scripts/gender_inequality_analysis.py
+python scripts/education_cleaning.py
+python scripts/WASH_datacleaning.py
 
 # Merge datasets and run XGBoost
-python xgboost_cleaning.py
-python xgboost_analysis.py
+python scripts/xgboost_cleaning.py
+python scripts/xgboost_analysis.py
 ```
 
 ## Team

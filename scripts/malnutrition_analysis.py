@@ -34,8 +34,9 @@ warnings.filterwarnings("ignore")
 
 # ===== USER INPUT =====
 _SCRIPT_DIR   = os.path.dirname(os.path.abspath(__file__))
-BASE_FOLDER   = os.path.join(_SCRIPT_DIR, "Malnutrition Datasets", "Malnutrition")
-OUTPUT_FOLDER = os.path.join(_SCRIPT_DIR, "Malnutrition Datasets", "outputs")
+_ROOT_DIR     = os.path.dirname(_SCRIPT_DIR)
+BASE_FOLDER   = os.path.join(_ROOT_DIR, "data", "Malnutrition Datasets", "Malnutrition")
+OUTPUT_FOLDER = os.path.join(_ROOT_DIR, "outputs")
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
 FILES = {

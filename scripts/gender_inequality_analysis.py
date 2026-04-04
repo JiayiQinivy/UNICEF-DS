@@ -28,13 +28,15 @@ from scipy import stats
 warnings.filterwarnings("ignore")
 
 # ===== USER INPUT =====
-BASE_FOLDER   = os.path.dirname(os.path.abspath(__file__))
-OUTPUT_FOLDER = os.path.join(BASE_FOLDER, "outputs")
+SCRIPT_DIR    = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR      = os.path.dirname(SCRIPT_DIR)
+DATA_FOLDER   = os.path.join(ROOT_DIR, "data")
+OUTPUT_FOLDER = os.path.join(ROOT_DIR, "outputs")
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
-ADOLESCENT_FILE     = os.path.join(BASE_FOLDER, "Adolescent_Long_clean.csv")
-CHILD_MARRIAGE_FILE = os.path.join(BASE_FOLDER, "Child_marriage.csv")
-FGM_FILE            = os.path.join(BASE_FOLDER, "FGM_clean_english.csv")
+ADOLESCENT_FILE     = os.path.join(DATA_FOLDER, "Adolescent_Long_clean.csv")
+CHILD_MARRIAGE_FILE = os.path.join(DATA_FOLDER, "Child_marriage.csv")
+FGM_FILE            = os.path.join(DATA_FOLDER, "FGM_clean_english.csv")
 # ======================
 
 
