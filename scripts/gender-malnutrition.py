@@ -262,8 +262,8 @@ def plot_scatter_matrix(df):
     predictors = [p for p in GENDER_PREDICTORS if p in df.columns]
     outcomes   = [o for o in OUTCOMES if o in df.columns]
 
-    n_rows = len(outcomes)
-    n_cols = len(predictors)
+    n_rows = len(predictors)
+    n_cols = len(outcomes)
 
     fig, axes = plt.subplots(n_rows, n_cols,
                               figsize=(4.5 * n_cols, 4 * n_rows))
@@ -279,8 +279,8 @@ def plot_scatter_matrix(df):
         "High Income":         "#1f77b4",
     }
 
-    for i, outcome in enumerate(outcomes):
-        for j, pred in enumerate(predictors):
+    for i, pred in enumerate(predictors):
+        for j, outcome in enumerate(outcomes):
             ax  = axes[i][j]
             sub = df[[pred, outcome, "income_group"]].dropna()
 
@@ -316,15 +316,10 @@ def plot_scatter_matrix(df):
                         bbox=dict(boxstyle="round,pad=0.3",
                                    fc="white", alpha=0.8))
 
-            # Labels only on edges
-            if i == n_rows - 1:
-                ax.set_xlabel(
-                    PREDICTOR_LABELS.get(pred, pred),
-                    fontsize=8)
-            if j == 0:
-                ax.set_ylabel(
-                    OUTCOME_LABELS.get(outcome, outcome),
-                    fontsize=8)
+            # Label every subplot so X/Y mappings are clear
+            ax.set_xlabel(PREDICTOR_LABELS.get(pred, pred), fontsize=8)
+            ax.set_ylabel(OUTCOME_LABELS.get(outcome, outcome), fontsize=8)
+
             ax.tick_params(labelsize=7)
             ax.grid(alpha=0.25)
 
