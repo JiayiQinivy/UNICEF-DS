@@ -50,9 +50,9 @@ UNICEF-DS/
 └── .gitignore
 ```
 
-## Analytical Framework
+## Models
 
-The project follows a **four-model incremental approach**:
+The project is composed of four models. The first three are linear regression models, with each one incrementally including more indicators. The final one is an XGBoost model which utilises all the indicators.
 
 1. **Model 1 (Baseline)**: Malnutrition ~ Income Group
 2. **Model 2 (Gender)**: Malnutrition ~ Gender Inequality Indicators
