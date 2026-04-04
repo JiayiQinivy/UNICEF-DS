@@ -61,22 +61,17 @@ def load_jme_standard(filepath, indicator):
       - header at row 8
       - LatestSource == 'Latest Source' marks most recent entry
       - National_r is the national point estimate
-      - male_r, female_r, urban_r, rural_r, Q1_r–Q5_r disaggregations
+      - male_r, female_r, urban_r, rural_r, Q1_r-Q5_r disaggregations
     """
-    print(f"\n{'─'*60}")
-    print(f"  Loading [{indicator.upper()}]: {os.path.basename(filepath)}")
-
     if not os.path.exists(filepath):
-        print(f"   File not found: {filepath}")
+        print(f"  File not found: {filepath}")
         return pd.DataFrame()
 
     df = pd.read_excel(filepath, sheet_name="Trend", header=8)
     df.columns = df.columns.astype(str).str.strip()
-    print(f"  Total rows       : {len(df)}")
 
     # Filter to latest source per country
     df_latest = df[df["LatestSource"] == "Latest Source"].copy()
-    print(f"  Latest-source    : {len(df_latest)} countries")
 
     # Column mapping
     col_map = {
@@ -122,15 +117,6 @@ def load_jme_standard(filepath, indicator):
     if u in df_out.columns and r in df_out.columns:
         df_out[f"{indicator}_urban_rural_gap"] = df_out[r] - df_out[u]
 
-    # Coverage report
-    nat = f"{indicator}_national"
-    print(f"  With national    : {df_out[nat].notna().sum()}")
-    if m in df_out.columns:
-        print(f"  With male/female : {df_out[m].notna().sum()}")
-    yr = df_out["data_year"].dropna()
-    if len(yr):
-        print(f"  Year range       : {yr.min():.0f}–{yr.max():.0f}")
-
     return df_out
 
 
@@ -153,25 +139,17 @@ def load_overlapping(filepath):
           ANT_WHZ_PO2_ONLY_r   = Overweight Only (%)
           ANT_FREE_r           = Free from all malnutrition (%)
     """
-    print(f"\n{'─'*60}")
-    print(f"  Loading [OVERLAPPING]: {os.path.basename(filepath)}")
-
     if not os.path.exists(filepath):
-        print(f"   File not found: {filepath}")
+        print(f"  File not found: {filepath}")
         return pd.DataFrame()
 
     df = pd.read_excel(filepath, sheet_name="Trend", header=8)
     df.columns = df.columns.astype(str).str.strip()
-    print(f"  Total rows       : {len(df)}")
-    print(f"  Latest_Estimate values: "
-          f"{df['Latest_Estimate'].value_counts().to_dict()}")
 
     # CORRECT filter: 'Latest Estimate' (not 'Latest Source')
     df_latest = df[df["Latest_Estimate"] == "Latest Estimate"].copy()
-    print(f"  Latest Estimate  : {len(df_latest)} countries")
 
     if df_latest.empty:
-        print("    No 'Latest Estimate' rows found!")
         return pd.DataFrame()
 
     # Column mapping — overlapping has different column names
@@ -208,11 +186,6 @@ def load_overlapping(filepath):
     # Derived: double deficit (wasted AND stunted — the most severe)
     # already captured in wasted_and_stunted_pct
 
-    print(f"  With wasted+stunted data : "
-          f"{df_out['wasted_and_stunted_pct'].notna().sum()}")
-    print(f"  With free-from-malnutr.  : "
-          f"{df_out['free_from_malnutrition_pct'].notna().sum()}")
-
     return df_out
 
 
@@ -231,16 +204,11 @@ def load_country_model(filepath):
              Both Sexes - Point Estimates | Lower/Upper Limit |
              Male/Female - Point Estimate
     """
-    print(f"\n{'─'*60}")
-    print(f"  Loading [MODEL-BASED]: {os.path.basename(filepath)}")
-
     if not os.path.exists(filepath):
-        print(f"   File not found: {filepath}")
+        print(f"  File not found: {filepath}")
         return pd.DataFrame()
 
     xl = pd.ExcelFile(filepath)
-    print(f"  Sheets: {xl.sheet_names}")
-
     sheet_prefix = {
         "Stunting Prevalence":   "stunting_model",
         "Overweight Prevalence": "overweight_model",
@@ -286,8 +254,6 @@ def load_country_model(filepath):
         if m in df.columns and f in df.columns:
             df[f"{prefix}_gender_gap"] = df[m] - df[f]
 
-        nat = f"{prefix}_national"
-        print(f"  {sheet}: {df[nat].notna().sum()} countries")
         all_dfs.append(df)
 
     if not all_dfs:
@@ -304,8 +270,6 @@ def load_country_model(filepath):
 
     return result
 
-
-# ──────────────────────────────────────────────────────────────
 # SECTION 4: BUILD MASTER DATASET
 # ──────────────────────────────────────────────────────────────
 
@@ -314,25 +278,18 @@ def build_master(stunting_df, wasting_df, overweight_df,
     """
     Merge all indicator DataFrames on ISO3 country code.
     """
-    print(f"\n{'='*60}")
-    print("BUILDING MALNUTRITION MASTER DATASET")
-    print(f"{'='*60}")
-
     master = stunting_df.copy()
-    print(f"  Base (stunting): {len(master)} countries")
 
     # Metadata columns that only need to come from the base
     shared_meta = {"country", "unicef_region", "income_group", "data_year"}
 
     def safe_merge(master, df, name):
         if df.empty:
-            print(f"  ️  {name} is empty — skipped")
             return master
         join_cols = ["ISO"] + [c for c in df.columns
                                 if c not in shared_meta]
         join_cols = list(dict.fromkeys(join_cols))
         master = master.merge(df[join_cols], on="ISO", how="outer")
-        print(f"  + {name:15s}: master now {len(master)} countries")
         return master
 
     master = safe_merge(master, wasting_df,     "wasting")
@@ -345,7 +302,6 @@ def build_master(stunting_df, wasting_df, overweight_df,
         master = master.merge(
             model_df.drop(columns=drop_dupe, errors="ignore"),
             on="ISO", how="left")
-        print(f"  + model-based   : master now {len(master)} countries")
 
     # ── Composite derived indicators ──────────────────────────
 
@@ -375,56 +331,13 @@ def build_master(stunting_df, wasting_df, overweight_df,
              > master["stunting_national"]).astype(int),
             np.nan)
 
-    # ── Coverage report ───────────────────────────────────────
-    print(f"\n  {'─'*50}")
-    print(f"  COVERAGE SUMMARY")
-    print(f"  {'─'*50}")
-    print(f"  Total countries  : {len(master)}")
-
-    core = ["stunting_national", "wasting_national",
-            "overweight_national"]
-    for col in core:
-        if col in master.columns:
-            print(f"  {col:40s}: {master[col].notna().sum():3d}")
-
-    overlapping_cols = ["wasted_only_pct", "wasted_and_stunted_pct",
-                        "stunted_only_pct", "free_from_malnutrition_pct"]
-    for col in overlapping_cols:
-        if col in master.columns:
-            print(f"  {col:40s}: {master[col].notna().sum():3d}")
-
-    three = [c for c in core if c in master.columns]
-    if len(three) == 3:
-        n3 = master[three].notna().all(axis=1).sum()
-        print(f"\n  With ALL 3 core indicators : {n3} countries")
-
-    print(f"\n  Gender gap indicators:")
-    for col in [c for c in master.columns if "gender_gap" in c]:
-        print(f"    {col:45s}: {master[col].notna().sum():3d}")
-
-    print(f"\n  Wealth gap indicators:")
-    for col in [c for c in master.columns if "wealth_gap" in c]:
-        print(f"    {col:45s}: {master[col].notna().sum():3d}")
-
-    print(f"\n  Missing values (core columns):")
-    for col in master.columns:
-        miss = master[col].isna().sum()
-        if miss > 0 and any(k in col for k in
-                            ["national", "gender_gap", "wealth_gap",
-                             "composite", "burden", "transition",
-                             "wasted", "stunted", "overweight",
-                             "free_from"]):
-            print(f"    {col:45s}: {miss} missing")
-
     out = os.path.join(OUTPUT_FOLDER, "malnutrition_master.csv")
     master.to_csv(out, index=False)
-
-    print(f"\n   Master saved → {out}")
+    print(f"Saved {out}  ({len(master)} countries)")
 
     modelling_sample = master.dropna(subset=["stunting_national",
                                              "wasting_national",
                                              "overweight_national"])
-    print(f"  Modelling sample (all 3 core): {len(modelling_sample)} countries")
     modelling_sample.to_csv(
         os.path.join(OUTPUT_FOLDER, "malnutrition_modelling_sample.csv"),
         index=False)
@@ -448,7 +361,6 @@ def get_world():
 
 def plot_four_panel_map(master):
     """4-panel choropleth: stunting, wasting, overweight, overlapping."""
-    print("\n  Generating 4-panel choropleth map...")
     world = get_world()
     if world is None:
         return
@@ -511,7 +423,6 @@ def plot_four_panel_map(master):
     out = os.path.join(OUTPUT_FOLDER, "malnutrition_4panel_map.png")
     fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
-    print(f"   4-panel map → {out}")
 
 
 def plot_overlapping_stacked_bar(master):
@@ -520,8 +431,6 @@ def plot_overlapping_stacked_bar(master):
     by UNICEF region — showing the 'nutritional landscape'.
     This is a unique visualisation using the overlapping data.
     """
-    print("\n  Generating nutritional status stacked bar chart...")
-
     cat_cols = [
         ("wasted_only_pct",            "Wasted Only",             "#e15759"),
         ("wasted_and_stunted_pct",     "Wasted & Stunted",        "#9c3d54"),
@@ -575,12 +484,10 @@ def plot_overlapping_stacked_bar(master):
                        "nutritional_status_stacked_bar.png")
     fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
-    print(f"   Stacked bar → {out}")
 
 
 def plot_double_burden(master):
     """Scatter: Stunting vs Overweight coloured by UNICEF region."""
-    print("\n  Generating double burden scatter plot...")
     need = ["stunting_national", "overweight_national", "unicef_region"]
     if not all(c in master.columns for c in need):
         return
@@ -628,12 +535,10 @@ def plot_double_burden(master):
     out = os.path.join(OUTPUT_FOLDER, "double_burden_scatter.png")
     fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
-    print(f"   Double burden → {out}")
 
 
 def plot_distributions(master):
     """Histogram + KDE + Shapiro-Wilk for each core indicator."""
-    print("\n  Generating distribution plots...")
     from scipy import stats
     from scipy.stats import gaussian_kde
 
@@ -688,12 +593,10 @@ def plot_distributions(master):
     out = os.path.join(OUTPUT_FOLDER, "malnutrition_distributions.png")
     fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
-    print(f"   Distributions → {out}")
 
 
 def plot_regional_boxplot(master):
     """Boxplot of core indicators by UNICEF region."""
-    print("\n  Generating regional boxplot...")
     if "unicef_region" not in master.columns:
         return
 
@@ -752,7 +655,6 @@ def plot_regional_boxplot(master):
                        "malnutrition_regional_boxplot.png")
     fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
-    print(f"   Regional boxplot → {out}")
 
 
 # ──────────────────────────────────────────────────────────────
@@ -760,37 +662,7 @@ def plot_regional_boxplot(master):
 # ──────────────────────────────────────────────────────────────
 
 def print_summary(master):
-    print(f"\n{'='*60}")
-    print("DESCRIPTIVE STATISTICS — FOR YOUR REPORT")
-    print(f"{'='*60}")
-
-    core = ["stunting_national", "wasting_national",
-            "overweight_national", "wasted_and_stunted_pct"]
-    avail = [c for c in core if c in master.columns]
-    if avail:
-        print(f"\n  Core indicators:")
-        print(master[avail].describe().round(2).to_string())
-
-    if ("income_group" in master.columns
-            and "stunting_national" in master.columns):
-        print(f"\n  Stunting by income group:")
-        ig = (master.groupby("income_group")["stunting_national"]
-                    .agg(["count", "mean", "median"]).round(1))
-        print(ig.to_string())
-
-    if ("unicef_region" in master.columns
-            and "nutrition_transition_flag" in master.columns):
-        nt = master["nutrition_transition_flag"].value_counts()
-        print(f"\n  Nutrition transition (overweight > stunting):")
-        print(f"    Yes (transition): {int(nt.get(1.0, 0))} countries")
-        print(f"    No (traditional): {int(nt.get(0.0, 0))} countries")
-
-    print(f"\n  Output files generated:")
-    for f in sorted(os.listdir(OUTPUT_FOLDER)):
-        if f.endswith((".csv", ".png")):
-            sz = os.path.getsize(os.path.join(OUTPUT_FOLDER, f))
-            print(f"    {f:55s} {sz/1024:6.1f} KB")
-    print("=" * 60)
+    pass
 
 
 # ──────────────────────────────────────────────────────────────
@@ -798,10 +670,6 @@ def print_summary(master):
 # ──────────────────────────────────────────────────────────────
 
 def main():
-    print("=" * 60)
-    print("MALNUTRITION FULL PIPELINE v3 — FINAL")
-    print("=" * 60)
-
     def fp(key):
         return os.path.join(BASE_FOLDER, FILES[key])
 
@@ -836,10 +704,7 @@ def main():
     plot_distributions(master)
     plot_regional_boxplot(master)
 
-    # Print summary
-    print_summary(master)
-
-    print("\n PIPELINE COMPLETE")
+    print("PIPELINE COMPLETE")
 
 
 if __name__ == "__main__":

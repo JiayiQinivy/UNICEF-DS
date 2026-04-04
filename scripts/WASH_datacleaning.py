@@ -106,22 +106,13 @@ def convert_value(val):
 
 
 def clean_wash():
-    print("=" * 60)
-    print("WASH DATA CLEANING PIPELINE")
-    print("=" * 60)
-
-    # Read raw sheet without header (two header rows in source file)
-    print(f"\n  Reading: {FILE}")
     raw = pd.read_excel(FILE, sheet_name="WASH", header=None)
-    print(f"  Raw shape: {raw.shape}")
 
     # Skip the two header rows (rows 0 and 1), keep data rows
     data = raw.iloc[2:].copy()
     data.columns = range(data.shape[1])
 
-    # Filter to year = 2023 (latest year, one row per country)
     data_2023 = data[data[1] == 2023].copy()
-    print(f"  Rows with year=2023: {len(data_2023)} countries")
 
     # Extract and rename required columns
     col_indices = list(COL_MAP.keys())
@@ -156,63 +147,21 @@ def clean_wash():
         mask = (df["ISO"] == iso) & (df["unicef_reporting_region"].isna())
         df.loc[mask, "unicef_reporting_region"] = region
 
-    # Flag countries where all 3 core basic indicators are missing
     core = ["wat_bas_nat", "san_bas_nat", "hyg_bas_nat"]
     df["all_basic_missing"] = df[core].isna().all(axis=1)
-    n_flagged = df["all_basic_missing"].sum()
-    print(f"  Flagged {n_flagged} countries with all 3 basic indicators missing")
 
     df = df.reset_index(drop=True)
 
-    # - Coverage report ---------------------------------------------------
-    print(f"\n  {'-'*50}")
-    print(f"  COVERAGE SUMMARY (year = 2023)")
-    print(f"  {'-'*50}")
-    print(f"  Total countries : {len(df)}")
-    for col in INDICATOR_COLS:
-        print(f"  {col:20s}: {df[col].notna().sum():3d} countries")
-
-    core = ["wat_bas_nat", "san_bas_nat", "hyg_bas_nat"]
-    n_all = df[core].notna().all(axis=1).sum()
-    print(f"\n  With ALL 3 core indicators: {n_all} countries")
-
-    # ── Value range check ──────────────────────────────────────
-    print(f"\n  Value range check (all should be 0-100):")
-    all_ok = True
-    for col in INDICATOR_COLS:
-        data_col = df[col].dropna()
-        if len(data_col) == 0:
-            continue
-        out_range = data_col[(data_col < 0) | (data_col > 100)]
-        if len(out_range) > 0:
-            print(f"    {col}: {len(out_range)} values out of [0,100]")
-            all_ok = False
-    if all_ok:
-        print(f"    All values within [0,100] range")
-
-    # ── Missing values ─────────────────────────────────────────
-    print(f"\n  Missing values:")
-    miss = df.isna().sum()
-    for col, n in miss[miss > 0].items():
-        print(f"    {col:30s}: {n}")
-
-    # ── Descriptive statistics ─────────────────────────────────
-    print(f"\n  Descriptive statistics (core indicators):")
-    print(df[core].describe().round(2).to_string())
-
-    # ── Round indicator columns to 2 decimal places ─────────────
     df[INDICATOR_COLS] = df[INDICATOR_COLS].round(2)
 
     # ── Save ───────────────────────────────────────────────────
     out_path = os.path.join(OUTPUT_FOLDER, "wash_clean_data.csv")
     df.to_csv(out_path, index=False)
-    print(f"\n  Saved -> {out_path}")
-    print(f"  Shape: {df.shape}")
-    print(f"  Columns: {list(df.columns)}")
-    print(f"\nPIPELINE COMPLETE")
+    print(f"Saved {out_path}  ({df.shape[0]} countries)")
 
     return df
 
 
 if __name__ == "__main__":
     clean_wash()
+    print("PIPELINE COMPLETE")

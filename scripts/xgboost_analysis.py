@@ -99,12 +99,7 @@ PREDICTOR_LABELS = {
 }
 
 def load_and_merge_data():
-    print("=" * 60)
-    print("DATA LOADING & MERGING")
-    print("=" * 60)
-
     df = pd.read_csv(MALNUTRITION_CSV)
-    print(f"Base Dataset: {len(df)} countries")
 
     wash_df = pd.read_csv(WASH_CSV) if os.path.exists(WASH_CSV) else pd.DataFrame(columns=["ISO"] + WASH_PREDICTORS)
     if "iso3" in wash_df.columns:
@@ -121,16 +116,11 @@ def load_and_merge_data():
     if not edu_df.empty:
         df_m3 = df_m3.merge(edu_df[["ISO"] + [p for p in EDU_PREDICTORS if p in edu_df.columns]], on="ISO", how="left")
 
-    print(f"Merged Dataset: {len(df_m3)} countries")
     return df_m3
 
 def run_xgboost_analysis(df):
     metrics_list = []
     shap_importance_list = []
-    print("\n" + "=" * 60)
-    print("XGBOOST MODELING & SHAP INTERPRETABILITY")
-    print("=" * 60)
-
     all_predictors = GENDER_PREDICTORS + WASH_PREDICTORS + EDU_PREDICTORS + HEALTH_PREDICTORS + ["income_group"]
 
     if "income_group" in df.columns:
@@ -140,17 +130,12 @@ def run_xgboost_analysis(df):
         if outcome not in df.columns:
             continue
 
-        print(f"\nTarget Outcome: {OUTCOME_LABELS[outcome]}")
-        print("-" * 50)
-
         sub = df.dropna(subset=[outcome]).copy()
 
         current_predictors = [p for p in all_predictors if p in sub.columns]
 
         X = sub[current_predictors]
         y = sub[outcome]
-
-        print(f"Sample Size (N): {len(sub)} countries")
 
         model = xgb.XGBRegressor(
             missing=np.nan,
@@ -170,17 +155,9 @@ def run_xgboost_analysis(df):
         # Use 20% holdout for early stopping
         X_tr, X_val, y_tr, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
         model.fit(X_tr, y_tr, eval_set=[(X_val, y_val)], verbose=False)
-        print(f"  Early stopping: best iteration = {model.best_iteration}")
-
         y_pred = model.predict(X)
         r2 = r2_score(y, y_pred)
         rmse = np.sqrt(mean_squared_error(y, y_pred))
-
-        print(f"Performance Metrics (full data):")
-        print(f"  R-squared (R\u00b2): {r2:.3f}")
-        print(f"  RMSE:           {rmse:.3f}")
-
-        print("Calculating SHAP values...")
 
         explainer = shap.TreeExplainer(model)
         shap_values = explainer(X)
@@ -202,9 +179,6 @@ def run_xgboost_analysis(df):
         plot_path = os.path.join(OUTPUT_FOLDER, f"xgboost_shap_{outcome}.png")
         fig.savefig(plot_path, dpi=300, bbox_inches="tight")
         plt.close(fig)
-        print(f"Saved SHAP plot to: {plot_path}")
-
-        print("Generating XGBoost native importance plots (gain, weight, cover)...")
 
         model.get_booster().feature_names = [PREDICTOR_LABELS.get(f, f) for f in current_predictors]
 
@@ -222,8 +196,6 @@ def run_xgboost_analysis(df):
             imp_path = os.path.join(OUTPUT_FOLDER, f"xgboost_importance_{imp_type}_{outcome}.png")
             fig.savefig(imp_path, dpi=300, bbox_inches="tight")
             plt.close(fig)
-
-        print(f"Saved native importance plots to {OUTPUT_FOLDER}/xgboost_importance_*_{outcome}.png")
 
         metrics_list.append({
             "Outcome": OUTCOME_LABELS[outcome],
@@ -271,9 +243,6 @@ def run_xgboost_analysis(df):
         bar_plot_path = os.path.join(OUTPUT_FOLDER, f"xgboost_importance_bar_{outcome}.png")
         fig.savefig(bar_plot_path, dpi=300, bbox_inches="tight")
         plt.close(fig)
-        print(f"Saved Importance Bar chart to: {bar_plot_path}")
-
-        print("Running 10-Fold Cross Validation...")
         kf = KFold(n_splits=10, shuffle=True, random_state=42)
         
         cv_model = xgb.XGBRegressor(
@@ -292,10 +261,6 @@ def run_xgboost_analysis(df):
         cv_preds = cross_val_predict(cv_model, X, y, cv=kf)
         cv_r2 = r2_score(y, cv_preds)
         cv_rmse = np.sqrt(mean_squared_error(y, cv_preds))
-        
-        print(f"  CV R-squared (R\u00b2): {cv_r2:.3f}")
-        print(f"  CV RMSE:           {cv_rmse:.3f}")
-        print(f"  Overfit gap (Train R\u00b2 - CV R\u00b2): {r2 - cv_r2:.3f}")
         
         metrics_list[-1]["CV_R2"] = round(cv_r2, 3)
         metrics_list[-1]["CV_RMSE"] = round(cv_rmse, 3)
@@ -328,19 +293,12 @@ def run_xgboost_analysis(df):
         scatter_path = os.path.join(OUTPUT_FOLDER, f"xgboost_actual_vs_pred_{outcome}.png")
         fig.savefig(scatter_path, dpi=300, bbox_inches="tight")
         plt.close(fig)
-        print(f"Saved Actual vs Pred plot to: {scatter_path}")
-
     if metrics_list:
         pd.DataFrame(metrics_list).to_csv(os.path.join(OUTPUT_FOLDER, "xgboost_performance_metrics.csv"), index=False)
-        print("\nSaved: outputs/xgboost_performance_metrics.csv")
 
     if shap_importance_list:
         pd.concat(shap_importance_list, ignore_index=True).to_csv(os.path.join(OUTPUT_FOLDER, "xgboost_shap_importance_rankings.csv"), index=False)
-        print("Saved: outputs/xgboost_shap_importance_rankings.csv")
 
 
 df = load_and_merge_data()
 run_xgboost_analysis(df)
-print("\n" + "=" * 60)
-print("XGBOOST ANALYSIS COMPLETE")
-print("=" * 60)

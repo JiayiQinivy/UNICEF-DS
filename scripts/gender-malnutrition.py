@@ -105,36 +105,16 @@ def load_and_merge():
     malnutrition_modelling_sample.csv on ISO3 code.
     Reports sample sizes before and after merge.
     """
-    print("=" * 60)
-    print("SECTION 1: DATA MERGE")
-    print("=" * 60)
-
     gender = pd.read_csv(GENDER_CSV)
     mal    = pd.read_csv(MALNUTRITION_CSV)
-
-    print(f"  Gender dataset   : {len(gender)} countries, "
-          f"{len(gender.columns)} columns")
-    print(f"  Malnutrition     : {len(mal)} countries, "
-          f"{len(mal.columns)} columns")
 
     # Merge on ISO
     df = mal.merge(gender.drop(columns=["country"], errors="ignore"),
                    on="ISO", how="inner")
-    print(f"  After inner merge: {len(df)} countries")
-
-    # Report per-variable sample sizes
-    all_vars = OUTCOMES + GENDER_PREDICTORS + [FGM_PREDICTOR]
-    print(f"\n  Variable coverage in merged dataset:")
-    for col in all_vars:
-        if col in df.columns:
-            n = df[col].notna().sum()
-            print(f"    {col:40s}: {n:3d} countries")
 
     # Save final analytical dataset
     out = os.path.join(OUTPUT_FOLDER, "final_analytical_dataset.csv")
     df.to_csv(out, index=False)
-    print(f"\n  Saved: final_analytical_dataset.csv ({len(df)} countries, "
-          f"{len(df.columns)} columns)")
 
     return df
 
@@ -153,17 +133,11 @@ def spearman_correlation_table(df):
 
     Returns a summary DataFrame for reporting.
     """
-    print("\n" + "=" * 60)
-    print("SECTION 2: SPEARMAN CORRELATION + BONFERRONI CORRECTION")
-    print("=" * 60)
-
     predictors = [p for p in GENDER_PREDICTORS + [FGM_PREDICTOR]
                   if p in df.columns]
     n_tests = len(predictors) * len(OUTCOMES)
     alpha   = 0.05
     bonf    = alpha / n_tests
-    print(f"  Number of tests: {n_tests} | "
-          f"Bonferroni threshold: p < {bonf:.4f}")
 
     rows = []
     for outcome in OUTCOMES:
@@ -188,14 +162,8 @@ def spearman_correlation_table(df):
             })
 
     corr_table = pd.DataFrame(rows)
-    print(f"\n  Results (sorted by |Spearman r|):")
-    display_df = corr_table.sort_values(
-        "Spearman_r", key=abs, ascending=False)
-    print(display_df.to_string(index=False))
-
     out = os.path.join(OUTPUT_FOLDER, "spearman_correlation_table.csv")
     corr_table.to_csv(out, index=False)
-    print(f"\n  Saved: spearman_correlation_table.csv")
 
     return corr_table
 
@@ -210,8 +178,6 @@ def plot_correlation_heatmap(df):
     and malnutrition outcomes. Shows r values with significance stars.
     * p < 0.05  ** p < 0.01  *** p < 0.001
     """
-    print("\n  Generating correlation heatmap...")
-
     predictors = [p for p in GENDER_PREDICTORS + [FGM_PREDICTOR]
                   if p in df.columns]
     outcomes   = [o for o in OUTCOMES if o in df.columns]
@@ -280,7 +246,6 @@ def plot_correlation_heatmap(df):
     out = os.path.join(OUTPUT_FOLDER, "correlation_heatmap.png")
     fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
-    print(f"  Saved: correlation_heatmap.png")
 
     return r_matrix, p_matrix
 
@@ -294,8 +259,6 @@ def plot_scatter_matrix(df):
     Scatter plots: each gender predictor vs each malnutrition outcome.
     Points coloured by income group. Includes regression line and r/p.
     """
-    print("\n  Generating scatter matrix...")
-
     predictors = [p for p in GENDER_PREDICTORS if p in df.columns]
     outcomes   = [o for o in OUTCOMES if o in df.columns]
 
@@ -381,7 +344,6 @@ def plot_scatter_matrix(df):
     out = os.path.join(OUTPUT_FOLDER, "scatter_matrix.png")
     fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
-    print(f"  Saved: scatter_matrix.png")
 
 
 # ──────────────────────────────────────────────────────────────
@@ -398,10 +360,6 @@ def partial_correlation_controlling_income(df):
     take residuals, then compute Spearman r on residuals.
     This removes the confounding effect of economic development.
     """
-    print("\n" + "=" * 60)
-    print("SECTION 5: PARTIAL CORRELATION (controlling for income group)")
-    print("=" * 60)
-
     # Dummy-encode income group
     income_dummies = pd.get_dummies(
         df["income_group"], prefix="ig", drop_first=True)
@@ -451,11 +409,9 @@ def partial_correlation_controlling_income(df):
             })
 
     part_df = pd.DataFrame(rows)
-    print(part_df.to_string(index=False))
 
     out = os.path.join(OUTPUT_FOLDER, "partial_correlation_table.csv")
     part_df.to_csv(out, index=False)
-    print(f"\n  Saved: partial_correlation_table.csv")
 
     return part_df
 
@@ -481,10 +437,6 @@ def run_regression_models(df):
     Reports: Adjusted R², AIC, BIC, coefficients, p-values.
     Compares models using F-test (partial F-test).
     """
-    print("\n" + "=" * 60)
-    print("SECTION 6: OLS REGRESSION MODELS")
-    print("=" * 60)
-
     all_results = []
     model_comparison = []
 
@@ -492,33 +444,21 @@ def run_regression_models(df):
         if outcome not in df.columns:
             continue
 
-        print(f"\n  Outcome: {OUTCOME_LABELS[outcome]}")
-        print(f"  {'─'*50}")
-
         predictors = [p for p in GENDER_PREDICTORS if p in df.columns]
         all_cols   = [outcome, "income_group"] + predictors
         sub        = df[all_cols].dropna()
-        print(f"  Sample size (complete cases): {len(sub)}")
 
         if len(sub) < 20:
-            print(f"  Sample too small for regression.")
             continue
 
         # ── Model 1: Baseline ────────────────────────────────
         formula1 = f"{outcome} ~ C(income_group)"
         m1 = smf.ols(formula1, data=sub).fit()
-        print(f"\n  Model 1 (Baseline — income group only):")
-        print(f"    Adj. R²: {m1.rsquared_adj:.3f} | "
-              f"AIC: {m1.aic:.1f} | N: {int(m1.nobs)}")
 
         # ── Model 2: Gender indicators ────────────────────────
         pred_str  = " + ".join(predictors)
         formula2  = f"{outcome} ~ {pred_str}"
         m2 = smf.ols(formula2, data=sub).fit()
-        print(f"\n  Model 2 (Gender indicators only):")
-        print(f"    Adj. R²: {m2.rsquared_adj:.3f} | "
-              f"AIC: {m2.aic:.1f} | N: {int(m2.nobs)}")
-        print(f"\n  Coefficients (Model 2):")
         coef_df = pd.DataFrame({
             "Coefficient": m2.params.round(3),
             "Std. Error":  m2.bse.round(3),
@@ -529,7 +469,6 @@ def run_regression_models(df):
                 else ("**" if p < 0.01
                       else ("*" if p < 0.05 else ""))),
         })
-        print(coef_df.to_string())
 
         # Store model comparison row
         model_comparison.append({
@@ -569,7 +508,6 @@ def run_regression_models(df):
     comp_df = pd.DataFrame(model_comparison)
     out = os.path.join(OUTPUT_FOLDER, "model_comparison_table.csv")
     comp_df.to_csv(out, index=False)
-    print(f"\n  Saved: model_comparison_table.csv")
 
     results_df = pd.DataFrame(all_results)
     return results_df, comp_df
@@ -580,10 +518,6 @@ def run_model_3(df):
       outcome ~ gender_predictors + wash_indicators + education_indicators
       Tests the explanatory power of gender inequality along with WASH and education indicators.
     """
-    print("\n" + "=" * 60)
-    print("SECTION 6B: OLS REGRESSION MODEL 3 (Integrated)")
-    print("=" * 60)
-
     all_results = []
     model_comparison = []
 
@@ -616,29 +550,20 @@ def run_model_3(df):
         if outcome not in df_m3.columns:
             continue
 
-        print(f"\n  Outcome: {OUTCOME_LABELS[outcome]}")
-        print(f"  {'─'*50}")
-
         base_predictors = [p for p in GENDER_PREDICTORS if p in df_m3.columns]
         extra_predictors = [p for p in wash_predictors + edu_predictors if p in df_m3.columns]
         all_predictors = base_predictors + extra_predictors
 
         all_cols   = [outcome, "income_group"] + all_predictors
         sub        = df_m3[all_cols].dropna()
-        print(f"  Sample size (complete cases): {len(sub)}")
 
         if len(sub) < 10:
-            print(f"  Sample too small for regression.")
             continue
 
         # ── Model 3: Integrated ────────────────────────
         pred_str  = " + ".join(all_predictors)
         formula3  = f"{outcome} ~ {pred_str}"
         m3 = smf.ols(formula3, data=sub).fit()
-        print(f"\n  Model 3 (Integrated):")
-        print(f"    Adj. R²: {m3.rsquared_adj:.3f} | "
-              f"AIC: {m3.aic:.1f} | N: {int(m3.nobs)}")
-        print(f"\n  Coefficients (Model 3):")
         coef_df = pd.DataFrame({
             "Coefficient": m3.params.round(3),
             "Std. Error":  m3.bse.round(3),
@@ -649,7 +574,6 @@ def run_model_3(df):
                 else ("**" if p < 0.01
                       else ("*" if p < 0.05 else ""))),
         })
-        print(coef_df.to_string())
 
         # Store model comparison row
         model_comparison.append({
@@ -681,7 +605,6 @@ def run_model_3(df):
         comp_df = pd.DataFrame(model_comparison)
         out = os.path.join(OUTPUT_FOLDER, "model_comparison_table_m3.csv")
         comp_df.to_csv(out, index=False)
-        print(f"\n  Saved: model_comparison_table_m3.csv")
         results_df = pd.DataFrame(all_results)
         return results_df, comp_df
     return pd.DataFrame(), pd.DataFrame()
@@ -698,8 +621,6 @@ def plot_regression_coefficients(results_df):
     Significant predictors highlighted.
     One panel per malnutrition outcome.
     """
-    print("\n  Generating regression coefficient plot...")
-
     if results_df.empty:
         return
 
@@ -748,7 +669,6 @@ def plot_regression_coefficients(results_df):
     out = os.path.join(OUTPUT_FOLDER, "regression_coefficients.png")
     fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
-    print(f"  Saved: regression_coefficients.png")
 
 
 # ──────────────────────────────────────────────────────────────
@@ -765,8 +685,6 @@ def plot_variable_importance(df):
 
     This is a data-driven alternative to manual feature selection.
     """
-    print("\n  Generating variable importance plot (Lasso)...")
-
     predictors = [p for p in GENDER_PREDICTORS if p in df.columns]
     scaler = StandardScaler()
 
@@ -820,7 +738,6 @@ def plot_variable_importance(df):
     out = os.path.join(OUTPUT_FOLDER, "variable_importance_lasso.png")
     fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
-    print(f"  Saved: variable_importance_lasso.png")
 
 
 # ──────────────────────────────────────────────────────────────
@@ -828,34 +745,15 @@ def plot_variable_importance(df):
 # ──────────────────────────────────────────────────────────────
 
 def print_model_comparison(comp_df):
-    print("\n" + "=" * 60)
-    print("MODEL COMPARISON SUMMARY")
-    print("=" * 60)
-    print(comp_df.to_string(index=False))
-    print("\n  Key metrics for report:")
-    print("  - Adj. R²: proportion of variance explained")
-    print("  - AIC: lower is better (penalises complexity)")
-    print("  - BIC: lower is better (stronger complexity penalty)")
-    print("\n  Interpretation guide:")
-    print("  If Model 2 Adj.R² >> Model 1 Adj.R²:")
-    print("  -> Gender indicators explain malnutrition BEYOND")
-    print("     what income group alone explains")
+    pass
 
-
-# ──────────────────────────────────────────────────────────────
 # MAIN
 # ──────────────────────────────────────────────────────────────
 
 def main():
-    print("=" * 60)
-    print("GENDER INEQUALITY vs MALNUTRITION — ANALYSIS PIPELINE")
-    print("Model 1 (Baseline) + Model 2 (Gender Only)")
-    print("=" * 60)
-
     # 1. Merge
     df = load_and_merge()
     if df.empty:
-        print("Merged dataset is empty. Check file paths.")
         return
 
     # 2. Spearman correlation table
@@ -916,7 +814,6 @@ def main():
             out = os.path.join(OUTPUT_FOLDER, "regression_coefficients_m3.png")
             fig.savefig(out, dpi=300, bbox_inches="tight")
             plt.close(fig)
-            print(f"  Saved: regression_coefficients_m3.png")
 
         plot_m3(results_df_m3)
 
@@ -927,15 +824,6 @@ def main():
     print_model_comparison(comp_df)
     if not comp_df_m3.empty:
         print_model_comparison(comp_df_m3)
-
-    print("\n" + "=" * 60)
-    print("ANALYSIS COMPLETE")
-    print("=" * 60)
-    print("\nOutput files:")
-    for f in sorted(os.listdir(OUTPUT_FOLDER)):
-        if f.endswith((".csv", ".png")):
-            sz = os.path.getsize(os.path.join(OUTPUT_FOLDER, f))
-            print(f"  {f:55s} {sz/1024:6.1f} KB")
 
 
 if __name__ == "__main__":

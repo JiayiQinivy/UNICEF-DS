@@ -106,7 +106,6 @@ def add_iso(df, country_col):
     return df
 
 def clean_education():
-    print("Cleaning Education Data...")
     _script_dir = os.path.dirname(os.path.abspath(__file__))
     _root_dir = os.path.dirname(_script_dir)
     raw = pd.read_excel(os.path.join(_root_dir, 'data', 'education-dataset.xlsx'), sheet_name='10. Edu', header=None)
@@ -131,17 +130,10 @@ def clean_education():
 
     data = data.dropna(subset=['ISO'])
 
-    print(f"Countries with ISO: {data['ISO'].notna().sum()}")
-    print(f"Missing values per column:")
-    print(data.isna().sum())
-    unmatched = data[data['ISO'].isna()]['country'].dropna().unique()
-    if len(unmatched) > 0:
-        print(f"Unmatched countries ({len(unmatched)}): {list(unmatched[:10])}")
-
     out_path = os.path.join(_root_dir, 'outputs', 'education_clean.csv')
     os.makedirs(os.path.join(_root_dir, 'outputs'), exist_ok=True)
     data.to_csv(out_path, index=False)
-    print(f"Saved to {out_path}")
+    print(f"Saved {out_path}  ({len(data)} countries)")
 
 if __name__ == "__main__":
     clean_education()

@@ -169,7 +169,6 @@ def get_iso(country_name):
     return ISO_LOOKUP.get(country_name.strip(), np.nan)
 
 def extract_child_health_db():
-    print("Extracting from Child-Health-Coverage-Database...")
     file_path = os.path.join(_ROOT_DIR, "data", "Child-Health-Coverage-Database-November-2025.xlsx")
     
     # We want DIARCARE, PNEUCARE, ITN
@@ -182,7 +181,6 @@ def extract_child_health_db():
     results = []
     
     for sheet, new_col_name in targets.items():
-        print(f"  Processing sheet: {sheet}")
         df = pd.read_excel(file_path, sheet_name=sheet, header=None)
         df = extract_target_columns(df)
         
@@ -201,11 +199,9 @@ def extract_child_health_db():
 
 
 def extract_malnutrition_datasets():
-    print("Extracting from Malnutrition Datasets...")
     results = []
     
     # 1. Exclusive Breastfeeding
-    print("  Processing: UNICEF_Expanded_Global_Databases_ExclusiveBF_2025.xlsx")
     ebf_df = pd.read_excel(os.path.join(_ROOT_DIR, "data", "Malnutrition Datasets", "Breastfeeding", "UNICEF_Expanded_Global_Databases_ExclusiveBF_2025.xlsx"), sheet_name="Exclusive Breastfeeding", header=None)
     ebf_idx = detect_header(ebf_df)
     if ebf_idx is not None:
@@ -231,7 +227,6 @@ def extract_malnutrition_datasets():
         results.append(ebf_clean[["CountryName", "exclusive_bf_pct"]])
         
     # 2. Low Birthweight
-    print("  Processing: UNICEF-WHO-LBW-estimates-2023.xlsx")
     lbw_df = pd.read_excel(os.path.join(_ROOT_DIR, "data", "Malnutrition Datasets", "Birthweight", "UNICEF-WHO-LBW-estimates-2023.xlsx"), sheet_name="country prevalence", header=8)
     if "ISO3" in lbw_df.columns and "Estimate" in lbw_df.columns:
         # The Estimate column specifies "Point Estimate", "Lower Bound", "Upper Bound"
@@ -245,8 +240,6 @@ def extract_malnutrition_datasets():
             
     return results
 def build_final_dataset():
-    print("\nMerging all indicators into xgboost_final_dataset.csv...")
-    
     # 1. Start with the existing base dataset that has Gender + existing Malnutrition
     base_df = pd.read_csv(os.path.join(_ROOT_DIR, "outputs", "final_analytical_dataset.csv"))
     
@@ -274,7 +267,6 @@ def build_final_dataset():
         # Merge via left join to keep base dataset intact
         final_df = final_df.merge(merge_df, on="ISO", how="left")
         
-        print(f"  Added {new_col}: {final_df[new_col].notna().sum()} countries matched")
 
     # 4. We also need to bring in WASH and Education directly into this final dataset
     # so xgboost_malnutrition.py doesn't have to do it.
@@ -293,12 +285,9 @@ def build_final_dataset():
     final_df = final_df.merge(wash_df[["ISO"] + [c for c in wash_cols if c in wash_df.columns]], on="ISO", how="left")
     final_df = final_df.merge(edu_df[["ISO"] + [c for c in edu_cols if c in edu_df.columns]], on="ISO", how="left")
     
-    print(f"\nFinal Dataset Shape: {final_df.shape}")
-    
     # Save it
     out_path = os.path.join(_ROOT_DIR, "outputs", "xgboost_final_dataset.csv")
     final_df.to_csv(out_path, index=False)
-    print(f"Saved complete dataset to: {out_path}")
 
 if __name__ == "__main__":
     build_final_dataset()

@@ -143,14 +143,9 @@ ISO_LOOKUP = {
 
 
 def add_iso(df, country_col):
-    """Map country names to ISO3 codes and report unmatched rows."""
+    """Map country names to ISO3 codes."""
     df = df.copy()
     df["ISO"] = df[country_col].map(ISO_LOOKUP)
-    unmatched = df[df["ISO"].isna()][country_col].dropna().unique()
-    if len(unmatched) > 0:
-        print(f"  Unmatched countries ({len(unmatched)}): "
-              f"{', '.join(str(x) for x in unmatched[:10])}"
-              f"{'...' if len(unmatched) > 10 else ''}")
     return df
 
 
@@ -165,18 +160,11 @@ def load_adolescent():
     Columns: ISO, Country or Area,
              ANC4_15_19_yrs(%), CPMODHS_15_19_yrs(%), ORS_15_19_yrs(%)
     """
-    print(f"\n{'='*60}")
-    print("LOADING ADOLESCENT HEALTH INDICATORS")
-    print(f"{'='*60}")
-    print(f"  Reading: {ADOLESCENT_FILE}")
-
     if not os.path.exists(ADOLESCENT_FILE):
         print(f"  File not found: {ADOLESCENT_FILE}")
         return pd.DataFrame()
 
     df = pd.read_csv(ADOLESCENT_FILE)
-    print(f"  Raw shape: {df.shape}")
-    print(f"  Columns: {list(df.columns)}")
 
     # Standardise column names
     df = df.rename(columns={
@@ -186,17 +174,10 @@ def load_adolescent():
         "ORS_15_19_yrs(%)":     "ors_usage_pct",
     })
 
-    # ISO column already present; add if missing
     if "ISO" not in df.columns:
-        print("  ISO column missing, adding via lookup")
         df = add_iso(df, "country")
 
     df = df.dropna(subset=["ISO"])
-    print(f"  Countries: {len(df)}")
-    for col in ["anc4_15_19_pct", "modern_contraceptive_pct",
-                "ors_usage_pct"]:
-        if col in df.columns:
-            print(f"  {col:35s}: {df[col].notna().sum()} countries")
 
     keep = ["ISO", "country"] + [
         c for c in ["anc4_15_19_pct", "modern_contraceptive_pct",
@@ -217,17 +198,11 @@ def load_child_marriage():
     - Derive marriage_gap_18 and early_marriage_ratio
     - Add ISO3 codes
     """
-    print(f"\n{'='*60}")
-    print("LOADING CHILD MARRIAGE INDICATORS")
-    print(f"{'='*60}")
-    print(f"  Reading: {CHILD_MARRIAGE_FILE}")
-
     if not os.path.exists(CHILD_MARRIAGE_FILE):
         print(f"  File not found: {CHILD_MARRIAGE_FILE}")
         return pd.DataFrame()
 
     df = pd.read_csv(CHILD_MARRIAGE_FILE, encoding="utf-8-sig")
-    print(f"  Raw shape: {df.shape}")
 
     df = df.rename(columns={"Countries and areas": "country"})
     df = df.replace("-", np.nan)
@@ -245,13 +220,6 @@ def load_child_marriage():
 
     df = add_iso(df, "country")
     df = df.dropna(subset=["ISO"])
-
-    print(f"  Countries with ISO: {len(df)}")
-    for col in ["female_married_by_18", "female_married_by_15",
-                "male_married_by_18", "marriage_gap_18",
-                "early_marriage_ratio"]:
-        if col in df.columns:
-            print(f"  {col:35s}: {df[col].notna().sum()} countries")
 
     keep = [c for c in ["ISO", "country",
                          "female_married_by_15", "female_married_by_18",
@@ -280,18 +248,11 @@ def load_fgm():
     This is expected. FGM is only surveyed in Sub-Saharan Africa and
     parts of the Middle East.
     """
-    print(f"\n{'='*60}")
-    print("LOADING FGM INDICATORS")
-    print(f"{'='*60}")
-    print(f"  Reading: {FGM_FILE}")
-
     if not os.path.exists(FGM_FILE):
         print(f"  File not found: {FGM_FILE}")
         return pd.DataFrame()
 
     df = pd.read_csv(FGM_FILE)
-    print(f"  Raw shape: {df.shape}")
-    print(f"  Columns: {list(df.columns)}")
 
     # Remove annotation rows and regional aggregates that survived
     # the notebook cleaning (e.g. "Contact us:", "East Asia and Pacific")
@@ -305,7 +266,6 @@ def load_fgm():
     df = df[~df["country"].str.contains(exclude_patterns,
                                         case=False, na=False)]
     df = df[df["country"].str.len() <= 60]
-    print(f"  Rows after cleaning annotation rows: {len(df)}")
 
     # Rename from FGM notebook output to standardised names
     df = df.rename(columns={
@@ -322,7 +282,6 @@ def load_fgm():
     df = add_iso(df, "country")
     df = df.dropna(subset=["ISO"])
 
-    # Derived indicators
     if ("fgm_wealth_Q1_poorest" in df.columns
             and "fgm_wealth_Q5_richest" in df.columns):
         df["fgm_wealth_gap"] = (
@@ -331,12 +290,6 @@ def load_fgm():
     if "fgm_urban_pct" in df.columns and "fgm_rural_pct" in df.columns:
         df["fgm_urban_rural_gap"] = (
             df["fgm_rural_pct"] - df["fgm_urban_pct"])
-
-    total     = len(df)
-    with_data = df["fgm_prevalence_pct"].notna().sum()
-    print(f"  Total countries (incl. structural NaN): {total}")
-    print(f"  Countries with FGM data: {with_data}")
-    print(f"  Structural missingness (MNAR): {total - with_data}")
 
     keep = [c for c in ["ISO", "country",
                          "fgm_prevalence_pct",
@@ -354,28 +307,19 @@ def load_fgm():
 # ──────────────────────────────────────────────────────────────
 
 def build_gender_master(adolescent_df, child_marriage_df, fgm_df):
-    print(f"\n{'=' * 60}")
-    print("BUILDING GENDER INEQUALITY MASTER DATASET")
-    print(f"{'=' * 60}")
-
-    # child_marriage是base，直接用，不再重复合并
     master = child_marriage_df.copy()
-    print(f"  Base (child_marriage): {len(master)} countries")
 
     shared_meta = {"country"}
 
     def safe_merge(master, df, name, how="outer"):
         if df is None or df.empty:
-            print(f"  {name} is empty, skipped")
             return master
         join_cols = ["ISO"] + [c for c in df.columns
                                 if c not in shared_meta]
         join_cols = list(dict.fromkeys(join_cols))
         result = master.merge(df[join_cols], on="ISO", how=how)
-        print(f"  + {name:15s} ({how}): master now {len(result)} countries")
         return result
 
-    # 只merge adolescent和fgm，不再merge child_marriage
     master = safe_merge(master, adolescent_df, "adolescent", how="outer")
     master = safe_merge(master, fgm_df, "fgm", how="left")
 
@@ -388,29 +332,6 @@ def build_gender_master(adolescent_df, child_marriage_df, fgm_df):
             columns=[c for c in ["country_x", "country_y"]
                         if c in master.columns])
 
-
-    # Coverage report
-    all_indicators = [
-        "female_married_by_18", "female_married_by_15",
-        "male_married_by_18",   "marriage_gap_18",
-        "early_marriage_ratio",
-        "anc4_15_19_pct",       "modern_contraceptive_pct",
-        "ors_usage_pct",
-        "fgm_prevalence_pct",   "fgm_wealth_gap",
-        "fgm_urban_rural_gap",
-    ]
-    print(f"\n  {'─'*50}")
-    print(f"  COVERAGE SUMMARY")
-    print(f"  {'─'*50}")
-    print(f"  Total countries: {len(master)}")
-    for col in all_indicators:
-        if col in master.columns:
-            print(f"  {col:40s}: {master[col].notna().sum():3d}")
-
-    avail = [c for c in all_indicators if c in master.columns]
-    has_any = master[avail].notna().any(axis=1).sum()
-    print(f"\n  Countries with >= 1 gender indicator: {has_any}")
-
     return master
 
 
@@ -420,7 +341,6 @@ def build_gender_master(adolescent_df, child_marriage_df, fgm_df):
 
 def plot_distributions(master):
     """Distribution + KDE + Shapiro-Wilk for all core indicators."""
-    print("\n  Generating distribution plots...")
     from scipy.stats import gaussian_kde
 
     indicators = [
@@ -479,12 +399,10 @@ def plot_distributions(master):
     out = os.path.join(OUTPUT_FOLDER, "gender_distributions.png")
     fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
-    print(f"  Saved: gender_distributions.png")
 
 
 def plot_child_marriage_gender_gap(master):
     """Boxplot female vs male + Top 15 countries by gender gap."""
-    print("\n  Generating child marriage gender gap plots...")
     sns.set_theme(style="whitegrid", palette="pastel")
     fig, axes = plt.subplots(1, 2, figsize=(16, 6))
 
@@ -523,12 +441,10 @@ def plot_child_marriage_gender_gap(master):
     out = os.path.join(OUTPUT_FOLDER, "child_marriage_gender_gap.png")
     fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
-    print(f"  Saved: child_marriage_gender_gap.png")
 
 
 def plot_fgm_analysis(master):
     """Top 15 FGM countries + wealth quintile gradient."""
-    print("\n  Generating FGM analysis plots...")
     if "fgm_prevalence_pct" not in master.columns:
         return
     df_fgm = master.dropna(subset=["fgm_prevalence_pct"]).copy()
@@ -579,12 +495,10 @@ def plot_fgm_analysis(master):
     out = os.path.join(OUTPUT_FOLDER, "fgm_analysis.png")
     fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
-    print(f"  Saved: fgm_analysis.png")
 
 
 def plot_adolescent_health(master):
     """Boxplot of adolescent indicators + ANC4 vs contraceptive scatter."""
-    print("\n  Generating adolescent health plots...")
     adol_cols = [c for c in ["anc4_15_19_pct",
                               "modern_contraceptive_pct",
                               "ors_usage_pct"]
@@ -641,12 +555,10 @@ def plot_adolescent_health(master):
     out = os.path.join(OUTPUT_FOLDER, "adolescent_health.png")
     fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
-    print(f"  Saved: adolescent_health.png")
 
 
 def plot_correlation_heatmap(master):
     """Spearman correlation heatmap of all gender indicators."""
-    print("\n  Generating correlation heatmap...")
     indicator_cols = [
         "female_married_by_18", "female_married_by_15",
         "male_married_by_18",   "marriage_gap_18",
@@ -691,33 +603,12 @@ def plot_correlation_heatmap(master):
     out = os.path.join(OUTPUT_FOLDER, "gender_correlation_heatmap.png")
     fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
-    print(f"  Saved: gender_correlation_heatmap.png")
 
-
-# ──────────────────────────────────────────────────────────────
 # SECTION 6: SUMMARY STATISTICS
 # ──────────────────────────────────────────────────────────────
 
 def print_summary(master):
-    print(f"\n{'='*60}")
-    print("DESCRIPTIVE STATISTICS")
-    print(f"{'='*60}")
-    cols = [
-        "female_married_by_18", "female_married_by_15",
-        "male_married_by_18",   "marriage_gap_18",
-        "early_marriage_ratio",
-        "anc4_15_19_pct",       "modern_contraceptive_pct",
-        "ors_usage_pct",        "fgm_prevalence_pct",
-    ]
-    avail = [c for c in cols if c in master.columns]
-    print(master[avail].describe().round(2).to_string())
-
-    print(f"\n  Output files:")
-    for f in sorted(os.listdir(OUTPUT_FOLDER)):
-        if f.endswith((".csv", ".png")):
-            sz = os.path.getsize(os.path.join(OUTPUT_FOLDER, f))
-            print(f"  {f:55s} {sz/1024:6.1f} KB")
-    print("=" * 60)
+    pass
 
 
 # ──────────────────────────────────────────────────────────────
@@ -725,10 +616,6 @@ def print_summary(master):
 # ──────────────────────────────────────────────────────────────
 
 def main():
-    print("=" * 60)
-    print("GENDER INEQUALITY ANALYSIS PIPELINE")
-    print("=" * 60)
-
     adolescent_df     = load_adolescent()
     child_marriage_df = load_child_marriage()
     fgm_df            = load_fgm()
@@ -743,9 +630,7 @@ def main():
     out_path = os.path.join(OUTPUT_FOLDER,
                              "gender_inequality_analysis.csv")
     master.to_csv(out_path, index=False)
-    print(f"\n  Final CSV saved -> {out_path}")
-    print(f"  Shape: {master.shape}")
-    print(f"  Columns: {list(master.columns)}")
+    print(f"Saved {out_path}  ({len(master)} countries)")
 
     plot_distributions(master)
     plot_child_marriage_gender_gap(master)
@@ -753,8 +638,7 @@ def main():
     plot_adolescent_health(master)
     plot_correlation_heatmap(master)
 
-    print_summary(master)
-    print("\nPIPELINE COMPLETE")
+    print("PIPELINE COMPLETE")
 
 
 if __name__ == "__main__":
