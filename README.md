@@ -2,10 +2,6 @@
 
 Data science coursework exploring the relationship between **gender inequality**, **WASH (Water, Sanitation & Hygiene)**, **education**, and **child malnutrition** using UNICEF datasets.
 
-## Research Question
-
-> Does gender inequality — measured through child marriage, adolescent health access, and FGM prevalence — explain variation in child malnutrition (stunting, wasting, overweight) across countries, beyond what income alone predicts?
-
 ## Data Sources
 
 All data sourced from [UNICEF Data](https://data.unicef.org/):
@@ -63,14 +59,6 @@ The project follows a **four-model incremental approach**:
 3. **Model 3 (Integrated)**: Malnutrition ~ Income + Gender + WASH + Education + Health
 4. **XGBoost**: Non-linear predictive model with SHAP interpretability
 
-## Key Findings
-
-- **Income group** is the strongest single predictor of stunting (SHAP = 3.03)
-- **Low birthweight** is the top predictor for wasting
-- **Female primary completion** is the top predictor for overweight
-- WASH indicators are absorbed by income group due to high collinearity
-- XGBoost CV R-squared: Stunting 0.58, Wasting 0.34, Overweight 0.24
-
 ## How to Run
 
 ```bash
@@ -89,5 +77,8 @@ python scripts/xgboost_analysis.py
 ```
 
 ## Team
-
-Data Science Coursework — UNICEF Child Wellbeing Analysis
+Omar Elekiaby
+Saud Binlebdah
+David Reeder
+Sulaiman Alsalami
+Jiayi Qin
