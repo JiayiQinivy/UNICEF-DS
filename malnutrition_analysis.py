@@ -424,6 +424,62 @@ def plot_four_panel_map(master):
     fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
 
+def plot_composite_map(master):
+    """
+    Single-panel choropleth of malnutrition composite score
+    for IEEE two-column layout (single column width).
+    """
+    world = get_world()
+    if world is None:
+        return
+
+    merged = world.merge(master, how="left",
+                          left_on="SOV_A3", right_on="ISO")
+
+    col  = "malnutrition_composite_score"
+    data = merged[col].dropna()
+    vmin = float(data.quantile(0.02))
+    vmax = float(data.quantile(0.98))
+
+    fig, ax = plt.subplots(1, 1, figsize=(5, 2.8))
+
+    merged.plot(
+        column=col, ax=ax, cmap="YlOrRd",
+        vmin=vmin, vmax=vmax, legend=False,
+        missing_kwds={"color": "#d4d4d4"},
+        linewidth=0.15, edgecolor="#aaaaaa")
+
+    sm = plt.cm.ScalarMappable(
+        cmap="YlOrRd", norm=plt.Normalize(vmin=vmin, vmax=vmax))
+    sm._A = []
+    cbar = fig.colorbar(sm, ax=ax,
+                        fraction=0.012,
+                        pad=0.01,
+                        shrink=0.85)
+    cbar.ax.tick_params(labelsize=6)
+    cbar.set_label("Composite score (%)", fontsize=6, labelpad=3)
+
+    ax.legend(
+        handles=[mpatches.Patch(color="#d4d4d4", label="No data")],
+        loc="lower left", fontsize=5, framealpha=0.8,
+        handlelength=1, handleheight=0.8,
+        borderpad=0.3, labelspacing=0.2)
+
+    ax.set_title(
+        f"Global Malnutrition Composite Score (n=137, UNICEF JME 2025)",
+        fontsize=7, fontweight="bold", pad=3)
+
+    ax.axis("off")
+
+    fig.subplots_adjust(left=0.01, right=0.88,
+                        top=0.92, bottom=0.01)
+
+    out = os.path.join(OUTPUT_FOLDER, "report_composite_map.png")
+    fig.savefig(out, dpi=300, bbox_inches="tight")
+    plt.close(fig)
+    print(f"  Saved: report_composite_map.png")
+
+
 
 def plot_overlapping_stacked_bar(master):
     """
@@ -604,7 +660,6 @@ def plot_regional_boxplot(master):
         ("stunting_national",    "Stunting (%)"),
         ("wasting_national",     "Wasting (%)"),
         ("overweight_national",  "Overweight (%)"),
-        ("wasted_and_stunted_pct", "Wasted & Stunted (%)"),
     ]
     panels = [(c, l) for c, l in candidates
               if c in master.columns
@@ -621,8 +676,7 @@ def plot_regional_boxplot(master):
         region_order = sorted(df["unicef_region"].unique())
 
     colors = ["#4e79a7", "#f28e2b", "#59a14f", "#b07aa1"]
-    fig, axes = plt.subplots(1, len(panels),
-                              figsize=(5.5 * len(panels), 6))
+    fig, axes = plt.subplots(1, len(panels), figsize=(15, 6))
     if len(panels) == 1:
         axes = [axes]
 
@@ -640,15 +694,14 @@ def plot_regional_boxplot(master):
 
         ax.set_xticks(range(1, len(region_order) + 1))
         ax.set_xticklabels(region_order, rotation=38,
-                            ha="right", fontsize=8)
+                            ha="right", fontsize=12)
         ax.set_title(label, fontsize=11, fontweight="bold")
-        ax.set_ylabel("Prevalence (%)", fontsize=9)
+        ax.set_ylabel("Prevalence (%)", fontsize=12)
         ax.set_ylim(bottom=0)
         ax.grid(axis="y", alpha=0.3)
 
     fig.suptitle(
-        "Child Malnutrition by UNICEF Region\n"
-        "(Sorted by median stunting rate)",
+        "Child Malnutrition by UNICEF Region",
         fontsize=13, fontweight="bold", y=1.01)
     plt.tight_layout()
     out = os.path.join(OUTPUT_FOLDER,
@@ -703,6 +756,7 @@ def main():
     plot_double_burden(master)
     plot_distributions(master)
     plot_regional_boxplot(master)
+    plot_composite_map(master)
 
     print("PIPELINE COMPLETE")
 

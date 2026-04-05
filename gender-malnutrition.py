@@ -35,6 +35,7 @@ Note on causal language:
 """
 
 import os
+import textwrap
 import warnings
 import numpy as np
 import pandas as pd
@@ -212,9 +213,15 @@ def plot_correlation_heatmap(df):
                 annot.loc[pred, outcome] = f"n={n}"
             else:
                 stars = ""
-                if p < 0.001: stars = "***"
-                elif p < 0.01: stars = "**"
-                elif p < 0.05: stars = "*"
+                if p < 0.001:
+                    stars = "***"
+
+                elif p < 0.01:
+                    stars = "**"
+
+                elif p < 0.05:
+                    stars = "*"
+
                 annot.loc[pred, outcome] = f"{r:.2f}{stars}\nn={n}"
 
     # Rename for display
@@ -223,23 +230,27 @@ def plot_correlation_heatmap(df):
     annot_display = annot.rename(
         index=PREDICTOR_LABELS, columns=OUTCOME_LABELS)
 
-    fig, ax = plt.subplots(figsize=(10, 7))
+    fig, ax = plt.subplots(figsize=(8, 6))
     sns.heatmap(
         r_display.astype(float),
         annot=annot_display, fmt="",
         cmap="RdBu_r", center=0, vmin=-1, vmax=1,
-        ax=ax, linewidths=0.8,
-        annot_kws={"size": 9},
-        cbar_kws={"label": "Spearman r", "shrink": 0.8}
+        ax=ax, linewidths=1.2,
+        annot_kws={"size": 11, "weight": "bold"},
+        cbar_kws={"label": "Spearman r", "shrink": 0.8})
+    wrapped_labels = [textwrap.fill(label, width=20) for label in r_display.index]
+    ax.set_yticklabels(
+        wrapped_labels,
+        rotation=0,  # 建议换行后旋转角度减小，否则很难读
+        va="center",
+        fontsize=10
     )
+    plt.xticks(rotation=15, ha="right", fontsize=11)
+
     ax.set_title(
-        "Spearman Correlation: Gender Inequality vs Child Malnutrition\n"
-        "* p<0.05  ** p<0.01  *** p<0.001  (n = pairwise complete cases)",
-        fontsize=12, fontweight="bold", pad=12)
-    ax.set_xlabel("")
-    ax.set_ylabel("")
-    plt.xticks(rotation=20, ha="right", fontsize=10)
-    plt.yticks(rotation=0, fontsize=9)
+        "Spearman Correlation: Gender Inequality vs Child Malnutrition(* p < 0.05  ** p < 0.01  *** p < 0.001)"
+        , fontsize=10, fontweight="bold", pad=10)
+
     plt.tight_layout()
 
     out = os.path.join(OUTPUT_FOLDER, "correlation_heatmap.png")
@@ -248,6 +259,99 @@ def plot_correlation_heatmap(df):
 
     return r_matrix, p_matrix
 
+def plot_gender_stunting_scatter(df):
+    """
+    Scatter: female_married_by_18 vs stunting_national.
+    Points coloured by UNICEF region. Single-column IEEE width.
+    """
+    REGION_COLORS = {
+        "SA":   "#d62728",
+        "WCA":  "#ff7f0e",
+        "ESA":  "#e377c2",
+        "EAP":  "#2ca02c",
+        "MENA": "#8c564b",
+        "LAC":  "#17becf",
+        "EECA": "#1f77b4",
+        "WE":   "#7f7f7f",
+        "NA":   "#bcbd22",
+    }
+    REGION_LABELS = {
+        "SA":   "South Asia",
+        "WCA":  "West/Central Africa",
+        "ESA":  "East/Southern Africa",
+        "EAP":  "East Asia & Pacific",
+        "MENA": "Middle East & N. Africa",
+        "LAC":  "Latin America & Carib.",
+        "EECA": "E. Europe & Central Asia",
+        "WE":   "Western Europe",
+        "NA":   "North America",
+    }
+
+    # Try both possible region column names
+    region_col = ("unicef_region" if "unicef_region" in df.columns
+                  else "unicef_reporting_region" if "unicef_reporting_region" in df.columns
+    else None)
+
+    if region_col is None:
+        print("  Scatter: no region column found")
+        return
+
+    need = ["female_married_by_18", "stunting_national", region_col]
+    plot_df = df[need].dropna().copy()
+    plot_df = plot_df.rename(columns={region_col: "region"})
+    if plot_df.empty:
+        print("  Scatter: no data available")
+        return
+
+    fig, ax = plt.subplots(figsize=(3.8, 3.2))
+
+    for region, grp in plot_df.groupby("region"):
+        color = REGION_COLORS.get(region, "#999999")
+        label = REGION_LABELS.get(region, region)
+        ax.scatter(grp["female_married_by_18"],
+                   grp["stunting_national"],
+                   c=color, s=28, alpha=0.82,
+                   edgecolors="white", linewidth=0.3,
+                   label=label)
+
+    # OLS trend line
+    x = plot_df["female_married_by_18"].values
+    y = plot_df["stunting_national"].values
+    m, b = np.polyfit(x, y, 1)
+    x_line = np.linspace(x.min(), x.max(), 100)
+    ax.plot(x_line, m * x_line + b,
+            color="black", lw=1.2, ls="--", alpha=0.55)
+
+    # Spearman r annotation
+    r, p = spearmanr(x, y)
+    sig = ("***" if p < 0.001 else
+           ("**"  if p < 0.01  else
+            ("*"   if p < 0.05  else "")))
+    ax.annotate(f"r = {r:.2f}{sig},  n = {len(plot_df)}",
+                xy=(0.05, 0.94), xycoords="axes fraction",
+                fontsize=8, va="top",
+                bbox=dict(boxstyle="round,pad=0.3",
+                           fc="white", alpha=0.88))
+
+    ax.set_xlabel("Female Child Marriage by 18 (%)", fontsize=8)
+    ax.set_ylabel("Stunting Prevalence (%)", fontsize=8)
+    ax.set_title("Child Marriage vs Stunting\nby UNICEF Region",
+                 fontsize=8, fontweight="bold", pad=4)
+    ax.tick_params(labelsize=7)
+    ax.grid(alpha=0.25)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+
+    ax.legend(fontsize=5.5, loc="lower right",
+              framealpha=0.85, ncol=1,
+              handlelength=1, handleheight=0.8,
+              borderpad=0.4, labelspacing=0.3)
+
+    plt.tight_layout(pad=0.4)
+    out = os.path.join(OUTPUT_FOLDER, "report_gender_scatter.png")
+    fig.savefig(out, dpi=300, bbox_inches="tight")
+    plt.close(fig)
+    print("  Saved: report_gender_scatter.png")
 
 # ──────────────────────────────────────────────────────────────
 # SECTION 4: SCATTER MATRIX
@@ -755,6 +859,7 @@ def main():
 
     # 3. Correlation heatmap
     plot_correlation_heatmap(df)
+    plot_gender_stunting_scatter(df)
 
     # 4. Scatter matrix
     plot_scatter_matrix(df)

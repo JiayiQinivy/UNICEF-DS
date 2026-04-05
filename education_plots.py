@@ -33,6 +33,7 @@ Outputs (same directory as this script):
 """
 
 import os
+import textwrap
 import warnings
 import numpy as np
 import pandas as pd
@@ -177,26 +178,41 @@ def plot_correlation_heatmap(merged):
     r_display = r_mat.rename(index=EDU_LABELS, columns=OUTCOME_LABELS)
     annot_display = annot.rename(index=EDU_LABELS, columns=OUTCOME_LABELS)
 
-    fig, ax = plt.subplots(figsize=(9, 7))
+
+    fig, ax = plt.subplots(figsize=(8, 6))  # 稍微增加宽度，给左侧换行标签留空间
+
     sns.heatmap(
         r_display.astype(float),
-        annot=annot_display, fmt="",
+        annot=annot_display,
+        fmt="",
         cmap="RdBu_r", center=0, vmin=-1, vmax=1,
-        ax=ax, linewidths=0.8, annot_kws={"size": 9},
+        ax=ax,
+        linewidths=0.8,
+        annot_kws={"size": 12},  # 稍微缩小单元格字体，看起来更精致
         cbar_kws={"label": "Spearman r", "shrink": 0.75})
+
+    # 3. 应用换行后的标签
+    wrapped_yticklabels = [textwrap.fill(label, width=20) for label in r_display.index]
+    ax.set_yticklabels(
+        wrapped_yticklabels,
+        rotation=0,  # 换行后建议保持水平 (0度)
+        fontsize=11,
+        va="center"  # 垂直居中对齐
+    )
+
+    # X 轴处理
+    plt.xticks(rotation=20, ha="right", fontsize=12)
+
     ax.set_title(
         "Spearman Correlation: Education Indicators vs Child Malnutrition\n"
         "Sorted by avg |r|  |  * p<0.05  ** p<0.01  *** p<0.001",
         fontsize=11, fontweight="bold", pad=12)
+
     ax.set_xlabel("")
     ax.set_ylabel("")
-    plt.xticks(rotation=15, ha="right", fontsize=10)
-    plt.yticks(rotation=0, fontsize=9)
-    plt.tight_layout()
 
-    out = os.path.join(OUTPUT_DIR, "education_correlation_heatmap.png")
-    fig.savefig(out, dpi=300, bbox_inches="tight")
-    plt.close(fig)
+    plt.tight_layout()
+    #plt.close(fig)
     print(f"  Saved: education_correlation_heatmap.png")
 
 
@@ -213,12 +229,9 @@ def plot_scatter_plots(merged):
     """
     print("\n  Generating Figure 2: Scatter plots...")
 
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    panels = [
-        ("oos_upsec_f",          "stunting_national"),
-        ("completion_primary_f", "stunting_national"),
-    ]
+    fig, ax = plt.subplots(1, 1, figsize=(7,5))
+    panels = [("oos_upsec_f", "stunting_national")]
+    axes = [ax]
 
     for ax, (edu_col, outcome) in zip(axes, panels):
         sub = merged[[edu_col, outcome, "region"]].dropna()
@@ -229,8 +242,8 @@ def plot_scatter_plots(merged):
             grp   = sub[sub["region"] == region]
             color = REGION_COLORS.get(region, "#999999")
             ax.scatter(grp[edu_col], grp[outcome],
-                       c=color, s=45, alpha=0.78,
-                       edgecolors="white", linewidth=0.4,
+                       c=color, s=50, alpha=0.7,
+                       edgecolors="white", linewidth=0.5,
                        label=region)
 
         # Regression line
@@ -247,16 +260,16 @@ def plot_scatter_plots(merged):
             ("*" if p < 0.05 else ""))
         ax.annotate(f"r = {r:+.3f}{s}\nn = {len(sub)}",
                     xy=(0.05, 0.95), xycoords="axes fraction",
-                    fontsize=9, va="top",
-                    bbox=dict(boxstyle="round,pad=0.3",
+                    fontsize=10, va="top",
+                    bbox=dict(boxstyle="round,pad=0.4",
                                fc="white", alpha=0.85))
 
-        ax.set_xlabel(EDU_LABELS.get(edu_col, edu_col), fontsize=10)
-        ax.set_ylabel(OUTCOME_LABELS.get(outcome, outcome), fontsize=10)
-        ax.set_title(
-            f"{EDU_LABELS.get(edu_col, edu_col)}\nvs "
-            f"{OUTCOME_LABELS.get(outcome, outcome)}",
-            fontsize=10, fontweight="bold")
+        ax.set_xlabel(EDU_LABELS.get(edu_col, edu_col), fontsize=11)
+        ax.set_ylabel(OUTCOME_LABELS.get(outcome, outcome), fontsize=11)
+        #ax.set_title(
+            #f"{EDU_LABELS.get(edu_col, edu_col)}\nvs "
+            #f"{OUTCOME_LABELS.get(outcome, outcome)}",
+            #fontsize=10, fontweight="bold")
         ax.grid(alpha=0.25)
         ax.tick_params(labelsize=8)
 
@@ -271,9 +284,8 @@ def plot_scatter_plots(merged):
                bbox_to_anchor=(0.5, -0.12))
 
     fig.suptitle(
-        "Female Education Indicators vs Child Stunting\n"
-        "(Spearman r; points coloured by UNICEF Region)",
-        fontsize=12, fontweight="bold", y=1.02)
+        "Female Upper-Secondary OOS Rate vs Child Stunting",
+        fontsize=12, fontweight="bold", y=1)
     plt.tight_layout()
 
     out = os.path.join(OUTPUT_DIR, "education_scatter_plots.png")
