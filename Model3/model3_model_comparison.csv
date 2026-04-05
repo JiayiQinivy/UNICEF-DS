@@ -1,0 +1,13 @@
+Outcome,Model,N,R2,Adj_R2,AIC,BIC
+Stunting (%),Model 1 (Baseline),75,0.428,0.404,558.3,567.6
+Stunting (%),Model 2 (Gender),75,0.288,0.279,570.7,575.4
+Stunting (%),Model 3 (Gender+Education),75,0.385,0.368,561.8,568.7
+Stunting (%),Model 4 (Full multivariate),75,0.545,0.505,547.1,563.3
+Wasting (%),Model 1 (Baseline),75,0.248,0.216,384.8,394.1
+Wasting (%),Model 2 (Gender),75,0.117,0.105,392.8,397.5
+Wasting (%),Model 3 (Gender+Education),75,0.169,0.146,390.2,397.2
+Wasting (%),Model 4 (Full multivariate),75,0.324,0.264,382.8,399.0
+Overweight (%),Model 1 (Baseline),75,0.35,0.323,398.3,407.6
+Overweight (%),Model 2 (Gender),75,0.141,0.129,415.2,419.9
+Overweight (%),Model 3 (Gender+Education),75,0.209,0.187,411.0,417.9
+Overweight (%),Model 4 (Full multivariate),75,0.361,0.305,403.0,419.2
