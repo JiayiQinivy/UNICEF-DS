@@ -72,6 +72,7 @@ GENDER_CSV       = os.path.join(ROOT_DIR, "outputs",
 EDUCATION_CSV    = os.path.join(ROOT_DIR, "education_clean.csv")
 WASH_CSV         = os.path.join(ROOT_DIR, "WASH", "outputs",
                                  "wash_selected.csv")
+COVERAGE_FILE    = os.path.join(ROOT_DIR, "data", "coverage.xlsx")
 OUTPUT_FOLDER    = SCRIPT_DIR
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 # ======================
@@ -83,20 +84,23 @@ OUTCOME_LABELS = {
     "overweight_national": "Overweight (%)",
 }
 
-GENDER_PRED = "female_married_by_18"
-EDU_PRED    = "literacy_f"
-WASH_PRED   = "san_bas_nat"
+GENDER_PRED   = "female_married_by_18"
+EDU_PRED      = "literacy_f"
+WASH_PRED     = "san_bas_nat"
+COVERAGE_PRED = "bcg_coverage"
 
 PREDICTOR_LABELS = {
     "female_married_by_18": "Female Marriage by 18 (%)",
     "literacy_f":           "Female Literacy Rate (%)",
     "san_bas_nat":          "Basic Sanitation Access (%)",
+    "bcg_coverage":         "BCG Coverage (%)",
 }
 
 GROUP_COLORS = {
     "Gender":    "#e15759",
     "Education": "#4e79a7",
     "WASH":      "#59a14f",
+    "Coverage":  "#f28e2b",
 }
 
 
@@ -114,6 +118,7 @@ def load_and_merge():
         "Gender":        GENDER_CSV,
         "Education":     EDUCATION_CSV,
         "WASH":          WASH_CSV,
+        "Coverage":      COVERAGE_FILE,
     }
     for name, path in files.items():
         status = "found" if os.path.exists(path) else "NOT FOUND"
@@ -127,10 +132,16 @@ def load_and_merge():
     gen  = pd.read_csv(GENDER_CSV)
     edu  = pd.read_csv(EDUCATION_CSV)
     wash = pd.read_csv(WASH_CSV)
+    
+    # Process coverage data: explicitly use the 2024 column
+    cov_raw = pd.read_excel(COVERAGE_FILE)
+    cov = cov_raw[['iso3', '2024']].rename(columns={'iso3': 'ISO', '2024': COVERAGE_PRED})
+    # Drop rows where ISO is null or coverage is null
+    cov = cov.dropna(subset=['ISO', COVERAGE_PRED])
 
     df = mal.copy()
     for src, name in [(gen, "gender"), (edu, "education"),
-                       (wash, "wash")]:
+                       (wash, "wash"), (cov, "coverage")]:
         drop_cols = [c for c in src.columns
                      if c in ("country", "year", "sdg_region",
                                "unicef_reporting_region",
@@ -152,14 +163,14 @@ def load_and_merge():
 
     # Model 4 complete-case subsample
     m4_cols = OUTCOMES + ["income_group",
-                           GENDER_PRED, EDU_PRED, WASH_PRED]
+                           GENDER_PRED, EDU_PRED, WASH_PRED, COVERAGE_PRED]
     avail   = [c for c in m4_cols if c in df.columns]
     n_m4    = df[avail].dropna().shape[0]
     print(f"\n  Model 4 complete-case sample: n = {n_m4} countries")
     print(f"  (all four models use this same subsample)")
 
     print(f"\n  Predictor coverage in merged dataset:")
-    for col in [GENDER_PRED, EDU_PRED, WASH_PRED]:
+    for col in [GENDER_PRED, EDU_PRED, WASH_PRED, COVERAGE_PRED]:
         if col in df.columns:
             print(f"    {col:30s}: {df[col].notna().sum():3d} / {len(df)}")
 
@@ -188,7 +199,7 @@ def run_models(df):
     print("=" * 60)
 
     m4_cols = OUTCOMES + ["income_group",
-                           GENDER_PRED, EDU_PRED, WASH_PRED]
+                           GENDER_PRED, EDU_PRED, WASH_PRED, COVERAGE_PRED]
     avail   = [c for c in m4_cols if c in df.columns]
     sub     = df[avail].dropna().copy()
     n       = len(sub)
@@ -201,9 +212,9 @@ def run_models(df):
         if outcome not in sub.columns:
             continue
 
-        print(f"\n  {'─'*55}")
+        print(f"\n  {'-'*55}")
         print(f"  Outcome: {OUTCOME_LABELS[outcome]}")
-        print(f"  {'─'*55}")
+        print(f"  {'-'*55}")
 
         m1 = smf.ols(
             f"{outcome} ~ C(income_group)",
@@ -216,7 +227,7 @@ def run_models(df):
             data=sub).fit()
         m4 = smf.ols(
             f"{outcome} ~ {GENDER_PRED} + {EDU_PRED}"
-            f" + {WASH_PRED} + C(income_group)",
+            f" + {WASH_PRED} + {COVERAGE_PRED} + C(income_group)",
             data=sub).fit()
 
         for label, model in [
@@ -269,7 +280,8 @@ def run_models(df):
             if "Intercept" in str(var) or "income_group" in str(var):
                 continue
             group = ("Gender"    if var == GENDER_PRED else
-                     "Education" if var == EDU_PRED    else "WASH")
+                     "Education" if var == EDU_PRED    else
+                     "WASH"      if var == WASH_PRED   else "Coverage")
             all_coefs.append({
                 "Outcome":     OUTCOME_LABELS[outcome],
                 "Predictor":   PREDICTOR_LABELS.get(
@@ -435,10 +447,11 @@ def plot_coefficient_forest(coefs_df):
 def plot_lasso_importance(sub):
     print("\n  Generating Figure 3: Lasso variable importance...")
 
-    predictors = [GENDER_PRED, EDU_PRED, WASH_PRED]
-    groups     = {GENDER_PRED: "Gender",
-                  EDU_PRED:    "Education",
-                  WASH_PRED:   "WASH"}
+    predictors = [GENDER_PRED, EDU_PRED, WASH_PRED, COVERAGE_PRED]
+    groups     = {GENDER_PRED:   "Gender",
+                  EDU_PRED:      "Education",
+                  WASH_PRED:     "WASH",
+                  COVERAGE_PRED: "Coverage"}
     scaler = StandardScaler()
 
     fig, axes = plt.subplots(1, len(OUTCOMES),
@@ -492,7 +505,7 @@ def plot_lasso_importance(sub):
                title_fontsize=9, framealpha=0.9)
     fig.suptitle(
         "Model 4 — Variable Importance via LassoCV\n"
-        "Standardised predictors  |  Gender | Education | WASH",
+        "Standardised predictors  |  Gender | Education | WASH | Coverage",
         fontsize=12, fontweight="bold", y=1.02)
     plt.tight_layout()
 
@@ -512,6 +525,7 @@ def main():
     print(f"  Gender predictor:    {GENDER_PRED}")
     print(f"  Education predictor: {EDU_PRED}")
     print(f"  WASH predictor:      {WASH_PRED}")
+    print(f"  Coverage predictor:  {COVERAGE_PRED}")
     print("=" * 60)
 
     df = load_and_merge()

@@ -1,10 +1,13 @@
 Outcome,Predictor,Variable,Coefficient,SE,p_value,Sig,Group
-Stunting (%),Female Marriage by 18 (%),female_married_by_18,0.154,0.099,0.1233,,Gender
-Stunting (%),Female Literacy Rate (%),literacy_f,-0.001,0.093,0.9921,,Education
-Stunting (%),Basic Sanitation Access (%),san_bas_nat,-0.164,0.056,0.0046,**,WASH
-Wasting (%),Female Marriage by 18 (%),female_married_by_18,0.031,0.033,0.3542,,Gender
-Wasting (%),Female Literacy Rate (%),literacy_f,-0.04,0.031,0.205,,Education
-Wasting (%),Basic Sanitation Access (%),san_bas_nat,-0.014,0.019,0.4582,,WASH
-Overweight (%),Female Marriage by 18 (%),female_married_by_18,-0.028,0.038,0.46,,Gender
-Overweight (%),Female Literacy Rate (%),literacy_f,-0.0,0.036,0.9918,,Education
-Overweight (%),Basic Sanitation Access (%),san_bas_nat,0.009,0.021,0.6759,,WASH
+Stunting (%),Female Marriage by 18 (%),female_married_by_18,0.169,0.096,0.0834,,Gender
+Stunting (%),Female Literacy Rate (%),literacy_f,0.025,0.089,0.7779,,Education
+Stunting (%),Basic Sanitation Access (%),san_bas_nat,-0.128,0.054,0.0211,*,WASH
+Stunting (%),BCG Coverage (%),bcg_coverage,-0.345,0.108,0.0022,**,Coverage
+Wasting (%),Female Marriage by 18 (%),female_married_by_18,0.024,0.034,0.4796,,Gender
+Wasting (%),Female Literacy Rate (%),literacy_f,-0.041,0.032,0.1967,,Education
+Wasting (%),Basic Sanitation Access (%),san_bas_nat,-0.014,0.019,0.4732,,WASH
+Wasting (%),BCG Coverage (%),bcg_coverage,-0.015,0.039,0.7025,,Coverage
+Overweight (%),Female Marriage by 18 (%),female_married_by_18,-0.04,0.039,0.3102,,Gender
+Overweight (%),Female Literacy Rate (%),literacy_f,-0.004,0.036,0.9209,,Education
+Overweight (%),Basic Sanitation Access (%),san_bas_nat,0.008,0.022,0.7199,,WASH
+Overweight (%),BCG Coverage (%),bcg_coverage,-0.015,0.044,0.732,,Coverage
