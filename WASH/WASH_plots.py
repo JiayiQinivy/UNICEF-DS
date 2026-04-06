@@ -235,7 +235,8 @@ def plot_correlation_heatmap(merged):
     """
     print("\n  Generating Figure 1: Correlation heatmap...")
 
-    indicators = [c for c in ALL_WASH_COLS if c in merged.columns]
+    #indicators = [c for c in ALL_WASH_COLS if c in merged.columns]
+    indicators = [c for c in SELECTED_WASH if c in merged.columns]
     r_mat = pd.DataFrame(index=indicators, columns=OUTCOMES, dtype=float)
     p_mat = pd.DataFrame(index=indicators, columns=OUTCOMES, dtype=float)
     n_mat = pd.DataFrame(index=indicators, columns=OUTCOMES, dtype=int)
@@ -275,29 +276,20 @@ def plot_correlation_heatmap(merged):
     r_display = r_mat.rename(index=WASH_LABELS, columns=OUTCOME_LABELS)
     a_display = annot.rename(index=WASH_LABELS, columns=OUTCOME_LABELS)
 
-    fig, ax = plt.subplots(figsize=(9, 8))
+    fig, ax = plt.subplots(figsize=(6, 4))
     sns.heatmap(
         r_display.astype(float),
         annot=a_display, fmt="",
         cmap="RdBu_r", center=0, vmin=-1, vmax=1,
-        ax=ax, linewidths=0.8, annot_kws={"size": 9},
+        ax=ax, linewidths=0.8, annot_kws={"size": 11, "weight": "bold"},
         cbar_kws={"label": "Spearman r", "shrink": 0.75})
 
     # Highlight selected indicator rows with a box
-    selected_labels = [WASH_LABELS[c] for c in SELECTED_WASH
-                       if c in WASH_LABELS]
-    row_labels = list(r_display.index)
-    for i, label in enumerate(row_labels):
-        if label in selected_labels:
-            ax.add_patch(plt.Rectangle(
-                (0, i), len(OUTCOMES), 1,
-                fill=False, edgecolor="black",
-                lw=2.5, clip_on=False))
+
 
     ax.set_title(
         "Spearman Correlation: WASH Indicators vs Child Malnutrition\n"
-        "Sorted by avg |r|  |  * p<0.05  ** p<0.01  *** p<0.001  "
-        "|  boxes = selected",
+        " * p<0.05  ** p<0.01  *** p<0.001  ",
         fontsize=11, fontweight="bold", pad=12)
     ax.set_xlabel("")
     ax.set_ylabel("")
@@ -322,9 +314,10 @@ def plot_scatter_plots(merged):
     """
     print("\n  Generating Figure 2: Scatter plots...")
 
-    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+    fig, ax = plt.subplots(1, 1, figsize=(7, 5))
+    axes = [ax]
 
-    for ax, wash_col in zip(axes, SELECTED_WASH):
+    for ax, wash_col in zip(axes, ["san_bas_nat"]):
         outcome = "stunting_national"
         sub = merged[[wash_col, outcome, "region"]].dropna()
         regions = sorted(sub["region"].dropna().unique())
@@ -350,25 +343,25 @@ def plot_scatter_plots(merged):
               ("*"   if p < 0.05  else "")))
         ax.annotate(f"r = {r:+.3f}{s}\nn = {len(sub)}",
                     xy=(0.05, 0.95), xycoords="axes fraction",
-                    fontsize=9, va="top",
+                    fontsize=10, va="top",
                     bbox=dict(boxstyle="round,pad=0.3",
                                fc="white", alpha=0.85))
 
-        ax.set_xlabel(WASH_LABELS.get(wash_col, wash_col), fontsize=10)
-        ax.set_ylabel(OUTCOME_LABELS["stunting_national"], fontsize=10)
+        ax.set_xlabel(WASH_LABELS.get(wash_col, wash_col), fontsize=12)
+        ax.set_ylabel(OUTCOME_LABELS["stunting_national"], fontsize=12)
         ax.set_title(WASH_LABELS.get(wash_col, wash_col),
-                     fontsize=10, fontweight="bold")
+                     fontsize=12, fontweight="bold")
         ax.grid(alpha=0.25)
-        ax.tick_params(labelsize=8)
+        ax.tick_params(labelsize=11)
 
     handles = [mpatches.Patch(color=REGION_COLORS.get(r, "#999"),
                                label=r)
                for r in sorted(REGION_COLORS.keys())
                if r in merged["region"].values]
-    fig.legend(handles=handles, loc="lower center",
-               ncol=4, fontsize=8, title="UNICEF Region",
-               title_fontsize=9, framealpha=0.9,
-               bbox_to_anchor=(0.5, -0.10))
+    ax.legend(handles=handles, loc="upper right",
+              fontsize=8, framealpha=0.85, ncol=1,
+              handlelength=1, handleheight=0.8,
+              borderpad=0.5, labelspacing=0.3)
 
     fig.suptitle(
         "WASH Basic Access Indicators vs Child Stunting\n"
