@@ -43,7 +43,7 @@ plt.rcParams.update({
 # ──────────────────────────────────────────────────────────
 
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-_ROOT_DIR   = os.path.dirname(_SCRIPT_DIR)
+_ROOT_DIR   = _SCRIPT_DIR
 
 OUTPUT_FOLDER = os.path.join(_ROOT_DIR, "outputs", "xgboost")
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
@@ -77,7 +77,8 @@ HEALTH_PREDICTORS = [
     "diarrhoea_care_pct",
     "pneumonia_care_pct",
     "exclusive_bf_pct",
-    "low_birthweight_pct"
+    "low_birthweight_pct",
+    "bcg_coverage"
 ]
 
 PREDICTOR_LABELS = {
@@ -95,6 +96,7 @@ PREDICTOR_LABELS = {
     "pneumonia_care_pct":      "Pneumonia Care Seeking (%)",
     "exclusive_bf_pct":        "Exclusive Breastfeeding (%)",
     "low_birthweight_pct":     "Low Birthweight (%)",
+    "bcg_coverage":            "BCG Coverage (%)",
     "income_group":            "Income Group"
 }
 

@@ -1,37 +1,46 @@
 Outcome,Indicator,Mean_Abs_SHAP
-Stunting (%),Income Group,3.0283184
-Stunting (%),Pneumonia Care Seeking (%),1.7464725
-Stunting (%),Marriage Gender Gap (F-M),1.5409793
-Stunting (%),Exclusive Breastfeeding (%),1.4326652
-Stunting (%),Low Birthweight (%),1.2924814
-Stunting (%),Female Literacy,1.0817592
-Stunting (%),Female Child Marriage by 15 (%),0.59509116
-Stunting (%),Female Child Marriage by 18 (%),0.47372606
-Stunting (%),Female Primary Completion,0.36993623
-Stunting (%),Diarrhoea Treatment (%),0.3275226
-Stunting (%),Antenatal Care (4+ visits),0.2757254
-Stunting (%),Modern Contraceptives,0.056186985
-Wasting (%),Low Birthweight (%),1.0524286
-Wasting (%),Pneumonia Care Seeking (%),0.5228101
-Wasting (%),Income Group,0.43605033
-Wasting (%),Diarrhoea Treatment (%),0.38862136
-Wasting (%),Female Child Marriage by 15 (%),0.31097493
-Wasting (%),Marriage Gender Gap (F-M),0.27248868
-Wasting (%),Modern Contraceptives,0.2556253
-Wasting (%),Female Literacy,0.20974956
-Wasting (%),Female Primary Completion,0.1957707
-Wasting (%),Exclusive Breastfeeding (%),0.18078695
-Wasting (%),Antenatal Care (4+ visits),0.1359674
-Wasting (%),Female Child Marriage by 18 (%),0.11277668
-Overweight (%),Female Primary Completion,0.74943674
-Overweight (%),Low Birthweight (%),0.6872412
-Overweight (%),Pneumonia Care Seeking (%),0.56645745
-Overweight (%),Exclusive Breastfeeding (%),0.42644167
-Overweight (%),Antenatal Care (4+ visits),0.39160645
-Overweight (%),Marriage Gender Gap (F-M),0.36187148
-Overweight (%),Female Child Marriage by 15 (%),0.31406662
-Overweight (%),Diarrhoea Treatment (%),0.2812012
-Overweight (%),Female Literacy,0.24767858
-Overweight (%),Female Child Marriage by 18 (%),0.15740864
-Overweight (%),Income Group,0.111746445
-Overweight (%),Modern Contraceptives,0.018805882
+Stunting (%),Income Group,2.7043505
+Stunting (%),Pneumonia Care Seeking (%),1.8452893
+Stunting (%),Basic Sanitation,1.5276539
+Stunting (%),Exclusive Breastfeeding (%),1.4731324
+Stunting (%),Low Birthweight (%),1.3820225
+Stunting (%),Marriage Gender Gap (F-M),1.3187795
+Stunting (%),Basic Hygiene,0.82673514
+Stunting (%),Female Child Marriage by 15 (%),0.75601643
+Stunting (%),Female Literacy,0.741186
+Stunting (%),Basic Water,0.61337864
+Stunting (%),Antenatal Care (4+ visits),0.418575
+Stunting (%),Diarrhoea Treatment (%),0.34749183
+Stunting (%),Female Primary Completion,0.26110125
+Stunting (%),Female Child Marriage by 18 (%),0.14125831
+Stunting (%),Modern Contraceptives,0.07603227
+Wasting (%),Low Birthweight (%),1.1401767
+Wasting (%),Income Group,0.5440272
+Wasting (%),Pneumonia Care Seeking (%),0.5305771
+Wasting (%),Diarrhoea Treatment (%),0.5242936
+Wasting (%),Marriage Gender Gap (F-M),0.39564505
+Wasting (%),Basic Water,0.36391652
+Wasting (%),Modern Contraceptives,0.33746946
+Wasting (%),Female Primary Completion,0.3198059
+Wasting (%),Basic Hygiene,0.28162584
+Wasting (%),Basic Sanitation,0.27657747
+Wasting (%),Female Child Marriage by 15 (%),0.20256913
+Wasting (%),Exclusive Breastfeeding (%),0.18435432
+Wasting (%),Female Literacy,0.18055096
+Wasting (%),Female Child Marriage by 18 (%),0.16015312
+Wasting (%),Antenatal Care (4+ visits),0.1335418
+Overweight (%),Female Primary Completion,0.6746814
+Overweight (%),Low Birthweight (%),0.67387056
+Overweight (%),Pneumonia Care Seeking (%),0.4611261
+Overweight (%),Exclusive Breastfeeding (%),0.43887755
+Overweight (%),Basic Sanitation,0.41924182
+Overweight (%),Marriage Gender Gap (F-M),0.3459219
+Overweight (%),Antenatal Care (4+ visits),0.31362462
+Overweight (%),Diarrhoea Treatment (%),0.22902453
+Overweight (%),Female Literacy,0.18539385
+Overweight (%),Income Group,0.18291013
+Overweight (%),Female Child Marriage by 15 (%),0.17978738
+Overweight (%),Female Child Marriage by 18 (%),0.109625846
+Overweight (%),Basic Water,0.066386804
+Overweight (%),Basic Hygiene,0.04212843
+Overweight (%),Modern Contraceptives,0.018448438

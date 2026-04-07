@@ -6,7 +6,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-_ROOT_DIR   = os.path.dirname(_SCRIPT_DIR)
+_ROOT_DIR   = _SCRIPT_DIR
 
 # ====================================================================
 # FUNCTIONS COPIED FROM Malnutrition Datasets/Semi-Final.py
@@ -170,31 +170,40 @@ def get_iso(country_name):
 
 def extract_child_health_db():
     file_path = os.path.join(_ROOT_DIR, "data", "Child-Health-Coverage-Database-November-2025.xlsx")
-    
+
     # We want DIARCARE, PNEUCARE, ITN
     targets = {
         "DIARCARE": "diarrhoea_care_pct",
         "PNEUCARE": "pneumonia_care_pct",
         "ITN": "itn_use_pct"
     }
-    
+
     results = []
-    
+
     for sheet, new_col_name in targets.items():
         df = pd.read_excel(file_path, sheet_name=sheet, header=None)
         df = extract_target_columns(df)
-        
+
         if df.empty:
             continue
-            
+
         # In this specific DB, the 8th column (index 8) is the National Total value
         # The columns are usually: ISO, Country, Region, ProgRegion, Income, Year, Source, SourceLong, Total, Male, Female...
-        target_val_col = df.columns[8] 
-        
+        target_val_col = df.columns[8]
+
         df_clean = clean_data(df, target_val_col)
         df_clean = df_clean.rename(columns={target_val_col: new_col_name})
         results.append(df_clean)
-        
+
+    # Process new coverage data
+    coverage_file = os.path.join(_ROOT_DIR, "data", "coverage.xlsx")
+    if os.path.exists(coverage_file):
+        cov_raw = pd.read_excel(coverage_file)
+        if 'iso3' in cov_raw.columns and 2024 in cov_raw.columns:
+            cov = cov_raw[['iso3', 2024]].rename(columns={'iso3': 'ISO', 2024: 'bcg_coverage'})
+            cov['CountryName'] = cov['ISO'] # Just a placeholder so get_iso doesn't crash if it looks at it
+            results.append(cov)
+
     return results
 
 
@@ -258,23 +267,24 @@ def build_final_dataset():
     
     for new_df in all_new_dfs:
         # Add ISO code to the new data
-        new_df["ISO"] = new_df[COUNTRY_COL].apply(get_iso)
-        
+        if "ISO" not in new_df.columns or new_df["ISO"].isnull().all():
+            new_df["ISO"] = new_df[COUNTRY_COL].apply(get_iso)
+
         # Drop the country name column to avoid conflicts, keep only ISO and the new value
         new_col = [c for c in new_df.columns if c not in [COUNTRY_COL, "ISO"]][0]
         merge_df = new_df[["ISO", new_col]].dropna(subset=["ISO", new_col])
-        
+
         # Merge via left join to keep base dataset intact
         final_df = final_df.merge(merge_df, on="ISO", how="left")
         
 
     # 4. We also need to bring in WASH and Education directly into this final dataset
     # so xgboost_malnutrition.py doesn't have to do it.
-    wash_df = pd.read_csv(os.path.join(_ROOT_DIR, "outputs", "wash_clean_data.csv"))
+    wash_df = pd.read_csv(os.path.join(_ROOT_DIR, "WASH", "outputs", "wash_clean_data.csv"))
     if "iso3" in wash_df.columns:
         wash_df = wash_df.rename(columns={"iso3": "ISO"})
-    
-    edu_df = pd.read_csv(os.path.join(_ROOT_DIR, "outputs", "education_clean.csv"))
+
+    edu_df = pd.read_csv(os.path.join(_ROOT_DIR, "education_clean.csv"))
     
     wash_cols = ["wat_bas_nat", "san_bas_nat", "hyg_bas_nat"]
     edu_cols = ["completion_primary_f", "literacy_f"]
