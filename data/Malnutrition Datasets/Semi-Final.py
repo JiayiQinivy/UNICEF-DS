@@ -152,15 +152,23 @@ def plot_gender_difference(df, save_path, title):
     df_top = df.sort_values("Diff", ascending=False).head(10).sort_values("Diff")
     fig, ax = plt.subplots(figsize=(12, 8))
     y = range(len(df_top))
-    width = 0.4
-    ax.barh([i - width / 2 for i in y], df_top[MALE_COL], height=width, label="Male")
-    ax.barh([i + width / 2 for i in y], df_top[FEMALE_COL], height=width, label="Female")
+    width = 0.3
+
+    # Base bars
+    ax.barh([i - width for i in y], df_top[MALE_COL], height=width, label="Male")
+    ax.barh(y, df_top[FEMALE_COL], height=width, label="Female")
+
+    # Difference bar (centered)
+    ax.barh([i + width for i in y], df_top["Diff"], height=width, label="Abs Diff")
     ax.set_yticks(y)
     ax.set_yticklabels(df_top[COUNTRY_COL])
-    for i, (m, f) in enumerate(zip(df_top[MALE_COL], df_top[FEMALE_COL])):
-        ax.text(m, i - width / 2, f" {m:.1f}", va="center")
-        ax.text(f, i + width / 2, f" {f:.1f}", va="center")
-    ax.set_title(title + " (Top 10 Male-Female Differences)")
+
+    # Labels
+    for i, (m, f, d) in enumerate(zip(df_top[MALE_COL], df_top[FEMALE_COL], df_top["Diff"])):
+        ax.text(m, i - width, f" {m:.1f}", va="center")
+        ax.text(f, i, f" {f:.1f}", va="center")
+        ax.text(d, i + width, f" {d:.1f}", va="center")
+    ax.set_title(title + " (Male vs Female with Difference)")
     ax.legend()
     fig.savefig(save_path, bbox_inches="tight")
     plt.close(fig)
@@ -173,15 +181,23 @@ def plot_urban_rural_difference(df, save_path, title):
     df_top = df.sort_values("Diff", ascending=False).head(10).sort_values("Diff")
     fig, ax = plt.subplots(figsize=(12, 8))
     y = range(len(df_top))
-    width = 0.4
-    ax.barh([i - width / 2 for i in y], df_top[URBAN_COL], height=width, label="Urban")
-    ax.barh([i + width / 2 for i in y], df_top[RURAL_COL], height=width, label="Rural")
+    width = 0.3
+
+    # Base bars
+    ax.barh([i - width for i in y], df_top[URBAN_COL], height=width, label="Urban")
+    ax.barh(y, df_top[RURAL_COL], height=width, label="Rural")
+
+    # Difference bar
+    ax.barh([i + width for i in y], df_top["Diff"], height=width, label="Abs Diff")
     ax.set_yticks(y)
     ax.set_yticklabels(df_top[COUNTRY_COL])
-    for i, (u, r) in enumerate(zip(df_top[URBAN_COL], df_top[RURAL_COL])):
-        ax.text(u, i - width / 2, f" {u:.1f}", va="center")
-        ax.text(r, i + width / 2, f" {r:.1f}", va="center")
-    ax.set_title(title + " (Top 10 Urban-Rural Differences)")
+
+    # Labels
+    for i, (u, r, d) in enumerate(zip(df_top[URBAN_COL], df_top[RURAL_COL], df_top["Diff"])):
+        ax.text(u, i - width, f" {u:.1f}", va="center")
+        ax.text(r, i, f" {r:.1f}", va="center")
+        ax.text(d, i + width, f" {d:.1f}", va="center")
+    ax.set_title(title + " (Urban vs Rural with Difference)")
     ax.legend()
     fig.savefig(save_path, bbox_inches="tight")
     plt.close(fig)
