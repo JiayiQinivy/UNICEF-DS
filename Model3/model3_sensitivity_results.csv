@@ -1,0 +1,5 @@
+Specification,N,Gender,Education,WASH,WASH_label,Beta,SE,CI_lo,CI_hi,p_value,Sig,Adj_R2,AIC
+Main (literacy_f / san_bas_nat),75,female_married_by_18,literacy_f,san_bas_nat,Basic Sanitation Access,-0.164,0.056,-0.274,-0.054,0.0046,**,0.505,547.1
+Spec A (oos_upsec_f / san_bas_nat),72,female_married_by_18,oos_upsec_f,san_bas_nat,Basic Sanitation Access,-0.127,0.055,-0.236,-0.019,0.0246,*,0.581,523.4
+Spec B (literacy_f / san_bas_nat / marriage_gap),51,marriage_gap_18,literacy_f,san_bas_nat,Basic Sanitation Access,-0.161,0.079,-0.317,-0.005,0.0491,*,0.345,393.3
+Spec C (literacy_f / wat_bas_nat),69,female_married_by_18,literacy_f,wat_bas_nat,Basic Water Access,-0.214,0.069,-0.349,-0.08,0.0027,**,0.525,496.8
