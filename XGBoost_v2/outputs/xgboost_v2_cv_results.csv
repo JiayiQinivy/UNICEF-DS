@@ -1,0 +1,4 @@
+Outcome,N,CV_R2,CV_R2_SD,CV_RMSE,OLS_Adj_R2,param_subsample,param_reg_lambda,param_reg_alpha,param_n_estimators,param_min_child_weight,param_max_depth,param_learning_rate,param_colsample_bytree
+Stunting (%),163,0.581,0.135,7.844,0.505,0.6,5,0.5,500,5,4,0.01,0.6
+Wasting (%),163,0.182,0.27,3.424,0.264,1.0,5,0.0,100,3,5,0.05,0.6
+Overweight (%),163,0.147,0.211,3.876,0.305,0.7,2,0.5,300,5,6,0.01,0.6

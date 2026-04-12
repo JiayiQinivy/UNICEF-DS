@@ -1,0 +1,4 @@
+Outcome,OLS_n,OLS_Adj_R2,XGB_n,XGB_CV_R2,XGB_CV_R2_SD,XGB_CV_RMSE
+Stunting (%),75,0.505,163,0.581,0.135,7.844
+Wasting (%),75,0.264,163,0.182,0.27,3.424
+Overweight (%),75,0.305,163,0.147,0.211,3.876

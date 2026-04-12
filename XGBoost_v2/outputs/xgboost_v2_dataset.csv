@@ -1,0 +1,164 @@
+ISO,country,unicef_region,income_group,stunting_national,wasting_national,overweight_national,female_married_by_15,female_married_by_18,marriage_gap_18,literacy_f,completion_primary_f,oos_upsec_f,wat_bas_nat,san_bas_nat,hyg_bas_nat,diarrhoea_care_pct,pneumonia_care_pct
+AFG,Afghanistan,SA,Low Income,44.6,3.6,4.5,10.0,29.0,22.0,32.11322,40.2,69.3785,65.66,38.33,7.73,40.1,45.3
+AGO,Angola,ESA,Lower Middle Income,37.6,4.9,3.4,8.0,30.0,24.0,70.58513,48.7,,,,,44.6,49.0
+ALB,Albania,EECA,Upper Middle Income,11.3,1.6,16.4,1.0,12.0,11.0,99.02019,92.50047398099804,17.90967,81.91,87.98,87.3,64.0,81.8
+ARG,Argentina,LAC,Upper Middle Income,8.7,1.7,12.4,2.0,16.0,,99.62893,97.2,4.53001,,83.11,77.57,56.6,94.2
+ARM,Armenia,EECA,Upper Middle Income,9.4,4.4,13.7,0.0,5.0,5.0,99.87619,99.12933111190796,,96.59,88.85,97.52,40.6,91.7
+AUS,Australia,EAP,High Income,1.9,0.2,22.0,,,,,,0.39444,99.5,99.5,99.5,,
+AZE,Azerbaijan,EECA,Upper Middle Income,6.6,3.5,4.0,0.0,15.0,14.6,99.91648,,,99.5,99.5,99.5,44.0,32.5
+BDI,Burundi,ESA,Low Income,52.8,7.8,1.5,3.0,19.0,18.0,74.95891,54.1,57.49594,45.82,44.75,17.31,59.3,58.5
+BEL,Belgium,WE,High Income,1.9,0.8,5.4,0.0,0.0,,,,1.27903,99.5,99.5,99.5,,
+BEN,Benin,WCA,Lower Middle Income,34.1,8.3,2.9,6.0,28.0,23.0,40.93838,44.1964694843862,65.85443,65.86,,48.69,22.8,34.9
+BFA,Burkina Faso,WCA,Low Income,21.1,9.3,1.5,9.0,51.0,49.0,43.98583,29.4,67.6528,62.81,48.37,49.95,62.5,77.4
+BGD,Bangladesh,SA,Lower Middle Income,23.6,10.7,1.6,17.0,51.0,47.0,94.37776,78.8,38.17939,89.65,86.59,92.16,29.5,46.4
+BGR,Bulgaria,EECA,High Income,7.0,5.9,6.9,,,,97.65106,,12.36526,,,,,
+BHR,Bahrain,MENA,High Income,13.6,6.6,7.5,,,,94.9168,,5.2634,99.5,99.5,99.5,,
+BIH,Bosnia and Herzegovina,EECA,Upper Middle Income,8.9,2.3,17.4,0.0,4.0,4.0,99.66747,99.9,,99.5,78.9,59.9,4.6,87.0
+BLR,Belarus,EECA,Upper Middle Income,1.2,1.3,3.0,0.0,5.0,3.0,,99.5,0.14606,99.5,99.5,99.5,57.8,92.8
+BLZ,Belize,LAC,Upper Middle Income,15.0,1.8,7.3,6.0,34.0,12.0,,86.3,33.87199,,,,37.7,67.4
+BOL,Bolivia (Plurinational State of),LAC,Lower Middle Income,16.1,2.0,10.1,3.0,20.0,15.0,99.40421,,18.19615,,,,64.7,81.4
+BRA,Brazil,LAC,Upper Middle Income,8.0,3.4,9.6,6.0,26.0,,99.3467,97.2,15.69928,,86.12,,,49.7
+BRB,Barbados,LAC,High Income,7.7,6.8,12.2,8.0,29.0,,99.9,99.2,,99.5,99.5,99.5,,
+BRN,Brunei Darussalam,EAP,High Income,19.6,2.9,8.3,,,,99.54606,,16.38018,,99.5,99.5,,
+BTN,Bhutan,SA,Lower Middle Income,17.9,5.1,7.6,6.0,26.0,,84.48774,70.8,26.91393,65.11,88.09,,52.6,64.7
+BWA,Botswana,ESA,Upper Middle Income,28.9,7.3,10.0,,,,99.4,,,,,,,14.0
+CAF,Central African Republic,WCA,Low Income,37.9,5.2,1.5,26.0,61.0,44.0,26.97133,33.1,89.79351,,,,31.4,34.7
+CHL,Chile,LAC,High Income,1.8,0.3,9.3,,,,99.44056,,6.49658,,,,,
+CHN,China,EAP,Upper Middle Income,4.8,1.9,8.5,0.0,3.0,2.0,99.59304,97.0,,,,,99.5,
+CIV,Cote d'Ivoire,WCA,Lower Middle Income,23.4,8.1,3.4,7.0,26.0,24.0,47.03975,53.1,69.05303,52.16,,,47.6,62.8
+CMR,Cameroon,WCA,Lower Middle Income,28.9,4.3,11.0,11.0,30.0,27.0,76.42093,63.9,57.20897,23.72,56.15,77.86,51.6,29.8
+COD,Democratic Republic of the Congo,WCA,Low Income,44.7,7.2,3.8,8.0,29.0,23.0,79.71484,66.4,,,,,28.3,34.2
+COG,Congo,WCA,Lower Middle Income,21.2,8.2,5.9,7.0,27.0,21.0,76.94608,81.66994420273112,,54.35,,,32.2,28.2
+COL,Colombia,LAC,Upper Middle Income,12.7,1.6,5.7,5.0,23.0,16.0,99.02527,94.7,14.81339,,84.58,16.93,43.2,71.4
+COM,Comoros,ESA,Lower Middle Income,18.2,5.1,4.0,5.0,21.0,14.0,69.59522,76.8,54.82458,,,,28.7,36.9
+CPV,Cabo Verde,WCA,Lower Middle Income,6.0,2.4,6.1,2.0,8.0,6.0,98.73018,,32.03883,,92.8,86.2,58.1,53.4
+CRI,Costa Rica,LAC,Upper Middle Income,9.0,1.8,7.5,2.0,17.0,,99.25812,94.8,9.25538,84.17,85.07,82.97,46.4,80.3
+CUB,Cuba,LAC,Upper Middle Income,7.1,2.0,10.3,5.0,29.0,23.0,99.8952,99.7,14.82585,99.5,95.36,99.5,53.0,89.6
+CZE,Czechia,WE,High Income,2.8,4.5,4.6,,,,,,1.62762,99.5,99.5,99.5,,
+DEU,Germany,WE,High Income,1.3,0.5,2.9,,,,,,,99.5,99.5,99.5,,
+DJI,Djibouti,ESA,Lower Middle Income,25.5,12.1,4.2,1.0,7.0,,,,71.88063,,,94.95,66.6,94.4
+DOM,Dominican Republic,LAC,Upper Middle Income,6.7,2.2,7.7,9.0,32.0,24.0,98.86737,94.4,23.06926,,76.42,83.06,56.6,84.5
+DZA,Algeria,MENA,Upper Middle Income,9.8,2.7,12.8,0.0,4.0,,,94.3,,91.12,99.5,95.47,44.9,47.0
+ECU,Ecuador,LAC,Upper Middle Income,17.4,0.7,4.5,4.0,22.0,,99.13692,,16.10604,77.15,73.27,50.67,,70.7
+EGY,Egypt,MENA,Lower Middle Income,12.8,3.3,10.1,2.0,16.0,15.8,86.81055,91.6,25.31363,,99.5,99.5,47.2,64.5
+ERI,Eritrea,ESA,Low Income,52.5,14.6,2.1,13.0,41.0,39.0,,,71.44885,,33.03,4.84,41.9,44.8
+EST,Estonia,WE,High Income,1.2,1.5,5.0,,,,99.95904,,3.06301,99.5,99.5,99.5,,
+ETH,Ethiopia,ESA,Low Income,36.8,6.8,2.3,14.0,40.0,35.0,,51.0,75.14659,28.5,,30.97,44.2,29.8
+FIN,Finland,WE,High Income,2.8,1.6,4.3,,0.0,,,,4.03983,99.5,99.5,99.5,,
+FJI,Fiji,EAP,Upper Middle Income,7.2,4.6,7.7,0.0,4.0,2.0,,,22.52198,77.62,90.54,43.11,57.3,
+GAB,Gabon,WCA,Upper Middle Income,14.4,3.4,5.0,3.0,13.0,8.0,89.42925,66.9,,65.78,,66.12,49.7,67.1
+GBR,United Kingdom,WE,High Income,2.0,0.4,6.5,,0.0,,,,1.59446,,,,,
+GEO,Georgia,EECA,Upper Middle Income,5.8,0.6,6.0,0.0,9.0,8.0,99.72914,,4.63298,,,,54.5,73.6
+GHA,Ghana,WCA,Lower Middle Income,17.4,5.8,2.0,3.0,16.0,14.0,83.23453,67.8,31.1573,78.48,58.73,53.56,36.2,43.2
+GIN,Guinea,WCA,Lower Middle Income,26.1,6.4,3.3,17.0,47.0,45.0,37.21018,49.06192949093671,75.37248,,52.13,,67.6,69.4
+GMB,Gambia,WCA,Low Income,17.5,5.1,2.1,6.0,23.0,23.0,56.12098,57.3,,,64.98,,62.2,63.8
+GNB,Guinea-Bissau,WCA,Low Income,28.1,7.8,2.2,8.0,26.0,24.0,49.75632,25.9,,63.17,36.88,74.69,40.9,47.6
+GNQ,Equatorial Guinea,WCA,Upper Middle Income,26.2,3.1,9.7,9.0,30.0,26.0,98.7,,,,,,52.5,54.3
+GRC,Greece,WE,High Income,1.5,1.5,13.6,,,,98.90698,,10.85319,,,,,
+GTM,Guatemala,LAC,Upper Middle Income,46.0,0.8,4.9,6.0,30.0,20.0,93.26925,76.9,60.62377,,72.15,,43.2,52.0
+GUY,Guyana,LAC,High Income,9.5,6.5,6.5,6.0,32.0,20.0,97.03701,98.6,25.03363,,,,45.4,83.7
+HND,Honduras,LAC,Lower Middle Income,18.7,1.9,4.5,9.0,34.0,24.0,97.24561,85.0,48.15662,78.07,89.49,,50.5,70.1
+HTI,Haiti,LAC,Lower Middle Income,22.0,5.0,3.9,2.0,15.0,13.0,,58.39659646154769,,,,,30.6,35.4
+IDN,Indonesia,EAP,Upper Middle Income,22.0,8.4,4.3,2.0,16.0,15.0,99.65351,92.18017610613218,12.77919,75.52,70.62,68.74,79.7,75.0
+IND,India,SA,Lower Middle Income,35.5,18.7,3.5,5.0,23.0,20.0,81.84981,91.347,48.60744,94.91,84.34,52.89,76.2,56.1
+IRL,Ireland,WE,High Income,2.2,0.4,10.5,,,,,,0.15643,,,,,
+IRN,Iran (Islamic Republic of),MENA,Upper Middle Income,4.8,4.3,2.9,3.0,17.0,,97.92513,,22.73296,,,,,52.9
+IRQ,Iraq,MENA,Upper Middle Income,12.6,3.0,6.1,7.0,28.0,,48.63865,73.2,,60.25,56.63,66.43,48.2,44.4
+JAM,Jamaica,LAC,Upper Middle Income,4.6,3.2,5.7,6.0,27.0,,98.8,99.6,19.36783,94.89,95.72,99.5,31.8,82.3
+JOR,Jordan,MENA,Lower Middle Income,8.2,2.3,9.2,1.0,10.0,10.0,99.20273,96.93236363724668,46.07643,99.5,,,62.6,78.6
+JPN,Japan,EAP,High Income,7.1,2.4,1.4,,,,,,1.92924,,,,,
+KAZ,Kazakhstan,EECA,Upper Middle Income,8.0,3.1,9.3,0.0,7.0,6.7,99.85091,99.9,0.47984,,,,4.9,81.2
+KEN,Kenya,ESA,Lower Middle Income,17.6,4.5,3.4,2.0,13.0,11.0,86.13652,81.6,,,,,57.6,73.0
+KGZ,Kyrgyzstan,EECA,Lower Middle Income,14.1,3.0,8.8,0.0,9.0,8.6,,99.4,26.36492,,,,47.2,59.7
+KHM,Cambodia,EAP,Lower Middle Income,21.9,9.6,4.1,2.0,18.0,15.0,92.57328,78.8,,85.79,37.07,84.04,55.5,88.0
+KIR,Kiribati,EAP,Lower Middle Income,15.2,3.5,2.1,2.0,18.0,9.0,,,,,66.16,86.79,70.1,86.5
+KOR,Republic of Korea,EAP,High Income,0.9,0.2,6.2,,,,,,0.98848,99.5,99.5,99.5,,
+KWT,Kuwait,MENA,High Income,3.2,3.5,8.1,,,,99.50355,,16.40917,99.5,99.5,99.5,,
+LAO,Lao People's Democratic Republic,EAP,Lower Middle Income,32.8,10.7,2.8,6.0,31.0,21.0,90.50107,86.42589321302252,41.08387,49.14,31.55,,58.0,66.2
+LBN,Lebanon,MENA,Lower Middle Income,13.9,1.3,4.4,1.0,6.0,,,,33.53088,,,,,73.6
+LBR,Liberia,WCA,Low Income,29.8,3.4,4.4,6.0,25.0,17.0,,32.6,34.22615,55.04,,67.62,66.3,57.8
+LBY,Libya,MENA,Upper Middle Income,7.9,3.5,4.6,,,,,,,,,,,83.0
+LCA,Saint Lucia,LAC,Upper Middle Income,2.5,3.7,6.3,4.0,24.0,,,99.0,17.37504,99.5,99.5,98.92,,
+LKA,Sri Lanka,SA,Lower Middle Income,10.5,9.3,0.5,1.0,10.0,,99.14777,,16.0262,87.04,89.91,87.1,90.5,52.3
+LSO,Lesotho,ESA,Lower Middle Income,35.6,1.6,7.7,1.0,13.0,10.0,93.96988,83.2,39.02002,,,,34.7,58.8
+LTU,Lithuania,WE,High Income,1.0,4.9,4.1,0.0,0.0,,99.86662,,3.133,99.5,99.5,99.5,,
+LVA,Latvia,WE,High Income,0.5,1.7,6.5,,,,99.87011,,3.6427,99.5,99.5,99.5,,
+MAR,Morocco,MENA,Lower Middle Income,14.2,2.4,3.2,1.0,14.0,,87.7834,,32.76111,89.51,96.08,87.07,36.4,70.3
+MDA,Republic of Moldova,EECA,Upper Middle Income,6.4,1.9,4.9,0.0,12.0,11.0,99.58578,99.5,34.63445,93.8,90.22,99.5,5.6,79.2
+MDG,Madagascar,ESA,Low Income,39.8,7.2,1.9,13.0,39.0,28.0,75.30385,,,,39.17,,37.6,51.5
+MDV,Maldives,SA,Upper Middle Income,15.3,9.1,4.9,0.0,2.0,0.0,99.43955,,,99.5,,,86.2,74.1
+MEX,Mexico,LAC,Upper Middle Income,12.5,1.0,7.1,4.0,18.0,,99.20723,95.9,28.81545,71.09,69.58,79.16,46.8,73.1
+MHL,Marshall Islands,EAP,Upper Middle Income,34.8,3.5,4.1,6.0,26.0,14.0,98.7567,,28.45149,66.83,78.36,70.15,,
+MKD,North Macedonia,EECA,Upper Middle Income,4.3,3.4,11.2,0.0,8.0,,98.5,99.3,,,,,,93.0
+MLI,Mali,WCA,Low Income,25.1,5.4,1.4,16.0,54.0,52.0,39.20776,40.7,76.59864,,29.78,,37.1,34.7
+MLT,Malta,WE,High Income,3.3,0.4,10.1,,,,99.38657,,9.33149,99.5,99.5,99.5,,
+MMR,Myanmar,EAP,Lower Middle Income,26.7,7.4,0.8,2.0,16.0,11.0,84.41379,84.0,42.55308,77.05,73.52,58.66,53.7,58.6
+MNE,Montenegro,EECA,Upper Middle Income,7.2,2.2,7.3,2.0,6.0,3.0,99.05261,99.9,14.4041,81.95,11.39,,56.4,89.4
+MNG,Mongolia,EAP,Upper Middle Income,8.8,2.7,12.8,1.0,8.0,5.0,98.90874,98.5,,,,,58.1,90.6
+MOZ,Mozambique,ESA,Low Income,36.7,3.8,3.2,13.0,48.0,35.0,62.66699,37.2,73.5749,,,,55.5,73.0
+MRT,Mauritania,WCA,Lower Middle Income,25.1,13.6,1.0,16.0,37.0,36.0,,55.93695562584081,72.90083,,30.69,,31.9,42.9
+MUS,Mauritius,ESA,Upper Middle Income,13.6,15.7,6.5,,,,98.57592,,14.68563,99.5,99.5,99.5,,
+MWI,Malawi,ESA,Low Income,34.9,2.1,1.4,8.0,38.0,31.0,73.3858,51.5,65.25073,92.47,74.33,44.21,58.3,71.1
+MYS,Malaysia,EAP,Upper Middle Income,21.2,11.0,5.6,,,,97.85761,,31.93911,95.35,99.5,99.5,3.1,91.6
+NAM,Namibia,ESA,Upper Middle Income,22.7,7.1,4.0,2.0,7.0,6.0,95.34632,86.1,,,,,63.7,68.0
+NER,Niger,WCA,Low Income,47.7,10.9,1.2,28.0,76.0,70.0,31.64391,23.6,88.87069,,25.39,41.77,59.1,60.4
+NGA,Nigeria,WCA,Lower Middle Income,33.8,11.6,1.5,12.0,30.0,28.0,,79.2,,35.62,42.92,23.6,59.5,40.6
+NIC,Nicaragua,LAC,Lower Middle Income,17.3,2.2,8.3,10.0,35.0,16.0,,,,53.27,28.54,,44.1,67.4
+NLD,Netherlands (Kingdom of the),WE,High Income,1.5,1.0,3.8,,,,,,0.57223,99.5,99.5,99.5,,
+NPL,Nepal,SA,Lower Middle Income,24.8,7.0,1.3,6.0,35.0,28.0,80.20683,76.4,17.97327,55.44,38.97,41.61,56.9,57.5
+NRU,Nauru,EAP,High Income,15.7,1.3,8.2,1.0,18.0,18.0,,,60.10101,99.5,99.5,90.02,28.1,44.4
+OMN,Oman,MENA,High Income,11.4,9.3,4.2,1.0,4.0,,98.95638,,11.69857,99.5,99.5,99.5,56.6,56.3
+PAK,Pakistan,SA,Lower Middle Income,37.6,7.1,2.5,4.0,18.0,13.0,65.54779,55.41709819894092,67.40446,35.49,41.59,,70.8,71.1
+PAN,Panama,LAC,High Income,15.9,1.1,11.5,7.0,26.0,,97.33687,95.5,30.84499,59.69,23.91,23.81,,81.6
+PER,Peru,LAC,Upper Middle Income,11.5,0.6,7.5,3.0,19.0,,98.85308,95.1,,73.67,92.89,,33.3,59.3
+PHL,Philippines,EAP,Lower Middle Income,26.7,5.4,3.9,2.0,9.0,6.0,98.81543,95.1556262902658,16.70764,46.27,84.79,73.04,42.0,70.1
+PNG,Papua New Guinea,EAP,Lower Middle Income,49.5,14.1,13.7,8.0,27.0,23.0,71.4,,50.08276,46.83,46.38,11.67,38.4,62.6
+POL,Poland,WE,High Income,1.0,0.8,7.7,,,,,,6.92797,99.5,99.5,99.5,,
+PRK,Democratic People's Republic of Korea,EAP,Low Income,19.1,2.5,2.3,0.0,0.0,0.0,,100.0,11.07315,,,,79.6,85.6
+PRT,Portugal,WE,High Income,3.2,1.1,7.1,,,,99.47964,,2.92029,99.5,99.5,99.5,,
+PRY,Paraguay,LAC,Upper Middle Income,5.6,1.0,12.4,4.0,22.0,,98.70381,95.1,29.57058,,94.1,,52.9,89.4
+PSE,State of Palestine,MENA,Lower Middle Income,8.7,1.3,8.6,1.0,13.0,,99.31307,99.5,25.64829,99.5,97.15,,44.8,77.3
+QAT,Qatar,MENA,High Income,6.2,1.6,10.0,0.0,2.0,2.0,97.26477,,16.15717,99.5,99.5,99.5,,
+ROU,Romania,EECA,High Income,12.8,3.5,8.3,0.5,6.9,,98.97622,,22.03563,93.88,90.82,90.82,,
+RWA,Rwanda,ESA,Low Income,33.1,1.1,5.6,0.0,6.0,6.0,86.26225,60.9,,54.05,69.6,,51.9,65.2
+SAU,Saudi Arabia,MENA,High Income,10.8,3.9,11.6,0.4,3.4,,99.13699,,7.52954,99.5,99.5,99.5,,
+SDN,Sudan,ESA,Low Income,38.2,16.3,3.0,12.0,34.0,,,72.58979487293689,,43.47,,7.56,42.7,48.3
+SEN,Senegal,WCA,Lower Middle Income,17.5,10.2,1.1,9.0,30.0,29.0,63.50271,51.01004899261405,62.3304,72.79,77.97,21.91,43.8,54.1
+SGP,Singapore,EAP,High Income,4.5,3.6,2.5,0.0,0.0,,99.94051,,,99.5,99.5,99.5,,
+SLB,Solomon Islands,EAP,Lower Middle Income,31.7,8.5,4.5,6.0,21.0,17.0,,,,30.97,18.78,,54.8,79.0
+SLE,Sierra Leone,WCA,Low Income,26.3,6.3,2.8,9.0,30.0,26.0,50.85709,65.1,62.712,39.39,48.65,22.08,75.3,75.8
+SLV,El Salvador,LAC,Upper Middle Income,10.0,2.9,8.3,4.0,20.0,,98.14964,88.6,35.38044,81.72,84.46,,62.9,60.7
+SOM,Somalia,ESA,Low Income,25.3,14.3,3.0,8.0,45.0,,,,,52.85,,,47.5,22.5
+SRB,Serbia,EECA,Upper Middle Income,5.4,2.6,10.9,1.0,6.0,5.0,99.72468,99.8,9.87155,98.45,98.83,84.74,9.8,89.7
+SSD,South Sudan,ESA,Low Income,31.3,22.7,6.0,9.0,52.0,,,17.6,74.81652,,36.65,18.11,20.2,74.8
+STP,Sao Tome and Principe,WCA,Lower Middle Income,11.7,4.1,4.5,5.0,28.0,25.0,96.35088,85.6,17.76,,75.82,,52.0,82.4
+SUR,Suriname,LAC,Upper Middle Income,8.3,5.5,3.5,9.0,36.0,16.0,97.25966,89.9,33.46942,,,,61.0,89.1
+SWZ,Eswatini,ESA,Lower Middle Income,20.0,1.8,9.8,0.0,2.0,2.0,94.74849,67.5,29.57662,,,,42.5,59.6
+SYC,Seychelles,ESA,High Income,7.9,4.3,10.2,,,,99.38308,,3.62832,99.5,99.5,99.5,,
+SYR,Syrian Arab Republic,MENA,Low Income,27.9,11.5,17.9,3.0,13.0,,,,67.14821,84.66,86.84,,9.7,77.0
+TCA,Turks and Caicos Islands,LAC,High Income,4.6,1.2,18.2,0.0,23.0,18.0,,,,98.71,98.71,98.71,,
+TCD,Chad,WCA,Low Income,31.9,7.8,2.2,24.0,61.0,53.0,22.38715,23.8,87.75322,30.38,19.38,9.82,22.9,17.6
+TGO,Togo,WCA,Low Income,23.8,5.7,1.5,6.0,25.0,22.0,78.37085,58.9,65.96714,65.38,16.82,17.0,28.0,39.0
+THA,Thailand,EAP,Upper Middle Income,12.4,7.2,10.9,6.0,17.0,11.0,98.29299,97.80450011203884,21.00417,99.5,99.5,99.5,70.7,79.5
+TJK,Tajikistan,EECA,Lower Middle Income,13.7,6.4,4.6,0.0,9.0,,99.9,97.84585186197732,,,,,63.9,68.5
+TKM,Turkmenistan,EECA,Upper Middle Income,7.2,4.1,3.1,0.0,6.0,,99.9,99.7,,99.5,99.5,99.5,51.4,51.0
+TLS,Timor-Leste,EAP,Lower Middle Income,46.7,8.3,1.3,3.0,15.0,14.0,78.56844,84.82213665242767,25.92439,70.28,,65.72,65.0,70.3
+TON,Tonga,EAP,Upper Middle Income,2.2,1.1,11.2,0.0,10.0,7.0,99.51043,,37.99815,95.03,95.52,83.59,,
+TTO,Trinidad and Tobago,LAC,High Income,9.2,6.4,11.4,1.0,4.0,,99.6,,,,,,25.2,74.0
+TUN,Tunisia,MENA,Lower Middle Income,8.4,2.1,17.2,0.0,2.0,2.0,95.80119,96.5,,,,,41.6,99.1
+TUR,Türkiye,EECA,Upper Middle Income,6.0,1.7,8.1,2.0,15.0,,99.37155,97.9,16.45536,99.5,99.5,99.5,,45.0
+TUV,Tuvalu,EAP,Upper Middle Income,5.7,2.8,4.2,0.0,2.0,0.0,,,46.40288,76.55,85.76,96.05,55.2,
+TZA,United Republic of Tanzania,ESA,Lower Middle Income,30.0,3.1,3.6,5.0,29.0,25.0,84.6408,83.5,88.3636,,44.4,15.03,43.1,52.3
+UGA,Uganda,ESA,Low Income,24.4,3.2,3.4,7.0,34.0,28.0,81.6542,36.2,,54.77,74.75,38.55,69.4,71.3
+UKR,Ukraine,EECA,Upper Middle Income,22.9,8.2,26.5,0.0,9.0,5.0,99.98272,99.3,3.64654,91.18,,81.72,5.3,92.3
+URY,Uruguay,LAC,High Income,6.9,1.4,11.4,1.0,25.0,,99.31699,95.4,16.21137,67.49,97.0,99.5,,91.1
+USA,United States,NA ,High Income,3.4,0.1,9.4,,,,,,6.27499,99.5,99.5,99.5,,
+UZB,Uzbekistan,EECA,Lower Middle Income,6.5,2.4,4.5,0.0,3.0,2.0,100.0,,16.82546,70.01,79.74,91.6,59.0,67.7
+VEN,Venezuela (Bolivarian Republic of),LAC,,13.4,4.1,6.4,,,,99.09258,,23.57197,,,,8.8,72.0
+VNM,Viet Nam,EAP,Lower Middle Income,18.2,4.4,9.4,1.0,15.0,13.0,,97.0,,67.79,93.35,71.93,5.0,72.6
+VUT,Vanuatu,EAP,Lower Middle Income,28.9,4.7,4.9,5.0,21.0,13.0,95.6,,45.80214,,,,35.1,75.9
+WSM,Samoa,EAP,Lower Middle Income,7.3,3.1,8.7,1.0,7.0,5.0,99.45804,,14.59826,99.5,99.5,78.0,57.4,72.4
+YEM,Yemen,MENA,Low Income,48.5,16.8,1.5,7.0,30.0,,,54.8,68.04319,,,,22.7,35.0
+ZAF,South Africa,ESA,Upper Middle Income,21.3,3.6,11.8,1.0,4.0,3.0,99.22904,97.92231889402125,19.48515,,,,63.0,65.7
+ZMB,Zambia,ESA,Lower Middle Income,34.6,4.2,5.2,5.0,29.0,26.0,86.50945,75.4,,79.07,,96.85,69.5,75.2
+ZWE,Zimbabwe,ESA,Lower Middle Income,25.9,5.1,4.3,5.0,34.0,32.0,93.18835,89.0,54.97931,69.86,93.92,76.64,35.2,48.0

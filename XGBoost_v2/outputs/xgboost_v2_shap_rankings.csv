@@ -1,0 +1,37 @@
+Outcome,Feature,Label,Mean_Abs_SHAP
+Overweight (%),completion_primary_f,Primary Completion (F),0.6882
+Overweight (%),pneumonia_care_pct,Pneumonia Care,0.5954
+Overweight (%),literacy_f,Female Literacy Rate,0.4308
+Overweight (%),diarrhoea_care_pct,Diarrhoea Care,0.3163
+Overweight (%),income_group,Income Group,0.2385
+Overweight (%),san_bas_nat,Basic Sanitation Access,0.2117
+Overweight (%),marriage_gap_18,Marriage Gender Gap,0.21
+Overweight (%),oos_upsec_f,Upper-Sec OOS Rate (F),0.1509
+Overweight (%),hyg_bas_nat,Basic Hygiene Access,0.1383
+Overweight (%),female_married_by_18,Child Marriage by 18 (F),0.125
+Overweight (%),female_married_by_15,Child Marriage by 15 (F),0.1159
+Overweight (%),wat_bas_nat,Basic Water Access,0.086
+Stunting (%),pneumonia_care_pct,Pneumonia Care,1.8604
+Stunting (%),oos_upsec_f,Upper-Sec OOS Rate (F),1.5984
+Stunting (%),completion_primary_f,Primary Completion (F),1.3798
+Stunting (%),literacy_f,Female Literacy Rate,1.3789
+Stunting (%),san_bas_nat,Basic Sanitation Access,1.3485
+Stunting (%),income_group,Income Group,1.2688
+Stunting (%),marriage_gap_18,Marriage Gender Gap,1.1592
+Stunting (%),hyg_bas_nat,Basic Hygiene Access,0.8342
+Stunting (%),female_married_by_15,Child Marriage by 15 (F),0.7749
+Stunting (%),diarrhoea_care_pct,Diarrhoea Care,0.7554
+Stunting (%),wat_bas_nat,Basic Water Access,0.7015
+Stunting (%),female_married_by_18,Child Marriage by 18 (F),0.5494
+Wasting (%),literacy_f,Female Literacy Rate,0.5465
+Wasting (%),oos_upsec_f,Upper-Sec OOS Rate (F),0.5385
+Wasting (%),diarrhoea_care_pct,Diarrhoea Care,0.4639
+Wasting (%),pneumonia_care_pct,Pneumonia Care,0.4276
+Wasting (%),marriage_gap_18,Marriage Gender Gap,0.3689
+Wasting (%),female_married_by_15,Child Marriage by 15 (F),0.3477
+Wasting (%),wat_bas_nat,Basic Water Access,0.3159
+Wasting (%),income_group,Income Group,0.2427
+Wasting (%),hyg_bas_nat,Basic Hygiene Access,0.202
+Wasting (%),completion_primary_f,Primary Completion (F),0.1793
+Wasting (%),san_bas_nat,Basic Sanitation Access,0.1577
+Wasting (%),female_married_by_18,Child Marriage by 18 (F),0.1277
