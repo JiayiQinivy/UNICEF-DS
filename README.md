@@ -1,6 +1,8 @@
 # UNICEF-DS — Child Malnutrition & Gender Inequality Analysis
 
-Data science coursework exploring the relationship between **gender inequality**, **WASH (Water, Sanitation & Hygiene)**, **education**, and **child malnutrition** using UNICEF datasets.
+## Overview
+
+This project analyzes the relationships between malnutrition, gender inequality, education, WASH (Water, Sanitation, and Hygiene), and other socioeconomic indicators using OLS regression and XGBoost machine learning models. All data sources are from UNICEF and related international datasets.
 
 ## Data Sources
 
@@ -14,71 +16,113 @@ All data sourced from [UNICEF Data](https://data.unicef.org/):
 | **Education** | UNICEF education dataset | Primary completion, literacy rates (male/female) |
 | **Child Health** | Child Health Coverage Database 2025 | Diarrhoea treatment, pneumonia care, breastfeeding, birthweight |
 
-## Project Structure
 
-```
+## Repository structure
+
+```text
 UNICEF-DS/
-├── data/                               # All raw source data
-│   ├── Child_marriage.csv
-│   ├── education-dataset.xlsx
-│   ├── Child-Health-Coverage-Database-November-2025.xlsx
-│   ├── JMP-WASH-in-schools-2024-data-by-country.xlsx
-│   └── Malnutrition Datasets/          # JME 2025 (stunting, wasting, etc.)
-│
-├── scripts/                            # All Python cleaning & analysis scripts
-│   ├── WASH_datacleaning.py            # Cleans JMP WASH data (year=2023)
-│   ├── education_cleaning.py           # Education data cleaning
-│   ├── gender_inequality_analysis.py   # Gender data cleaning & ISO mapping
-│   ├── gender-malnutrition.py          # OLS regression (Models 1-3), SHAP
-│   ├── malnutrition_analysis.py        # Malnutrition data extraction pipeline
-│   ├── xgboost_cleaning.py             # Merges all datasets for XGBoost
-│   └── xgboost_analysis.py             # XGBoost predictive model + SHAP
-│
-├── notebooks/                          # Jupyter notebooks (cleaning & viz)
-│   ├── WASH_visualisation.ipynb
-│   ├── education_visualisation.ipynb
-│   ├── xgboost_datasets_visualisation.ipynb
-│   ├── Adolescent_cleaning_and_visulisation.ipynb
-│   ├── Child marriage cleaning and visulisation.ipynb
-│   └── FGM_cleaning_and_visulisation.ipynb
-│
-├── outputs/                            # All generated outputs (CSVs, PNGs)
-│   └── xgboost/                        # XGBoost model plots and metrics
-│
 ├── README.md
 ├── requirements.txt
-└── .gitignore
+├── data/
+│   ├── raw/                # raw source datasets
+│   └── processed/          # cleaned datasets used for analysis
+├── scripts/
+│   ├── data_preparation/   # cleaning and merge scripts
+│   ├── exploration/        # exploratory visualisation scripts
+│   ├── modelling/          # OLS and final XGBoost v2 scripts
+│   └── legacy/             # archived scripts retained for reference
+├── notebooks/              # exploratory notebooks
+├── outputs/
+│   ├── exploration/        # exploratory figures
+│   ├── ols/                # OLS model outputs
+│   └── xgboost_v2/         # final XGBoost v2 outputs
+└── report/                 # final report files
 ```
 
-## Models
 
-The project is composed of four models. The first three are linear regression models, with each one incrementally including more indicators. The final one is an XGBoost model which utilises all the indicators.
+## Data Exploration
 
-1. **Model 1 (Baseline)**: Malnutrition ~ Income Group
-2. **Model 2 (Gender)**: Malnutrition ~ Gender Inequality Indicators
-3. **Model 3 (Integrated)**: Malnutrition ~ Income + Gender + WASH + Education + Health
-4. **XGBoost**: Non-linear predictive model with SHAP interpretability
+Exploratory analysis is conducted separately for:
+
+- Global malnutrition distributions
+- Gender inequality indicators
+- Education indicators
+- WASH indicators
+
+Outputs are stored in `outputs/exploration/`.
+
+## OLS Modelling
+
+A staged OLS comparison is used as the main inferential framework:
+
+- **Model 1:** `outcome ~ income group`
+- **Model 2:** `outcome ~ female child marriage by age 18`
+- **Model 3:** `outcome ~ female child marriage by age 18 + female literacy`
+- **Model 4:** `outcome ~ female child marriage by age 18 + female literacy + basic sanitation + income group`
+
+All models are estimated on the same complete-case sample (n = 75) for fair comparison of adjusted R², AIC, and BIC.
+
+## XGBoost v2 Modelling (Final Predictive Framework)
+
+The final predictive framework is implemented in:
+
+- `xgboost_v2_cleaning.py`
+- `Xgboost_v2_analysis.py`
+
+Key features:
+
+- Uses a broader predictor set across gender, education, WASH, and child health coverage
+- Applies a minimum predictor coverage threshold (n ≥ 90)
+- One-hot encodes income group
+- Evaluates performance using true nested cross-validation
+- Interprets feature importance using SHAP
+
+## Main Outputs Used in the Report
+
+### OLS
+- Model comparison table
+- Grouped coefficient plot
+- Coefficient summaries
+
+### XGBoost v2
+- `xgboost_v2_performance_table.csv`
+- `xgboost_v2_shap_rankings.csv`
+- `xgboost_v2_shap_bar_stunting_national.png`
+- `xgboost_v2_shap_dependence_stunting_national.png`
 
 ## How to Run
 
+### 1. Install dependencies
+
 ```bash
-# Install dependencies
 pip install -r requirements.txt
+````
 
-# Run data cleaning pipelines
-python scripts/malnutrition_analysis.py
-python scripts/gender_inequality_analysis.py
-python scripts/education_cleaning.py
-python scripts/WASH_datacleaning.py
+### 2. Run the Core Pipeline
 
-# Merge datasets and run XGBoost
-python scripts/xgboost_cleaning.py
-python scripts/xgboost_analysis.py
-```
+To replicate the analysis, execute the scripts in the **exact order** listed below. This ensures that data is cleaned and harmonized before being fed into the models.
+
+**Data Preparation & Cleaning:**
+```bash
+python scripts/data_preparation/malnutrition_analysis.py
+python scripts/data_preparation/gender_inequality_analysis.py
+python scripts/data_preparation/education_datacleaning.py
+python scripts/data_preparation/WASH_datacleaning.py
+python scripts/data_preparation/xgboost_v2_cleaning.py
+````
+
+## Notes on Legacy Files
+
+Older XGBoost scripts (`xgboost_analysis.py`, `xgboost_cleaning.py`) and other exploratory scripts are retained for reference only.
+
+The final XGBoost results used in the report are generated exclusively by:
+
+- `xgboost_v2_cleaning.py`
+- `Xgboost_v2_analysis.py`
 
 ## Team
+- Jiayi Qin
 - Omar Elekiaby
-- Saud Binlebdah
 - David Reeder
 - Sulaiman Alsalami
-- Jiayi Qin
+- Saud Binlebdah
