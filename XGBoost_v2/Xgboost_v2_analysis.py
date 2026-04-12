@@ -494,7 +494,7 @@ def plot_shap_dependence(shap_values, X, feature_names, outcome, cv_r2):
     fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
     print(f"    Saved: xgboost_v2_shap_dependence_{outcome}.png")
-    
+
 # ──────────────────────────────────────────────────────────────
 # SECTION 6: PERFORMANCE TABLE
 # ──────────────────────────────────────────────────────────────
