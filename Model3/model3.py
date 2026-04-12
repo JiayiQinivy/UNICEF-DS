@@ -1,54 +1,3 @@
-"""
-model3_analysis.py
-=============================================================
-Model 3: Full Multivariate Analysis
-
-Research question:
-  Does gender inequality retain independent explanatory power
-  for child malnutrition after controlling for educational
-  deprivation and environmental (WASH) factors?
-
-Incremental modelling framework:
-  Model 1 — Baseline:
-    outcome ~ C(income_group)
-
-  Model 2 — Gender inequality:
-    outcome ~ female_married_by_18
-
-  Model 3 — Gender + Education:
-    outcome ~ female_married_by_18 + literacy_f
-
-  Model 4 — Full multivariate:
-    outcome ~ female_married_by_18 + literacy_f
-             + san_bas_nat + C(income_group)
-
-Variable selection rationale (one per dimension):
-  Gender:    female_married_by_18  n=138, strongest gender pathway
-  Education: literacy_f            n=123, highest-coverage edu indicator
-  WASH:      san_bas_nat           n=110, highest-coverage WASH indicator
-
-  This combination yields n=75 complete-case countries, the
-  largest achievable sample given data availability constraints.
-
-  All four models run on the same complete-case subsample
-  (Model 4 sample) for fair Adj.R² and AIC comparisons.
-
-Inputs:
-  outputs/malnutrition_modelling_sample.csv
-  outputs/gender_inequality_analysis.csv
-  education_clean.csv
-  WASH/outputs/wash_selected.csv
-
-Outputs (Model3/ folder):
-  model3_analytical_dataset.csv
-  model3_model_comparison.csv
-  model3_coefficients.csv
-  model3_model_comparison_plot.png
-  model3_coefficient_plot.png
-  model3_lasso_importance.png
-=============================================================
-"""
-
 import os
 import warnings
 import numpy as np
@@ -72,7 +21,6 @@ GENDER_CSV       = os.path.join(ROOT_DIR, "outputs",
 EDUCATION_CSV    = os.path.join(ROOT_DIR, "education_clean.csv")
 WASH_CSV         = os.path.join(ROOT_DIR, "WASH", "outputs",
                                  "wash_selected.csv")
-COVERAGE_FILE    = os.path.join(ROOT_DIR, "data", "coverage.xlsx")
 OUTPUT_FOLDER    = SCRIPT_DIR
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 # ======================
@@ -84,23 +32,20 @@ OUTCOME_LABELS = {
     "overweight_national": "Overweight (%)",
 }
 
-GENDER_PRED   = "female_married_by_18"
-EDU_PRED      = "literacy_f"
-WASH_PRED     = "san_bas_nat"
-COVERAGE_PRED = "bcg_coverage"
+GENDER_PRED = "female_married_by_18"
+EDU_PRED    = "literacy_f"
+WASH_PRED   = "san_bas_nat"
 
 PREDICTOR_LABELS = {
     "female_married_by_18": "Female Marriage by 18 (%)",
     "literacy_f":           "Female Literacy Rate (%)",
     "san_bas_nat":          "Basic Sanitation Access (%)",
-    "bcg_coverage":         "BCG Coverage (%)",
 }
 
 GROUP_COLORS = {
     "Gender":    "#e15759",
     "Education": "#4e79a7",
     "WASH":      "#59a14f",
-    "Coverage":  "#f28e2b",
 }
 
 
@@ -118,7 +63,6 @@ def load_and_merge():
         "Gender":        GENDER_CSV,
         "Education":     EDUCATION_CSV,
         "WASH":          WASH_CSV,
-        "Coverage":      COVERAGE_FILE,
     }
     for name, path in files.items():
         status = "found" if os.path.exists(path) else "NOT FOUND"
@@ -132,16 +76,10 @@ def load_and_merge():
     gen  = pd.read_csv(GENDER_CSV)
     edu  = pd.read_csv(EDUCATION_CSV)
     wash = pd.read_csv(WASH_CSV)
-    
-    # Process coverage data: explicitly use the 2024 column
-    cov_raw = pd.read_excel(COVERAGE_FILE)
-    cov = cov_raw[['iso3', '2024']].rename(columns={'iso3': 'ISO', '2024': COVERAGE_PRED})
-    # Drop rows where ISO is null or coverage is null
-    cov = cov.dropna(subset=['ISO', COVERAGE_PRED])
 
     df = mal.copy()
     for src, name in [(gen, "gender"), (edu, "education"),
-                       (wash, "wash"), (cov, "coverage")]:
+                       (wash, "wash")]:
         drop_cols = [c for c in src.columns
                      if c in ("country", "year", "sdg_region",
                                "unicef_reporting_region",
@@ -163,14 +101,14 @@ def load_and_merge():
 
     # Model 4 complete-case subsample
     m4_cols = OUTCOMES + ["income_group",
-                           GENDER_PRED, EDU_PRED, WASH_PRED, COVERAGE_PRED]
+                           GENDER_PRED, EDU_PRED, WASH_PRED]
     avail   = [c for c in m4_cols if c in df.columns]
     n_m4    = df[avail].dropna().shape[0]
     print(f"\n  Model 4 complete-case sample: n = {n_m4} countries")
     print(f"  (all four models use this same subsample)")
 
     print(f"\n  Predictor coverage in merged dataset:")
-    for col in [GENDER_PRED, EDU_PRED, WASH_PRED, COVERAGE_PRED]:
+    for col in [GENDER_PRED, EDU_PRED, WASH_PRED]:
         if col in df.columns:
             print(f"    {col:30s}: {df[col].notna().sum():3d} / {len(df)}")
 
@@ -199,7 +137,7 @@ def run_models(df):
     print("=" * 60)
 
     m4_cols = OUTCOMES + ["income_group",
-                           GENDER_PRED, EDU_PRED, WASH_PRED, COVERAGE_PRED]
+                           GENDER_PRED, EDU_PRED, WASH_PRED]
     avail   = [c for c in m4_cols if c in df.columns]
     sub     = df[avail].dropna().copy()
     n       = len(sub)
@@ -212,9 +150,9 @@ def run_models(df):
         if outcome not in sub.columns:
             continue
 
-        print(f"\n  {'-'*55}")
+        print(f"\n  {'─'*55}")
         print(f"  Outcome: {OUTCOME_LABELS[outcome]}")
-        print(f"  {'-'*55}")
+        print(f"  {'─'*55}")
 
         m1 = smf.ols(
             f"{outcome} ~ C(income_group)",
@@ -227,7 +165,7 @@ def run_models(df):
             data=sub).fit()
         m4 = smf.ols(
             f"{outcome} ~ {GENDER_PRED} + {EDU_PRED}"
-            f" + {WASH_PRED} + {COVERAGE_PRED} + C(income_group)",
+            f" + {WASH_PRED} + C(income_group)",
             data=sub).fit()
 
         for label, model in [
@@ -280,8 +218,7 @@ def run_models(df):
             if "Intercept" in str(var) or "income_group" in str(var):
                 continue
             group = ("Gender"    if var == GENDER_PRED else
-                     "Education" if var == EDU_PRED    else
-                     "WASH"      if var == WASH_PRED   else "Coverage")
+                     "Education" if var == EDU_PRED    else "WASH")
             all_coefs.append({
                 "Outcome":     OUTCOME_LABELS[outcome],
                 "Predictor":   PREDICTOR_LABELS.get(
@@ -374,70 +311,246 @@ def plot_model_comparison(comp_df):
 # ──────────────────────────────────────────────────────────────
 # FIGURE 2: COEFFICIENT FOREST PLOT (Model 4)
 # ──────────────────────────────────────────────────────────────
+def plot_grouped_coefficient_forest(coefs_df):
+    """
+    Single grouped coefficient plot for Model 4 OLS coefficients.
 
-def plot_coefficient_forest(coefs_df):
-    print("\n  Generating Figure 2: Coefficient forest plot...")
+    Design:
+      - One row per retained predictor
+      - Three outcomes shown side-by-side within each row
+      - Dot = coefficient estimate
+      - Whisker = 95% CI
+      - Colour = outcome
+      - Significant predictors (p < 0.05): filled dot
+      - Non-significant predictors: hollow dot
+      - Significance stars shown to the right of the CI
+      - Common x-axis across all outcomes
 
-    if coefs_df.empty:
+    Expected columns in coefs_df:
+      Outcome, Predictor, Coefficient, SE, p_value, Sig, Group
+    Optional CI columns (preferred if available):
+      CI_lower, CI_upper
+    """
+    import os
+    import numpy as np
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    from matplotlib.lines import Line2D
+
+    print("\n  Generating grouped coefficient plot...")
+
+    if coefs_df is None or coefs_df.empty:
         print("  No coefficients to plot.")
         return
 
-    outcomes = [OUTCOME_LABELS[o] for o in OUTCOMES
-                if OUTCOME_LABELS[o] in coefs_df["Outcome"].unique()]
-    n_panels = len(outcomes)
-    fig, axes = plt.subplots(1, n_panels,
-                              figsize=(6 * n_panels, 6),
-                              sharey=False)
-    if n_panels == 1:
-        axes = [axes]
+    df = coefs_df.copy()
 
-    for ax, outcome in zip(axes, outcomes):
-        sub = coefs_df[coefs_df["Outcome"] == outcome].copy()
-        sub = sub.sort_values("Coefficient")
+    required_cols = {
+        "Outcome", "Predictor", "Coefficient", "SE", "p_value", "Sig"
+    }
+    missing_cols = required_cols - set(df.columns)
+    if missing_cols:
+        print(f"  Missing required columns: {sorted(missing_cols)}")
+        return
 
-        y_pos  = range(len(sub))
-        colors = [GROUP_COLORS.get(g, "#aaa") for g in sub["Group"]]
-        alphas = [0.9 if p < 0.05 else 0.40 for p in sub["p_value"]]
-
-        for y, (_, row), color, alpha in zip(
-                y_pos, sub.iterrows(), colors, alphas):
-            ax.barh(y, row["Coefficient"],
-                    xerr=1.96 * row["SE"],
-                    color=color, alpha=alpha, height=0.55,
-                    error_kw=dict(elinewidth=1.2, capsize=4,
-                                   ecolor="black"))
-            if row["Sig"]:
-                ax.text(
-                    row["Coefficient"] + 1.96 * row["SE"] + 0.05,
-                    y, row["Sig"],
-                    va="center", fontsize=10,
-                    color=GROUP_COLORS.get(row["Group"], "#333"))
-
-        ax.axvline(0, color="black", lw=0.9, ls="--", alpha=0.5)
-        ax.set_yticks(list(y_pos))
-        ax.set_yticklabels(sub["Predictor"], fontsize=9)
-        ax.set_xlabel("OLS Coefficient", fontsize=9)
-        ax.set_title(outcome, fontsize=11, fontweight="bold")
-        ax.grid(axis="x", alpha=0.3)
-
-    legend_handles = [
-        mpatches.Patch(color=c, alpha=0.9, label=g)
-        for g, c in GROUP_COLORS.items()
+    # Predictor order: top to bottom
+    pred_order = [
+        PREDICTOR_LABELS[GENDER_PRED],
+        PREDICTOR_LABELS[EDU_PRED],
+        PREDICTOR_LABELS[WASH_PRED],
     ]
-    fig.legend(handles=legend_handles, loc="upper right",
-               fontsize=9, title="Predictor Group",
-               title_fontsize=9, framealpha=0.9)
-    fig.suptitle(
-        "Model 4 — OLS Regression Coefficients\n"
-        "Gender + Education + WASH + Income Group  |  "
-        "Bars = 95% CI  |  faded = p > 0.05",
-        fontsize=11, fontweight="bold", y=1.02)
+
+    # Outcome order
+    outcome_order = [OUTCOME_LABELS[o] for o in OUTCOMES if OUTCOME_LABELS[o] in df["Outcome"].unique()]
+    if len(outcome_order) == 0:
+        print("  No recognised outcomes found.")
+        return
+
+    # Keep only relevant rows
+    df = df[df["Predictor"].isin(pred_order) & df["Outcome"].isin(outcome_order)].copy()
+    if df.empty:
+        print("  No matching retained predictors found.")
+        return
+
+    # Confidence intervals
+    if {"CI_lower", "CI_upper"}.issubset(df.columns):
+        df["CI_lower_plot"] = df["CI_lower"]
+        df["CI_upper_plot"] = df["CI_upper"]
+    else:
+        df["CI_lower_plot"] = df["Coefficient"] - 1.96 * df["SE"]
+        df["CI_upper_plot"] = df["Coefficient"] + 1.96 * df["SE"]
+
+    # Common x range
+    x_min = np.nanmin(df["CI_lower_plot"].values)
+    x_max = np.nanmax(df["CI_upper_plot"].values)
+    pad = max((x_max - x_min) * 0.10, 0.025)
+    x_min -= pad
+    x_max += pad
+
+    # Outcome colours
+    outcome_colors = {
+        OUTCOME_LABELS["stunting_national"]: "#4e79a7",  # steel blue
+        OUTCOME_LABELS["wasting_national"]: "#f28e2b",  # orange
+        OUTCOME_LABELS["overweight_national"]: "#9c755f",  # brown
+    }
+
+    # Small vertical offsets within each predictor row
+    offsets = {
+        outcome_order[0]: -0.18 if len(outcome_order) >= 1 else 0.0,
+        outcome_order[1]:  0.00 if len(outcome_order) >= 2 else 0.0,
+        outcome_order[2]:  0.18 if len(outcome_order) >= 3 else 0.0,
+    }
+
+    fig, ax = plt.subplots(figsize=(7, 5.2))
+
+    # Base y positions for predictors
+    y_base = np.arange(len(pred_order))
+
+    # Background guides for each predictor row
+    for y in y_base:
+        ax.axhline(y, color="#eeeeee", lw=0.8, zorder=0)
+
+    # Plot all outcome-predictor combinations
+    for pred_idx, pred in enumerate(pred_order):
+        pred_df = df[df["Predictor"] == pred].copy()
+
+        for outcome in outcome_order:
+            row = pred_df[pred_df["Outcome"] == outcome]
+            if row.empty:
+                continue
+
+            row = row.iloc[0]
+            y = pred_idx + offsets[outcome]
+
+            coef = row["Coefficient"]
+            ci_lo = row["CI_lower_plot"]
+            ci_hi = row["CI_upper_plot"]
+            p_val = row["p_value"]
+            sig = row["Sig"] if pd.notna(row["Sig"]) else ""
+
+            color = outcome_colors.get(outcome, "#444444")
+            is_sig = pd.notna(p_val) and p_val < 0.05
+
+            # CI whisker
+            ax.plot(
+                [ci_lo, ci_hi], [y, y],
+                color=color,
+                alpha=0.85 if is_sig else 0.45,
+                linewidth=1.8,
+                solid_capstyle="round",
+                zorder=2
+            )
+
+            # End caps
+            cap_half = 0.055
+            ax.plot([ci_lo, ci_lo], [y - cap_half, y + cap_half],
+                    color=color, alpha=0.85 if is_sig else 0.45,
+                    linewidth=1.1, zorder=2)
+            ax.plot([ci_hi, ci_hi], [y - cap_half, y + cap_half],
+                    color=color, alpha=0.85 if is_sig else 0.45,
+                    linewidth=1.1, zorder=2)
+
+            # Dot
+            if is_sig:
+                ax.scatter(
+                    coef, y,
+                    s=72,
+                    color=color,
+                    edgecolors="white",
+                    linewidth=0.6,
+                    zorder=3
+                )
+            else:
+                ax.scatter(
+                    coef, y,
+                    s=68,
+                    facecolors="white",
+                    edgecolors=color,
+                    linewidth=1.7,
+                    zorder=3
+                )
+
+            # Significance stars
+            if isinstance(sig, str) and sig.strip() and is_sig:
+                offset = max(abs(ci_hi - ci_lo) * 0.08, 0.012 * (x_max - x_min))
+                #star_x = min(ci_hi + offset, x_max - 0.02 * (x_max - x_min))
+                star_x = x_max - (x_max - x_min) * 0.03
+                ax.text(
+                    star_x, y, sig.strip(),
+                    va="center", ha="left",
+                    fontsize=10,
+                    color=color,
+                    fontweight="bold",
+                    zorder=4
+                )
+
+    # Zero line
+    ax.axvline(0, color="#444444", lw=1.0, ls="--", alpha=0.65, zorder=1)
+
+    # Axes
+    ax.set_xlim(x_min, x_max)
+    ax.set_yticks(y_base)
+    ax.set_yticklabels(pred_order, fontsize=11)
+    ax.invert_yaxis()
+
+    ax.set_xlabel("OLS Coefficient", fontsize=12)
+    ax.set_title(
+        "Model 4 — Grouped OLS Coefficients with 95% Confidence Intervals",
+        fontsize=12,
+        fontweight="bold",
+        pad=10
+    )
+
+    ax.grid(axis="x", alpha=0.22, linestyle=":", linewidth=0.8)
+    ax.grid(axis="y", alpha=0.0)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+
+    # Legend for outcomes
+    outcome_handles = [
+        Line2D([0], [0],
+               marker='o', color=outcome_colors[o], label=o,
+               markerfacecolor=outcome_colors[o], markersize=7, linewidth=1.8)
+        for o in outcome_order
+    ]
+
+    # Legend for significance encoding
+    sig_handles = [
+        Line2D([0], [0],
+               marker='o', color="#555555", label="p < 0.05",
+               markerfacecolor="#555555", markersize=7, linewidth=0),
+        Line2D([0], [0],
+               marker='o', color="#555555", label="p ≥ 0.05",
+               markerfacecolor="white", markeredgecolor="#555555",
+               markersize=7, linewidth=0),
+    ]
+
+    legend1 = ax.legend(
+        handles=outcome_handles,
+        title="Outcome",
+        loc="upper right",
+        bbox_to_anchor=(1.0, 0.90),
+        fontsize=10,
+        title_fontsize=10,
+        framealpha=0.92
+    )
+    ax.add_artist(legend1)
+
+    ax.legend(
+        handles=sig_handles,
+        title="Point style",
+        loc="lower right",
+        fontsize=9,
+        title_fontsize=9,
+        framealpha=0.92
+    )
+
     plt.tight_layout()
 
-    out = os.path.join(OUTPUT_FOLDER, "model3_coefficient_plot.png")
+    out = os.path.join(OUTPUT_FOLDER, "model3_grouped_coefficient_plot.png")
     fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
-    print(f"  Saved: model3_coefficient_plot.png")
+    print("  Saved: model3_grouped_coefficient_plot.png")
 
 
 # ──────────────────────────────────────────────────────────────
@@ -447,11 +560,10 @@ def plot_coefficient_forest(coefs_df):
 def plot_lasso_importance(sub):
     print("\n  Generating Figure 3: Lasso variable importance...")
 
-    predictors = [GENDER_PRED, EDU_PRED, WASH_PRED, COVERAGE_PRED]
-    groups     = {GENDER_PRED:   "Gender",
-                  EDU_PRED:      "Education",
-                  WASH_PRED:     "WASH",
-                  COVERAGE_PRED: "Coverage"}
+    predictors = [GENDER_PRED, EDU_PRED, WASH_PRED]
+    groups     = {GENDER_PRED: "Gender",
+                  EDU_PRED:    "Education",
+                  WASH_PRED:   "WASH"}
     scaler = StandardScaler()
 
     fig, axes = plt.subplots(1, len(OUTCOMES),
@@ -505,7 +617,7 @@ def plot_lasso_importance(sub):
                title_fontsize=9, framealpha=0.9)
     fig.suptitle(
         "Model 4 — Variable Importance via LassoCV\n"
-        "Standardised predictors  |  Gender | Education | WASH | Coverage",
+        "Standardised predictors  |  Gender | Education | WASH",
         fontsize=12, fontweight="bold", y=1.02)
     plt.tight_layout()
 
@@ -525,7 +637,6 @@ def main():
     print(f"  Gender predictor:    {GENDER_PRED}")
     print(f"  Education predictor: {EDU_PRED}")
     print(f"  WASH predictor:      {WASH_PRED}")
-    print(f"  Coverage predictor:  {COVERAGE_PRED}")
     print("=" * 60)
 
     df = load_and_merge()
@@ -535,7 +646,8 @@ def main():
 
     comp_df, coefs_df, sub = run_models(df)
     plot_model_comparison(comp_df)
-    plot_coefficient_forest(coefs_df)
+    #plot_coefficient_forest(coefs_df)
+    plot_grouped_coefficient_forest(coefs_df)
     plot_lasso_importance(sub)
 
     print("\n" + "=" * 60)
@@ -556,3 +668,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
