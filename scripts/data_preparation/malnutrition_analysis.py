@@ -35,7 +35,7 @@ warnings.filterwarnings("ignore")
 # ===== USER INPUT =====
 # ===== USER INPUT =====
 _SCRIPT_DIR   = os.path.dirname(os.path.abspath(__file__))
-BASE_FOLDER   = os.path.join(_SCRIPT_DIR, "data", "Malnutrition Datasets", "Malnutrition")
+BASE_FOLDER   = os.path.join(_SCRIPT_DIR, "Malnutrition") #"data", "Malnutrition Datasets"
 OUTPUT_FOLDER = os.path.join(_SCRIPT_DIR, "outputs")
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
@@ -441,7 +441,7 @@ def plot_composite_map(master):
     vmin = float(data.quantile(0.02))
     vmax = float(data.quantile(0.98))
 
-    fig, ax = plt.subplots(1, 1, figsize=(5, 2.8))
+    fig, ax = plt.subplots(1, 1, figsize=(8, 8))
 
     merged.plot(
         column=col, ax=ax, cmap="YlOrRd",
@@ -456,25 +456,25 @@ def plot_composite_map(master):
                         fraction=0.012,
                         pad=0.01,
                         shrink=0.85)
-    cbar.ax.tick_params(labelsize=6)
-    cbar.set_label("Composite score (%)", fontsize=6, labelpad=3)
+    cbar.ax.tick_params(labelsize=12)
+    cbar.set_label("Composite score (%)", fontsize=14, labelpad=3)
 
     ax.legend(
         handles=[mpatches.Patch(color="#d4d4d4", label="No data")],
-        loc="lower left", fontsize=5, framealpha=0.8,
+        loc="lower left", fontsize=12, framealpha=0.8,
         handlelength=1, handleheight=0.8,
         borderpad=0.3, labelspacing=0.2)
 
     ax.set_title(
         f"Global Malnutrition Composite Score (n=137, UNICEF JME 2025)",
-        fontsize=7, fontweight="bold", pad=3)
+        fontsize=16, fontweight="bold", pad=3)
 
     ax.axis("off")
 
     fig.subplots_adjust(left=0.01, right=0.88,
                         top=0.92, bottom=0.01)
 
-    out = os.path.join(OUTPUT_FOLDER, "report_composite_map.png")
+    out = os.path.join(OUTPUT_FOLDER, "report_composite_map.pdf")
     fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
     print(f"  Saved: report_composite_map.png")
@@ -694,18 +694,18 @@ def plot_regional_boxplot(master):
 
         ax.set_xticks(range(1, len(region_order) + 1))
         ax.set_xticklabels(region_order, rotation=38,
-                            ha="right", fontsize=12)
-        ax.set_title(label, fontsize=11, fontweight="bold")
-        ax.set_ylabel("Prevalence (%)", fontsize=12)
+                            ha="right", fontsize=14)
+        ax.set_title(label, fontsize=13, fontweight="bold")
+        ax.set_ylabel("Prevalence (%)", fontsize=14)
         ax.set_ylim(bottom=0)
         ax.grid(axis="y", alpha=0.3)
 
     fig.suptitle(
         "Child Malnutrition by UNICEF Region",
-        fontsize=13, fontweight="bold", y=1.01)
+        fontsize=16, fontweight="bold", y=1.01)
     plt.tight_layout()
     out = os.path.join(OUTPUT_FOLDER,
-                       "malnutrition_regional_boxplot.png")
+                       "malnutrition_regional_boxplot.pdf")
     fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
 
