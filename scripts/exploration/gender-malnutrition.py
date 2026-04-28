@@ -236,24 +236,25 @@ def plot_correlation_heatmap(df):
         annot=annot_display, fmt="",
         cmap="RdBu_r", center=0, vmin=-1, vmax=1,
         ax=ax, linewidths=1.2,
-        annot_kws={"size": 11, "weight": "bold"},
+        annot_kws={"size": 18, "weight": "bold"},
         cbar_kws={"label": "Spearman r", "shrink": 0.8})
     wrapped_labels = [textwrap.fill(label, width=20) for label in r_display.index]
     ax.set_yticklabels(
         wrapped_labels,
         rotation=0,  # 建议换行后旋转角度减小，否则很难读
         va="center",
-        fontsize=10
+        fontsize=16
     )
-    plt.xticks(rotation=15, ha="right", fontsize=11)
+    plt.xticks(rotation=15, ha="right", fontsize=16)
 
     ax.set_title(
-        "Spearman Correlation: Gender Inequality vs Child Malnutrition(* p < 0.05  ** p < 0.01  *** p < 0.001)"
-        , fontsize=10, fontweight="bold", pad=10)
+        "Spearman Correlation: Gender Inequality vs Child Malnutrition\n"
+        "(* p < 0.05  ** p < 0.01  *** p < 0.001)"
+        , fontsize=16, fontweight="bold", pad=10)
 
     plt.tight_layout()
 
-    out = os.path.join(OUTPUT_FOLDER, "correlation_heatmap.png")
+    out = os.path.join(OUTPUT_FOLDER, "correlation_heatmap.pdf")
     fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
 
@@ -336,19 +337,19 @@ def plot_gender_stunting_scatter(df):
     ax.set_xlabel("Female Child Marriage by 18 (%)", fontsize=8)
     ax.set_ylabel("Stunting Prevalence (%)", fontsize=8)
     ax.set_title("Child Marriage vs Stunting\nby UNICEF Region",
-                 fontsize=8, fontweight="bold", pad=4)
+                 fontsize=10, fontweight="bold", pad=4)
     ax.tick_params(labelsize=7)
     ax.grid(alpha=0.25)
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
 
-    ax.legend(fontsize=5.5, loc="lower right",
+    ax.legend(fontsize=6.5, loc="lower right",
               framealpha=0.85, ncol=1,
               handlelength=1, handleheight=0.8,
               borderpad=0.4, labelspacing=0.3)
 
     plt.tight_layout(pad=0.4)
-    out = os.path.join(OUTPUT_FOLDER, "report_gender_scatter.png")
+    out = os.path.join(OUTPUT_FOLDER, "report_gender_scatter.pdf")
     fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
     print("  Saved: report_gender_scatter.png")

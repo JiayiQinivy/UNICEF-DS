@@ -36,7 +36,7 @@ warnings.filterwarnings("ignore")
 # ===== USER INPUT =====
 SCRIPT_DIR       = os.path.dirname(os.path.abspath(__file__))
 WASH_CSV         = os.path.join(SCRIPT_DIR, "outputs", "wash_clean_data.csv")
-MALNUTRITION_CSV = os.path.join(SCRIPT_DIR, "..", "outputs",
+MALNUTRITION_CSV = os.path.join(SCRIPT_DIR, "outputs",
                                  "malnutrition_modelling_sample.csv")
 OUTPUT_DIR       = SCRIPT_DIR
 OUTPUT_CSV_DIR   = os.path.join(SCRIPT_DIR, "outputs")
@@ -276,12 +276,12 @@ def plot_correlation_heatmap(merged):
     r_display = r_mat.rename(index=WASH_LABELS, columns=OUTCOME_LABELS)
     a_display = annot.rename(index=WASH_LABELS, columns=OUTCOME_LABELS)
 
-    fig, ax = plt.subplots(figsize=(6, 4))
+    fig, ax = plt.subplots(figsize=(8, 6))
     sns.heatmap(
         r_display.astype(float),
         annot=a_display, fmt="",
         cmap="RdBu_r", center=0, vmin=-1, vmax=1,
-        ax=ax, linewidths=0.8, annot_kws={"size": 11, "weight": "bold"},
+        ax=ax, linewidths=0.8, annot_kws={"size": 18, "weight": "bold"},
         cbar_kws={"label": "Spearman r", "shrink": 0.75})
 
     # Highlight selected indicator rows with a box
@@ -290,14 +290,14 @@ def plot_correlation_heatmap(merged):
     ax.set_title(
         "Spearman Correlation: WASH Indicators vs Child Malnutrition\n"
         " * p<0.05  ** p<0.01  *** p<0.001  ",
-        fontsize=11, fontweight="bold", pad=12)
+        fontsize=16, fontweight="bold", pad=12)
     ax.set_xlabel("")
     ax.set_ylabel("")
-    plt.xticks(rotation=15, ha="right", fontsize=10)
-    plt.yticks(rotation=0, fontsize=9)
+    plt.xticks(rotation=15, ha="right", fontsize=14)
+    plt.yticks(rotation=0, fontsize=14)
     plt.tight_layout()
 
-    out = os.path.join(OUTPUT_DIR, "wash_correlation_heatmap.png")
+    out = os.path.join(OUTPUT_DIR, "wash_correlation_heatmap.pdf")
     fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
     print(f"  Saved: wash_correlation_heatmap.png")
@@ -347,29 +347,29 @@ def plot_scatter_plots(merged):
                     bbox=dict(boxstyle="round,pad=0.3",
                                fc="white", alpha=0.85))
 
-        ax.set_xlabel(WASH_LABELS.get(wash_col, wash_col), fontsize=12)
-        ax.set_ylabel(OUTCOME_LABELS["stunting_national"], fontsize=12)
+        ax.set_xlabel(WASH_LABELS.get(wash_col, wash_col), fontsize=14)
+        ax.set_ylabel(OUTCOME_LABELS["stunting_national"], fontsize=14)
         ax.set_title(WASH_LABELS.get(wash_col, wash_col),
                      fontsize=12, fontweight="bold")
         ax.grid(alpha=0.25)
-        ax.tick_params(labelsize=11)
+        ax.tick_params(labelsize=14)
 
     handles = [mpatches.Patch(color=REGION_COLORS.get(r, "#999"),
                                label=r)
                for r in sorted(REGION_COLORS.keys())
                if r in merged["region"].values]
     ax.legend(handles=handles, loc="upper right",
-              fontsize=8, framealpha=0.85, ncol=1,
+              fontsize=10, framealpha=0.85, ncol=1,
               handlelength=1, handleheight=0.8,
               borderpad=0.5, labelspacing=0.3)
 
     fig.suptitle(
         "WASH Basic Access Indicators vs Child Stunting\n"
         "(Spearman r; points coloured by UNICEF Region)",
-        fontsize=12, fontweight="bold", y=1.02)
+        fontsize=16, fontweight="bold", y=1.02)
     plt.tight_layout()
 
-    out = os.path.join(OUTPUT_DIR, "wash_scatter_plots.png")
+    out = os.path.join(OUTPUT_DIR, "wash_scatter_plots.pdf")
     fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
     print(f"  Saved: wash_scatter_plots.png")

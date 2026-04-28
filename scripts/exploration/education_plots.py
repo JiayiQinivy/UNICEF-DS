@@ -188,7 +188,7 @@ def plot_correlation_heatmap(merged):
         cmap="RdBu_r", center=0, vmin=-1, vmax=1,
         ax=ax,
         linewidths=0.8,
-        annot_kws={"size": 12},  # 稍微缩小单元格字体，看起来更精致
+        annot_kws={"size": 18,  "weight": "bold"},  # 稍微缩小单元格字体，看起来更精致
         cbar_kws={"label": "Spearman r", "shrink": 0.75})
 
     # 3. 应用换行后的标签
@@ -196,7 +196,7 @@ def plot_correlation_heatmap(merged):
     ax.set_yticklabels(
         wrapped_yticklabels,
         rotation=0,  # 换行后建议保持水平 (0度)
-        fontsize=11,
+        fontsize=16,
         va="center"  # 垂直居中对齐
     )
 
@@ -206,14 +206,15 @@ def plot_correlation_heatmap(merged):
     ax.set_title(
         "Spearman Correlation: Education Indicators vs Child Malnutrition\n"
         "Sorted by avg |r|  |  * p<0.05  ** p<0.01  *** p<0.001",
-        fontsize=11, fontweight="bold", pad=12)
+        fontsize=16, fontweight="bold", pad=12)
 
     ax.set_xlabel("")
     ax.set_ylabel("")
-
+    out = os.path.join(OUTPUT_DIR, "education_correlation_heatmap.pdf")
+    fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.tight_layout()
-    #plt.close(fig)
-    print(f"  Saved: education_correlation_heatmap.png")
+    plt.close(fig)
+    print(f"  Saved: education_correlation_heatmap.pdf")
 
 
 # ──────────────────────────────────────────────────────────────
@@ -271,7 +272,7 @@ def plot_scatter_plots(merged):
             #f"{OUTCOME_LABELS.get(outcome, outcome)}",
             #fontsize=10, fontweight="bold")
         ax.grid(alpha=0.25)
-        ax.tick_params(labelsize=8)
+        ax.tick_params(labelsize=12)
 
     # Shared legend (regions)
     handles = [mpatches.Patch(color=REGION_COLORS.get(r, "#999"),
@@ -279,16 +280,16 @@ def plot_scatter_plots(merged):
                for r in sorted(REGION_COLORS.keys())
                if r in merged["region"].values]
     fig.legend(handles=handles, loc="lower center",
-               ncol=3, fontsize=8, title="UNICEF Region",
-               title_fontsize=9, framealpha=0.9,
-               bbox_to_anchor=(0.5, -0.12))
+               ncol=3, fontsize=12, title="UNICEF Region",
+               title_fontsize=12, framealpha=0.9,
+               bbox_to_anchor=(0.5, -0.2))
 
     fig.suptitle(
         "Female Upper-Secondary OOS Rate vs Child Stunting",
-        fontsize=12, fontweight="bold", y=1)
+        fontsize=16, fontweight="bold", y=1)
     plt.tight_layout()
 
-    out = os.path.join(OUTPUT_DIR, "education_scatter_plots.png")
+    out = os.path.join(OUTPUT_DIR, "education_scatter_plots.pdf")
     fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
     print(f"  Saved: education_scatter_plots.png")
