@@ -315,14 +315,14 @@ def plot_shap_bar(shap_values, feature_names, outcome, cv_r2):
             val + shap_df["mean_shap"].max() * 0.01,
             bar.get_y() + bar.get_height() / 2,
             f"{val:.2f}",
-            va="center", ha="left", fontsize=8.5
+            va="center", ha="left", fontsize=12
         )
 
-    ax.set_xlabel("Mean |SHAP value|", fontsize=10)
+    ax.set_xlabel("Mean |SHAP value|", fontsize=12)
     ax.set_title(
         f"{OUTCOME_LABELS[outcome]} — Feature Importance (SHAP)\n"
         f"Nested 10-fold CV R² = {cv_r2:.3f}",
-        fontsize=11, fontweight="bold", pad=8
+        fontsize=14, fontweight="bold", pad=8
     )
     ax.grid(axis="x", alpha=0.25, linestyle=":")
     ax.spines[["top", "right"]].set_visible(False)
@@ -337,12 +337,12 @@ def plot_shap_bar(shap_values, feature_names, outcome, cv_r2):
     handles = [mpatches.Patch(color=c, alpha=0.88, label=d)
                for d, c in domain_info]
     ax.legend(handles=handles, loc="lower right",
-              fontsize=8, title="Domain", title_fontsize=8,
+              fontsize=12, title="Domain", title_fontsize=8,
               framealpha=0.9)
 
     plt.tight_layout()
     out = os.path.join(OUTPUT_DIR,
-                       f"xgboost_v2_shap_bar_{outcome}.png")
+                       f"xgboost_v2_shap_bar_{outcome}.pdf")
     fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
     print(f"    Saved: xgboost_v2_shap_bar_{outcome}.png")
@@ -450,9 +450,9 @@ def plot_shap_dependence(shap_values, X, feature_names, outcome, cv_r2):
             # Colorbar - for vertical layout, keep at side of each subplot
             cbar = fig.colorbar(sc, ax=ax, pad=0.02,
                                 fraction=0.046)
-            cbar.set_label("High Income (1=yes)", fontsize=7.5)
+            cbar.set_label("High Income (1=yes)", fontsize=10)
             cbar.set_ticks([0, 1])
-            cbar.ax.tick_params(labelsize=7)
+            cbar.ax.tick_params(labelsize=10)
         else:
             ax.scatter(
                 x_plot, shap_plot,
@@ -471,26 +471,26 @@ def plot_shap_dependence(shap_values, X, feature_names, outcome, cv_r2):
                 label="Quadratic trend")
 
         ax.axhline(0, color="#666", lw=0.8, ls=":", alpha=0.5)
-        ax.set_xlabel(target_labels[feat], fontsize=9)
+        ax.set_xlabel(target_labels[feat], fontsize=12)
         ax.set_ylabel(
             "SHAP value\n(impact on stunting prediction)",
-            fontsize=9)
+            fontsize=12)
         ax.set_title(
             PREDICTOR_LABELS.get(feat, feat),
-            fontsize=10, fontweight="bold")
+            fontsize=14, fontweight="bold")
         ax.grid(alpha=0.2, linestyle=":")
         ax.spines[["top", "right"]].set_visible(False)
-        ax.legend(fontsize=8, framealpha=0.8)
+        ax.legend(fontsize=14, framealpha=0.8)
 
     fig.suptitle(
         f"{OUTCOME_LABELS[outcome]} — SHAP Dependence Plots\n"
-        f"Nested 10-fold CV R² = {cv_r2:.3f}  |  "
+        f"Nested 10-fold CV R² = {cv_r2:.3f}  \n  "
         f"Colour = Income: High (1) vs Others (0)",
-        fontsize=11, fontweight="bold", y=1.02
+        fontsize=13, fontweight="bold", y=1.02
     )
     plt.tight_layout()
     out = os.path.join(OUTPUT_DIR,
-                       f"xgboost_v2_shap_dependence_{outcome}.png")
+                       f"xgboost_v2_shap_dependence_{outcome}.pdf")
     fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
     print(f"    Saved: xgboost_v2_shap_dependence_{outcome}.png")
