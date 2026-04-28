@@ -1,21 +1,10 @@
 """
-gender_inequality_analysis.py
-=============================================================
 Gender Inequality Data Cleaning and Analysis Pipeline
 
-Reads three existing files from the UNICEF-DS root folder:
-  1. Adolescent_Long_clean.csv  -- already cleaned, has ISO column
-  2. Child_marriage.csv         -- raw, needs cleaning
-  3. FGM_clean_english.csv      -- already cleaned, needs ISO added
-
-Output:
-  outputs/gender_inequality_analysis.csv  -- one row per country
-  outputs/gender_distributions.png
-  outputs/child_marriage_gender_gap.png
-  outputs/fgm_analysis.png
-  outputs/adolescent_health.png
-  outputs/gender_correlation_heatmap.png
-=============================================================
+Inputs:
+  Adolescent_Long_clean.csv, Child_marriage.csv, FGM_clean_english.csv
+Outputs:
+  outputs/gender_inequality_analysis.csv + visualisation PNGs
 """
 
 import os
@@ -27,7 +16,6 @@ import seaborn as sns
 from scipy import stats
 warnings.filterwarnings("ignore")
 
-# ===== USER INPUT =====
 SCRIPT_DIR    = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR      = os.path.dirname(SCRIPT_DIR)
 DATA_FOLDER   = os.path.join(ROOT_DIR, "data")
@@ -37,12 +25,9 @@ os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 ADOLESCENT_FILE     = os.path.join(DATA_FOLDER, "Adolescent_Long_clean.csv")
 CHILD_MARRIAGE_FILE = os.path.join(DATA_FOLDER, "Child_marriage.csv")
 FGM_FILE            = os.path.join(DATA_FOLDER, "FGM_clean_english.csv")
-# ======================
 
 
-# ──────────────────────────────────────────────────────────────
-# ISO3 LOOKUP TABLE
-# ──────────────────────────────────────────────────────────────
+
 
 ISO_LOOKUP = {
     "Afghanistan": "AFG", "Albania": "ALB", "Algeria": "DZA",
@@ -149,23 +134,14 @@ def add_iso(df, country_col):
     return df
 
 
-# ──────────────────────────────────────────────────────────────
-# SECTION 1: ADOLESCENT HEALTH INDICATORS
-# Reads Adolescent_Long_clean.csv (already cleaned by notebook)
-# ──────────────────────────────────────────────────────────────
 
 def load_adolescent():
-    """
-    Load Adolescent_Long_clean.csv.
-    Columns: ISO, Country or Area,
-             ANC4_15_19_yrs(%), CPMODHS_15_19_yrs(%), ORS_15_19_yrs(%)
-    """
+    """Load and standardise adolescent health indicators."""
     if not os.path.exists(ADOLESCENT_FILE):
         print(f"  File not found: {ADOLESCENT_FILE}")
         return pd.DataFrame()
 
     df = pd.read_csv(ADOLESCENT_FILE)
-
     # Standardise column names
     df = df.rename(columns={
         "Country or Area":      "country",
@@ -185,19 +161,9 @@ def load_adolescent():
     return df[keep]
 
 
-# ──────────────────────────────────────────────────────────────
-# SECTION 2: CHILD MARRIAGE
-# Reads Child_marriage.csv (raw file, cleans here)
-# ──────────────────────────────────────────────────────────────
 
 def load_child_marriage():
-    """
-    Load and clean Child_marriage.csv.
-    - Rename 'Countries and areas' to 'country'
-    - Replace '-' with NaN, coerce numerics
-    - Derive marriage_gap_18 and early_marriage_ratio
-    - Add ISO3 codes
-    """
+    """Load, clean, and derive gender gap indicators from Child_marriage.csv."""
     if not os.path.exists(CHILD_MARRIAGE_FILE):
         print(f"  File not found: {CHILD_MARRIAGE_FILE}")
         return pd.DataFrame()
@@ -228,25 +194,11 @@ def load_child_marriage():
     return df[keep]
 
 
-# ──────────────────────────────────────────────────────────────
-# SECTION 3: FGM
-# Reads FGM_clean_english.csv (already cleaned by notebook)
-# ──────────────────────────────────────────────────────────────
 
 def load_fgm():
     """
-    Load FGM_clean_english.csv produced by the FGM notebook.
-    Columns: country, fgm_prevalence_total, fgm_urban, fgm_rural,
-             fgm_wealth_poorest, fgm_wealth_second, fgm_wealth_middle,
-             fgm_wealth_fourth, fgm_wealth_richest
-
-    Renames to standardised names, adds ISO3, derives:
-      fgm_wealth_gap      = poorest - richest
-      fgm_urban_rural_gap = rural - urban
-
-    MNAR structural missingness: ~183 of ~213 countries will have NaN.
-    This is expected. FGM is only surveyed in Sub-Saharan Africa and
-    parts of the Middle East.
+    Load FGM data, add ISO3, derive wealth and urban/rural gaps.
+    ~183/213 countries will have NaN (FGM only surveyed in SSA/MENA).
     """
     if not os.path.exists(FGM_FILE):
         print(f"  File not found: {FGM_FILE}")
@@ -254,8 +206,7 @@ def load_fgm():
 
     df = pd.read_csv(FGM_FILE)
 
-    # Remove annotation rows and regional aggregates that survived
-    # the notebook cleaning (e.g. "Contact us:", "East Asia and Pacific")
+    # Remove annotation rows and regional aggregates
     df["country"] = df["country"].astype(str).str.strip()
     exclude_patterns = (
         "Contact us|East Asia|Eastern Europe|Europe and Central|"
@@ -267,7 +218,7 @@ def load_fgm():
                                         case=False, na=False)]
     df = df[df["country"].str.len() <= 60]
 
-    # Rename from FGM notebook output to standardised names
+
     df = df.rename(columns={
         "fgm_prevalence_total": "fgm_prevalence_pct",
         "fgm_urban":            "fgm_urban_pct",
@@ -302,9 +253,6 @@ def load_fgm():
     return df[keep]
 
 
-# ──────────────────────────────────────────────────────────────
-# SECTION 4: BUILD GENDER MASTER DATASET
-# ──────────────────────────────────────────────────────────────
 
 def build_gender_master(adolescent_df, child_marriage_df, fgm_df):
     master = child_marriage_df.copy()
@@ -323,7 +271,7 @@ def build_gender_master(adolescent_df, child_marriage_df, fgm_df):
     master = safe_merge(master, adolescent_df, "adolescent", how="outer")
     master = safe_merge(master, fgm_df, "fgm", how="left")
 
-    # Resolve duplicate country columns
+
     if "country_x" in master.columns or "country_y" in master.columns:
         col_x = master.get("country_x", pd.Series(dtype=str))
         col_y = master.get("country_y", pd.Series(dtype=str))
@@ -335,12 +283,8 @@ def build_gender_master(adolescent_df, child_marriage_df, fgm_df):
     return master
 
 
-# ──────────────────────────────────────────────────────────────
-# SECTION 5: VISUALISATIONS
-# ──────────────────────────────────────────────────────────────
 
 def plot_distributions(master):
-    """Distribution + KDE + Shapiro-Wilk for all core indicators."""
     from scipy.stats import gaussian_kde
 
     indicators = [
@@ -604,16 +548,10 @@ def plot_correlation_heatmap(master):
     fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
 
-# SECTION 6: SUMMARY STATISTICS
-# ──────────────────────────────────────────────────────────────
-
 def print_summary(master):
     pass
 
 
-# ──────────────────────────────────────────────────────────────
-# MAIN
-# ──────────────────────────────────────────────────────────────
 
 def main():
     adolescent_df     = load_adolescent()

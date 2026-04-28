@@ -1,37 +1,15 @@
 """
-gender_malnutrition_analysis.py
-=============================================================
-Analysis: Does Gender Inequality Explain Child Malnutrition?
+Gender Inequality and Child Malnutrition Analysis
 
-This script implements Model 1 and Model 2 of the four-model
-incremental framework:
-
-  Model 1 — Baseline: stunting/wasting/overweight ~ income_group
-  Model 2 — Gender:   stunting/wasting/overweight ~ gender_indicators
-
-Analysis layers:
-  1. Data merge and sample description
-  2. Exploratory correlation analysis (Spearman + heatmap)
-  3. Scatter plots (each gender indicator vs each outcome)
-  4. Inferential statistics (Spearman r, p-values, Bonferroni)
-  5. Partial correlation (controlling for income group)
-  6. OLS regression (Model 1 baseline, Model 2 gender-only)
-  7. SHAP variable importance
-  8. Visualisation of regression results
+Inputs:
+  outputs/malnutrition_modelling_sample.csv
+  outputs/gender_inequality_analysis.csv
 
 Outputs:
-  final_analytical_dataset.csv
-  correlation_heatmap.png
-  scatter_matrix.png
-  regression_coefficients.png
-  shap_importance.png
-  partial_correlation_table.csv
-  model_comparison_table.csv
+  outputs/gender_malnutrition/
 
-Note on causal language:
-  This is cross-sectional data. We establish statistical association,
-  not causation. Causal mechanisms are discussed in the report.
-=============================================================
+Models: Models 1-3 (Baseline, Gender, Gender+Education),
+plus partial correlation, Lasso variable importance, and forest plots.
 """
 
 import os
@@ -52,12 +30,14 @@ import statsmodels.formula.api as smf
 warnings.filterwarnings("ignore")
 
 # ===== USER INPUT =====
-_SCRIPT_DIR      = os.path.dirname(os.path.abspath(__file__))
-OUTPUT_FOLDER    = os.path.join(_SCRIPT_DIR, "outputs")
+SCRIPT_DIR    = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR      = os.path.dirname(SCRIPT_DIR)
+MAL_CSV       = os.path.join(ROOT_DIR, "outputs",
+                              "malnutrition_modelling_sample.csv")
+GENDER_CSV    = os.path.join(ROOT_DIR, "outputs",
+                              "gender_inequality_analysis.csv")
+OUTPUT_FOLDER = os.path.join(ROOT_DIR, "outputs", "gender_malnutrition")
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
-
-GENDER_CSV       = os.path.join(OUTPUT_FOLDER, "gender_inequality_analysis.csv")
-MALNUTRITION_CSV = os.path.join(OUTPUT_FOLDER, "malnutrition_modelling_sample.csv")
 # ======================
 
 # Gender inequality predictors used in models
@@ -106,7 +86,7 @@ def load_and_merge():
     Reports sample sizes before and after merge.
     """
     gender = pd.read_csv(GENDER_CSV)
-    mal    = pd.read_csv(MALNUTRITION_CSV)
+    mal    = pd.read_csv(MAL_CSV)
 
     # Merge on ISO
     df = mal.merge(gender.drop(columns=["country"], errors="ignore"),
@@ -167,10 +147,6 @@ def spearman_correlation_table(df):
 
     return corr_table
 
-
-# ──────────────────────────────────────────────────────────────
-# SECTION 3: CORRELATION HEATMAP
-# ──────────────────────────────────────────────────────────────
 
 def plot_correlation_heatmap(df):
     """
@@ -241,7 +217,7 @@ def plot_correlation_heatmap(df):
     wrapped_labels = [textwrap.fill(label, width=20) for label in r_display.index]
     ax.set_yticklabels(
         wrapped_labels,
-        rotation=0,  # 建议换行后旋转角度减小，否则很难读
+        rotation=0,
         va="center",
         fontsize=16
     )
@@ -288,7 +264,6 @@ def plot_gender_stunting_scatter(df):
         "NA":   "North America",
     }
 
-    # Try both possible region column names
     region_col = ("unicef_region" if "unicef_region" in df.columns
                   else "unicef_reporting_region" if "unicef_reporting_region" in df.columns
     else None)
@@ -353,10 +328,6 @@ def plot_gender_stunting_scatter(df):
     fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
     print("  Saved: report_gender_scatter.png")
-
-# ──────────────────────────────────────────────────────────────
-# SECTION 4: SCATTER MATRIX
-# ──────────────────────────────────────────────────────────────
 
 def plot_scatter_matrix(df):
     """
@@ -454,10 +425,6 @@ def partial_correlation_controlling_income(df):
     """
     Compute partial Spearman correlation between each gender predictor
     and each outcome, controlling for income group.
-
-    Method: regress both predictor and outcome on income group dummies,
-    take residuals, then compute Spearman r on residuals.
-    This removes the confounding effect of economic development.
     """
     # Dummy-encode income group
     income_dummies = pd.get_dummies(
@@ -517,24 +484,13 @@ def partial_correlation_controlling_income(df):
 
 # ──────────────────────────────────────────────────────────────
 # SECTION 6: OLS REGRESSION MODELS
-# Model 1: Baseline (income group only)
-# Model 2: Gender indicators only
 # ──────────────────────────────────────────────────────────────
 
 def run_regression_models(df):
     """
     For each outcome (stunting, wasting, overweight):
-
-    Model 1 — Baseline:
-      outcome ~ C(income_group)
-      Establishes how much variance is explained by economic development
-
-    Model 2 — Gender only:
-      outcome ~ gender_predictors
-      Tests the incremental explanatory power of gender inequality
-
-    Reports: Adjusted R², AIC, BIC, coefficients, p-values.
-    Compares models using F-test (partial F-test).
+    Model 1 — Baseline: outcome ~ C(income_group)
+    Model 2 — Gender only: outcome ~ gender_predictors
     """
     all_results = []
     model_comparison = []
@@ -615,7 +571,6 @@ def run_model_3(df):
     """
     Model 3 — Integrated:
       outcome ~ gender_predictors + wash_indicators + education_indicators
-      Tests the explanatory power of gender inequality along with WASH and education indicators.
     """
     all_results = []
     model_comparison = []
@@ -717,8 +672,6 @@ def plot_regression_coefficients(results_df):
     """
     Forest plot of OLS regression coefficients (Model 2).
     Shows point estimate ± 1.96*SE (95% CI).
-    Significant predictors highlighted.
-    One panel per malnutrition outcome.
     """
     if results_df.empty:
         return
@@ -778,8 +731,6 @@ def plot_variable_importance(df):
     """
     Standardise all predictors and outcomes, then fit LassoCV
     to get relative variable importance for each outcome.
-
-    Standardisation allows direct comparison of coefficients
     across predictors with different scales.
 
     This is a data-driven alternative to manual feature selection.

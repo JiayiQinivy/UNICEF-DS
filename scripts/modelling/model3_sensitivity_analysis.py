@@ -1,32 +1,20 @@
-import pandas as pd
-df = pd.read_csv("model3_analytical_dataset.csv")
-for col in ["oos_upsec_f", "marriage_gap_18", "wat_bas_nat"]:
-    print(f"{col}: {df[col].notna().sum()} / {len(df)}")
-
 """
-model3_sensitivity.py
-=============================================================
 OLS Sensitivity Analysis for Stunting Model 4
 
-Tests whether the sanitation finding is robust to
-alternative indicator choices within each domain.
+Tests whether the sanitation finding is robust to alternative
+indicator choices within each domain.
 
-Four specifications, all for stunting only:
+Four specifications (stunting only):
   Main:   female_married_by_18 + literacy_f    + san_bas_nat + income_group
   Spec A: female_married_by_18 + oos_upsec_f   + san_bas_nat + income_group
   Spec B: marriage_gap_18      + literacy_f    + san_bas_nat + income_group
   Spec C: female_married_by_18 + literacy_f    + wat_bas_nat + income_group
 
 Each specification uses its own complete-case sample.
-Sample sizes may differ due to varying indicator coverage.
 
-Input:
-  Model3/model3_analytical_dataset.csv
-
-Output:
-  Model3/model3_sensitivity_results.csv
-  Model3/model3_sensitivity_table.png
-=============================================================
+Input:  Model3/model3_analytical_dataset.csv
+Output: Model3/model3_sensitivity_results.csv
+        Model3/model3_sensitivity_plot.png
 """
 
 import os
@@ -40,9 +28,7 @@ warnings.filterwarnings("ignore")
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_CSV   = os.path.join(SCRIPT_DIR, "model3_analytical_dataset.csv")
-OUTPUT_DIR = SCRIPT_DIR
-
-# ── Specifications ─────────────────────────────────────────────
+OUTPUT_DIR = SCRIPT_DIR──
 SPECIFICATIONS = {
     "Main (literacy_f / san_bas_nat)":
         {
@@ -97,9 +83,7 @@ def sig_label(p):
     return ""
 
 
-# ──────────────────────────────────────────────────────────────
-# SECTION 1: RUN SENSITIVITY MODELS
-# ──────────────────────────────────────────────────────────────
+
 def run_sensitivity(df):
     print("=" * 60)
     print("OLS SENSITIVITY ANALYSIS — Stunting")
@@ -113,21 +97,18 @@ def run_sensitivity(df):
         edu_pred     = spec["edu_pred"]
         gender_pred  = spec["gender_pred"]
 
-        # Identify all variables in this specification
         vars_needed = [
             "stunting_national", "income_group",
             wash_pred, edu_pred, gender_pred
         ]
         vars_needed = [v for v in vars_needed if v in df.columns]
 
-        # Complete-case subsample for this specification
         sub = df[vars_needed].dropna().copy()
         n   = len(sub)
 
         model = smf.ols(formula, data=sub).fit()
 
-        # Extract WASH coefficient
-        wash_coef = model.params.get(wash_pred, np.nan)
+        wash_coef  = model.params.get(wash_pred, np.nan)
         wash_se   = model.bse.get(wash_pred, np.nan)
         wash_p    = model.pvalues.get(wash_pred, np.nan)
         wash_ci_lo = wash_coef - 1.96 * wash_se
@@ -165,16 +146,12 @@ def run_sensitivity(df):
     return pd.DataFrame(results)
 
 
-# ──────────────────────────────────────────────────────────────
-# SECTION 2: SENSITIVITY COEFFICIENT PLOT
-# ──────────────────────────────────────────────────────────────
+
 def plot_sensitivity(results_df):
-    # 1. 增加画布大小，尤其是宽度和高度
     fig, ax = plt.subplots(figsize=(9, 5))
 
     y_labels = []
     for i, row in results_df.iterrows():
-        # 简化 Specification 文本，避免过长导致重叠
         spec_short = row["Specification"]
         label = f"{spec_short}\n(n={row['N']}, {row['WASH_label']})"
         y_labels.append(label)
@@ -188,20 +165,17 @@ def plot_sensitivity(results_df):
         sig = row["p_value"] < 0.05
         ci_lo, ci_hi, coef = row["CI_lo"], row["CI_hi"], row["Beta"]
 
-        # 绘制线条和点
         ax.plot([ci_lo, ci_hi], [y, y], color=color, alpha=0.8, linewidth=2.5)
         ax.scatter(coef, y, color=color, s=100, zorder=3,
                    edgecolors="black" if sig else "none")
 
-        # 2. 改进系数标注位置：增加水平偏移量 (offset) 避免贴着线条
         ax.text(
-            ci_lo - 0.015, y,  # 增加间距
-            f"β={coef:.3f}\np={row['p_value']:.3f}",  # 使用换行避免水平拉得太长
+            ci_lo - 0.015, y,
+            f"β={coef:.3f}\np={row['p_value']:.3f}",
             va="center", ha="right",
             fontsize=8, color="#333"
         )
 
-        # 显著性星号
         if sig and row["Sig"]:
             ax.text(ci_hi + 0.01, y, row["Sig"], va="center",
                     ha="left", fontsize=10, color=color, fontweight="bold")
@@ -210,7 +184,6 @@ def plot_sensitivity(results_df):
     ax.set_yticks(y_pos)
     ax.set_yticklabels(y_labels, fontsize=9)
 
-    # 3. 扩大 X 轴范围，防止文字超出边界
     current_xlim = ax.get_xlim()
     ax.set_xlim(current_xlim[0] - 0.05, current_xlim[1] + 0.05)
 
@@ -221,8 +194,7 @@ def plot_sensitivity(results_df):
     ax.spines[["top", "right"]].set_visible(False)
     ax.grid(axis="x", alpha=0.2, linestyle=":")
 
-    # 4. 关键：手动调整布局，不要只用 tight_layout
-    # left=0.35 为左侧长标签留出 35% 的空间
+    # Expand left margin for long labels
     plt.subplots_adjust(left=0.35, right=0.9, top=0.85, bottom=0.15)
 
     out = os.path.join(OUTPUT_DIR, "model3_sensitivity_plot.png")
@@ -231,9 +203,7 @@ def plot_sensitivity(results_df):
     print(f"\n Saved: model3_sensitivity_plot.png")
 
 
-# ──────────────────────────────────────────────────────────────
-# MAIN
-# ──────────────────────────────────────────────────────────────
+
 def main():
     df = pd.read_csv(DATA_CSV)
     print(f"  Dataset loaded: {df.shape[0]} countries, "

@@ -1,26 +1,12 @@
 """
-wash_analysis.py
-=============================================================
-WASH Indicator Selection and Visualisation
+WASH Exploratory Visualisation
 
-Rationale for keeping all three basic-service indicators:
-  Although wat_bas_nat, san_bas_nat, and hyg_bas_nat are
-  correlated (r = 0.84-0.89), they represent three conceptually
-  distinct dimensions of WASH infrastructure:
-    - Water:      access to safe drinking water
-    - Sanitation: access to improved toilet/latrine facilities
-    - Hygiene:    access to handwashing facilities with soap
-  Each dimension has an independent causal pathway to child
-  malnutrition (faecal-oral disease transmission, diarrhoea
-  prevention, nutrient absorption). All three are retained
-  as WASH predictors in Model 3.
+Source: outputs/wash_clean_data.csv
+Outputs: outputs/
 
-Outputs (same directory as this script):
-  wash_correlation_heatmap.png
-  wash_scatter_plots.png
-  wash_regional_boxplot.png
-  WASH/outputs/wash_selected.csv
-=============================================================
+Selected indicators: wat_bas_nat, san_bas_nat, hyg_bas_nat
+Rationale: Basic-service tier is the JMP policy benchmark and has
+complete national coverage.
 """
 
 import os
@@ -284,9 +270,6 @@ def plot_correlation_heatmap(merged):
         ax=ax, linewidths=0.8, annot_kws={"size": 18, "weight": "bold"},
         cbar_kws={"label": "Spearman r", "shrink": 0.75})
 
-    # Highlight selected indicator rows with a box
-
-
     ax.set_title(
         "Spearman Correlation: WASH Indicators vs Child Malnutrition\n"
         " * p<0.05  ** p<0.01  *** p<0.001  ",
@@ -439,10 +422,6 @@ def plot_regional_boxplot(merged):
     plt.close(fig)
     print(f"  Saved: wash_regional_boxplot.png")
 
-
-# ──────────────────────────────────────────────────────────────
-# MAIN
-# ──────────────────────────────────────────────────────────────
 
 def main():
     print("=" * 60)

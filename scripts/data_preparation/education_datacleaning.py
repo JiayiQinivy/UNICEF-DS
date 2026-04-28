@@ -1,40 +1,12 @@
 """
-education_cleaning.py
-=============================================================
 Education Data Cleaning Pipeline
 
-Source : education-dataset.xlsx, sheet '10. Edu'
-Period : Out-of-school rates 2012-2018
-         Completion rates    2012-2018
-         Literacy rate       2010-2018
+Source: education-dataset.xlsx, sheet '10. Edu'
+Output: education_clean.csv
 
-Route B Rationale:
-  Education indicators are selected to double-reinforce the
-  gender inequality argument:
-
-  (1) Female absolute indicators (oos_upsec_f, completion_primary_f,
-      literacy_f) capture women's educational deprivation as a
-      direct pathway to child malnutrition — educated mothers
-      have better feeding practices, healthcare utilisation, and
-      household bargaining power (Smith & Haddad, 2015).
-
-  (2) Education gender gap indicators (oos_upsec_gap,
-      completion_primary_gap) measure relative gender inequality
-      in education, complementing the marriage gender gap already
-      captured in the gender inequality dataset.
-
-  Together these two types of indicator provide converging evidence
-  that gender inequality in education — both in absolute female
-  deprivation and relative female disadvantage — is associated with
-  child malnutrition.
-
-  Male indicators and learning outcome indicators are excluded:
-  - Male indicators are redundant given female and gap indicators
-  - Learning outcomes have low country coverage (< 90 countries)
-    which would severely reduce Model 3 sample size
-
-Output: education_clean.csv  (same directory as this script)
-=============================================================
+Extracts female absolute indicators and gender gap indicators.
+Male indicators excluded (redundant given female + gap).
+Learning outcomes excluded (low coverage, <90 countries).
 """
 
 import os
@@ -43,21 +15,16 @@ import numpy as np
 import pandas as pd
 warnings.filterwarnings("ignore")
 
-# ===== USER INPUT =====
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 FILE = os.path.join(SCRIPT_DIR, "data", "education-dataset.xlsx")
 SHEET  = "10. Edu"
-OUTPUT = "education_clean.csv"   # saved in same folder as this script
-# ======================
+OUTPUT = "education_clean.csv"
 
 COL_MAP = {
     1:  "country",
-    # Out-of-school rates — female and male (male needed for gap derivation)
     6:  "oos_primary_m",         8:  "oos_primary_f",
     14: "oos_upsec_m",           16: "oos_upsec_f",
-    # Completion rates — female and male (male needed for gap derivation)
     18: "completion_primary_m",  20: "completion_primary_f",
-    # Literacy — female only (no male needed, no gap derived)
     44: "literacy_f",
 }
 
@@ -163,14 +130,11 @@ def clean_education():
     raw = pd.read_excel(file_path, sheet_name=SHEET, header=None)
     print(f"  Raw shape: {raw.shape}")
 
-    # ── Step 1: Extract required columns ──────────────────────
     data = raw.iloc[8:, list(COL_MAP.keys())].copy()
     data.columns = list(COL_MAP.values())
 
-    # ── Step 2: Clean country column ──────────────────────────
     data["country"] = data["country"].astype(str).str.strip()
 
-    # ── Step 3: Remove non-country rows ───────────────────────
     data = data[data["country"].str.len() <= 60]
     data = data[~data["country"].str.contains(
         NON_COUNTRY_PATTERNS, case=False, na=True)]
@@ -178,49 +142,36 @@ def clean_education():
     data = data.reset_index(drop=True)
     print(f"  Rows after cleaning: {len(data)}")
 
-    # ── Step 4: Convert numeric columns ───────────────────────
     num_cols = [c for c in data.columns if c != "country"]
     for col in num_cols:
         data[col] = data[col].replace(
             ["−", "-", "–", "x", "..", ""], np.nan)
         data[col] = pd.to_numeric(data[col], errors="coerce")
 
-    # ── Step 5: Add ISO3 codes ─────────────────────────────────
     data["ISO"] = data["country"].map(ISO_LOOKUP)
     unmatched = data[data["ISO"].isna()]["country"].dropna().unique()
     if len(unmatched) > 0:
         print(f"  Unmatched ({len(unmatched)}): {list(unmatched)}")
     data = data.dropna(subset=["ISO"]).reset_index(drop=True)
 
-    # ── Step 6: Derive gender gap indicators ──────────────────
-    # completion_primary_gap < 0: girls complete less than boys
-    # oos_upsec_gap > 0: more girls out of school than boys
+    # Gap: negative = girls worse than boys
     data["completion_primary_gap"] = (
         data["completion_primary_f"] - data["completion_primary_m"])
     data["oos_upsec_gap"] = (
         data["oos_upsec_f"] - data["oos_upsec_m"])
 
-    # ── Step 7: Drop male columns (no longer needed) ──────────
-    # Male columns were only needed to compute gender gaps
     data = data.drop(columns=["oos_primary_m", "oos_upsec_m",
                                "completion_primary_m"])
 
-    # ── Step 8: Reorder final columns ─────────────────────────
-    # Female absolute indicators first, then gender gap indicators
     final_cols = [
         "ISO", "country",
-        # Female absolute indicators
-        "oos_primary_f",          # Female primary OOS rate
-        "oos_upsec_f",            # Female upper-secondary OOS rate
-        "completion_primary_f",   # Female primary completion rate
-        "literacy_f",             # Female youth literacy rate
-        # Education gender gap indicators
-        "completion_primary_gap", # Female minus male completion rate
-        "oos_upsec_gap",          # Female minus male upper-sec OOS rate
+        "oos_primary_f", "oos_upsec_f",
+        "completion_primary_f", "literacy_f",
+        "completion_primary_gap", "oos_upsec_gap",
     ]
     data = data[final_cols]
 
-    # ── Coverage report ────────────────────────────────────────
+
     print(f"\n  {'─'*50}")
     print(f"  COVERAGE SUMMARY")
     print(f"  {'─'*50}")
@@ -238,7 +189,6 @@ def clean_education():
               f"(mean={d.mean():+.2f}, min={d.min():.2f}, "
               f"max={d.max():.2f})")
 
-    # ── Value range check ──────────────────────────────────────
     print(f"\n  Value range check:")
     all_ok = True
     for col in ["oos_primary_f", "oos_upsec_f",
@@ -253,21 +203,19 @@ def clean_education():
     if all_ok:
         print(f"    All female indicators within [0,100]")
 
-    # ── Missing values ─────────────────────────────────────────
     print(f"\n  Missing values:")
     miss = data.isna().sum()
     for col, n in miss[miss > 0].items():
         if col not in ("ISO", "country"):
             print(f"    {col:30s}: {n}")
 
-    # ── Descriptive statistics ─────────────────────────────────
     print(f"\n  Descriptive statistics:")
     print(data[["oos_primary_f", "oos_upsec_f",
                 "completion_primary_f", "literacy_f",
                 "completion_primary_gap",
                 "oos_upsec_gap"]].describe().round(2).to_string())
 
-    # ── Save ───────────────────────────────────────────────────
+
     data.to_csv(out_path, index=False)
     print(f"\n  Saved -> {out_path}")
     print(f"  Shape: {data.shape}")

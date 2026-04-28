@@ -10,7 +10,6 @@ from sklearn.preprocessing import StandardScaler
 import statsmodels.formula.api as smf
 warnings.filterwarnings("ignore")
 
-# ===== FILE PATHS =====
 SCRIPT_DIR       = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR         = os.path.dirname(SCRIPT_DIR)
 
@@ -23,7 +22,7 @@ WASH_CSV         = os.path.join(ROOT_DIR, "WASH", "outputs",
                                  "wash_selected.csv")
 OUTPUT_FOLDER    = SCRIPT_DIR
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
-# ======================
+
 
 OUTCOMES = ["stunting_national", "wasting_national", "overweight_national"]
 OUTCOME_LABELS = {
@@ -49,9 +48,6 @@ GROUP_COLORS = {
 }
 
 
-# ──────────────────────────────────────────────────────────────
-# SECTION 1: MERGE ALL DATASETS
-# ──────────────────────────────────────────────────────────────
 
 def load_and_merge():
     print("=" * 60)
@@ -127,9 +123,6 @@ def load_and_merge():
     return df
 
 
-# ──────────────────────────────────────────────────────────────
-# SECTION 2: RUN MODELS 1-4
-# ──────────────────────────────────────────────────────────────
 
 def run_models(df):
     print("\n" + "=" * 60)
@@ -251,9 +244,6 @@ def run_models(df):
     return comp_df, coefs_df, sub
 
 
-# ──────────────────────────────────────────────────────────────
-# FIGURE 1: MODEL COMPARISON PLOT (Adj.R²)
-# ──────────────────────────────────────────────────────────────
 
 def plot_model_comparison(comp_df):
     print("\n  Generating Figure 1: Model comparison plot...")
@@ -308,35 +298,14 @@ def plot_model_comparison(comp_df):
     print(f"  Saved: model3_model_comparison_plot.png")
 
 
-# ──────────────────────────────────────────────────────────────
-# FIGURE 2: COEFFICIENT FOREST PLOT (Model 4)
-# ──────────────────────────────────────────────────────────────
+
 def plot_grouped_coefficient_forest(coefs_df):
-    """
-    Single grouped coefficient plot for Model 4 OLS coefficients.
-
-    Design:
-      - One row per retained predictor
-      - Three outcomes shown side-by-side within each row
-      - Dot = coefficient estimate
-      - Whisker = 95% CI
-      - Colour = outcome
-      - Significant predictors (p < 0.05): filled dot
-      - Non-significant predictors: hollow dot
-      - Significance stars shown to the right of the CI
-      - Common x-axis across all outcomes
-
-    Expected columns in coefs_df:
-      Outcome, Predictor, Coefficient, SE, p_value, Sig, Group
-    Optional CI columns (preferred if available):
-      CI_lower, CI_upper
-    """
+    """Grouped coefficient plot for Model 4 OLS coefficients."""
     import os
     import numpy as np
     import pandas as pd
     import matplotlib.pyplot as plt
     from matplotlib.lines import Line2D
-
     print("\n  Generating grouped coefficient plot...")
 
     if coefs_df is None or coefs_df.empty:
@@ -366,13 +335,11 @@ def plot_grouped_coefficient_forest(coefs_df):
         print("  No recognised outcomes found.")
         return
 
-    # Keep only relevant rows
     df = df[df["Predictor"].isin(pred_order) & df["Outcome"].isin(outcome_order)].copy()
     if df.empty:
         print("  No matching retained predictors found.")
         return
 
-    # Confidence intervals
     if {"CI_lower", "CI_upper"}.issubset(df.columns):
         df["CI_lower_plot"] = df["CI_lower"]
         df["CI_upper_plot"] = df["CI_upper"]
@@ -380,21 +347,18 @@ def plot_grouped_coefficient_forest(coefs_df):
         df["CI_lower_plot"] = df["Coefficient"] - 1.96 * df["SE"]
         df["CI_upper_plot"] = df["Coefficient"] + 1.96 * df["SE"]
 
-    # Common x range
     x_min = np.nanmin(df["CI_lower_plot"].values)
     x_max = np.nanmax(df["CI_upper_plot"].values)
     pad = max((x_max - x_min) * 0.10, 0.025)
     x_min -= pad
     x_max += pad
 
-    # Outcome colours
     outcome_colors = {
         OUTCOME_LABELS["stunting_national"]: "#4e79a7",  # steel blue
         OUTCOME_LABELS["wasting_national"]: "#f28e2b",  # orange
         OUTCOME_LABELS["overweight_national"]: "#9c755f",  # brown
     }
 
-    # Small vertical offsets within each predictor row
     offsets = {
         outcome_order[0]: -0.18 if len(outcome_order) >= 1 else 0.0,
         outcome_order[1]:  0.00 if len(outcome_order) >= 2 else 0.0,
@@ -403,10 +367,8 @@ def plot_grouped_coefficient_forest(coefs_df):
 
     fig, ax = plt.subplots(figsize=(7, 5.2))
 
-    # Base y positions for predictors
     y_base = np.arange(len(pred_order))
 
-    # Background guides for each predictor row
     for y in y_base:
         ax.axhline(y, color="#eeeeee", lw=0.8, zorder=0)
 
@@ -484,7 +446,6 @@ def plot_grouped_coefficient_forest(coefs_df):
                     zorder=4
                 )
 
-    # Zero line
     ax.axvline(0, color="#444444", lw=1.0, ls="--", alpha=0.65, zorder=1)
 
     # Axes
@@ -553,9 +514,6 @@ def plot_grouped_coefficient_forest(coefs_df):
     print("  Saved: model3_grouped_coefficient_plot.png")
 
 
-# ──────────────────────────────────────────────────────────────
-# FIGURE 3: LASSO VARIABLE IMPORTANCE
-# ──────────────────────────────────────────────────────────────
 
 def plot_lasso_importance(sub):
     print("\n  Generating Figure 3: Lasso variable importance...")
@@ -627,9 +585,6 @@ def plot_lasso_importance(sub):
     print(f"  Saved: model3_lasso_importance.png")
 
 
-# ──────────────────────────────────────────────────────────────
-# MAIN
-# ──────────────────────────────────────────────────────────────
 
 def main():
     print("=" * 60)
